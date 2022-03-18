@@ -9,10 +9,11 @@ import MessagesScreen from './app/screens/MessagesScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
 import ViewImageScreen from './app/screens/ViewImageScreen';
 import WelcomeScreen from './app/screens/WelcomeScreen';
+import FeedScreen from './app/screens/FeedScreen';
 
 export default function App() {
   return (
-    <WelcomeScreen />
+    // <WelcomeScreen />
     //<LoginScreen />
     //<RegisterScreen />
     //<AccountScreen />
@@ -20,5 +21,6 @@ export default function App() {
     //<MessagesScreen />
     //<ViewImageScreen />
     //<RegisterScreen />
+    <FeedScreen />
   );
 }
