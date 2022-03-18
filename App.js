@@ -10,6 +10,7 @@ import RegisterScreen from './app/screens/RegisterScreen';
 import ViewImageScreen from './app/screens/ViewImageScreen';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import FeedScreen from './app/screens/FeedScreen';
+import UploadImageScreen from './app/screens/UploadImageScreen';
 
 export default function App() {
   return (
@@ -22,5 +23,6 @@ export default function App() {
     //<ViewImageScreen />
     //<RegisterScreen />
     <FeedScreen />
+    // <UploadImageScreen />
   );
 }

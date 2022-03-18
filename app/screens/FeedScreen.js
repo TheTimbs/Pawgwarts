@@ -5,40 +5,22 @@ import {
   View,
   Text,
   Image,
+  Button,
   AsyncStorage,
 } from 'react-native';
-
+// import { useNavigation } from '@react-navigation/native';
 import Card from '../components/Card';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 
 import { db } from '../../firebase/firebase-config';
 import { getDocs, collection, doc } from 'firebase/firestore';
-
-const dummyData = [
-  {
-    id: 1,
-    username: 'Chris',
-    likes: 0,
-    image: require('../assets/GermanShepPuppy.webp'),
-  },
-  {
-    id: 2,
-    username: 'Kazi',
-    likes: 2,
-    image: require('../assets/GermanTeen.jpeg'),
-  },
-  {
-    id: 3,
-    username: 'Eric',
-    likes: 2,
-    image: require('../assets/GermanAdult.jpeg'),
-  },
-];
+import AppButton from '../components/Button';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
   const feedCollectionRef = collection(db, 'feed');
+  // const navigation = useNavigation();
   useEffect(() => {
     const getFeed = async () => {
       const data = await getDocs(feedCollectionRef);
@@ -46,11 +28,14 @@ function FeedScreen() {
         ...doc.data(),
         id: doc.id,
       }));
-      // console.log(data);
       setFeedList(mappedData);
     };
     getFeed();
   }, []);
+
+  // const createPost = () => {
+  //   navigation.navigate('UploadImageScreen');
+  // };
 
   return (
     <Screen style={styles.screen}>
@@ -65,6 +50,7 @@ function FeedScreen() {
           />
         )}
       />
+      <AppButton title="Upload Image" />
     </Screen>
   );
 }
