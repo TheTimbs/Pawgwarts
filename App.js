@@ -15,14 +15,14 @@ import UploadImageScreen from './app/screens/UploadImageScreen';
 export default function App() {
   return (
     // <WelcomeScreen />
-    <LoginScreen />
+   // <LoginScreen />
     //<RegisterScreen />
     //<AccountScreen />
     //<ListingsScreen />
     //<MessagesScreen />
     //<ViewImageScreen />
    // <RegisterScreen />
-   //<FeedScreen />
+  <FeedScreen />
     // <UploadImageScreen />
   );
 }

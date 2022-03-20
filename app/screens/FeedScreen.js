@@ -44,7 +44,7 @@ function FeedScreen() {
         keyExtractor={(feedList) => feedList.id.toString()}
         renderItem={({ item }) => (
           <Card
-            title={item.username}
+            title={item.name}
             subTitle={item.likes}
             image={{ uri: item.image }}
           />
