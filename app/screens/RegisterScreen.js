@@ -1,31 +1,53 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React,{useState} from 'react';
+import { StyleSheet, Button } from 'react-native';
 import * as Yup from 'yup';
-
+import {  createUserWithEmailAndPassword } from '@firebase/auth';
+import { db,storage,auth } from '../../firebase/firebase-config';
 import Screen from '../components/Screen';
 import { Form, FormField, SubmitButton } from '../components/forms';
+import { asyncstorage } from '@react-native-async-storage/async-storage';
+import { TextInput } from 'react-native-gesture-handler';
+import {collection, addDoc, setDoc, doc} from 'firebase/firestore'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label('Name'),
-  email: Yup.string().required().email().label('Email'),
-  password: Yup.string().required().min(4).label('Password'),
-});
+
+// const validationSchema = Yup.object().shape({
+//   name: Yup.string().required().label('Name'),
+//   email: Yup.string().required().email().label('Email'),
+//   password: Yup.string().required().min(4).label('Password'),
+// });
 
 function RegisterScreen() {
+
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const [name, setName] = useState('');
+
+  const RegisterUser = async () =>{
+    const user = await createUserWithEmailAndPassword(auth,email,password)
+    const docRef = await setDoc(doc(db, "users", `${user.user.uid}`), {
+      name: name,
+      email: email
+    });
+
+
+    setEmail('');
+    setName('');
+    setPassword('');
+  }
   return (
     <Screen style={styles.container}>
-      <Form
-        initialValues={{ name: '', email: '', password: '' }}
-        onSubmit={(values) => console.log(values)}
-        validationSchema={validationSchema}
-      >
-        <FormField
+
+        <TextInput
+          style={styles.TextInput}
           autoCorrect={false}
           icon="account"
           name="name"
           placeholder="Name"
+          onChangeText= {text => setName(text)}
         />
-        <FormField
+        <TextInput
+          style={styles.TextInput}
           autoCapitalize="none"
           autoCorrect={false}
           icon="email"
@@ -33,8 +55,10 @@ function RegisterScreen() {
           name="email"
           placeholder="Email"
           textContentType="emailAddress"
+          onChangeText= {text => setEmail(text)}
         />
-        <FormField
+        <TextInput
+          style={styles.TextInput}
           autoCapitalize="none"
           autoCorrect={false}
           icon="lock"
@@ -42,9 +66,12 @@ function RegisterScreen() {
           placeholder="Password"
           secureTextEntry
           textContentType="password"
+          onChangeText= {text => setPassword(text)}
         />
-        <SubmitButton title="Register" color="purple" />
-      </Form>
+          <Button
+        title="Register"
+        onPress={()=>RegisterUser()}
+      />
     </Screen>
   );
 }
@@ -53,6 +80,11 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
   },
+  TextInput:{
+    height:50,
+    fontSize:20
+}
+
 });
 
 export default RegisterScreen;
