@@ -18,7 +18,7 @@ import colors from '../config/colors';
 
 function FeedCard({ title, likes, image, email }) {
   const [like, setLike] = useState(likes);
-  const feedScreenRef = collection(db, 'feed');
+
   async function addLike(email) {
     const post = query(
       collection(db, 'feed'),
@@ -31,6 +31,17 @@ function FeedCard({ title, likes, image, email }) {
       const feedPost = doc(db, 'feed', document.id);
       updateDoc(feedPost, { likes: increment(1) });
       setLike(document.data().likes + 1);
+    });
+
+    const user = query(
+      collection(db, 'users'),
+      where('email', '==', `${email}`)
+    );
+    const userDocs = await getDocs(user);
+
+    userDocs.forEach((document) => {
+      const userPost = doc(db, 'users', document.id);
+      updateDoc(userPost, { likes: increment(1) });
     });
   }
 
