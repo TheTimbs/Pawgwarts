@@ -24,6 +24,8 @@ export default function UploadImageScreen() {
     await addDoc(feedCollectionRef, {
       likes: 0,
       image: image,
+      name: auth.currentUser.email
+
     });
   };
 

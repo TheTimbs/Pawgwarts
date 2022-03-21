@@ -21,8 +21,10 @@ export default function App() {
     //<ListingsScreen />
     //<MessagesScreen />
     //<ViewImageScreen />
+
     //<RegisterScreen />
     <FeedScreen />
+
     // <UploadImageScreen />
   );
 }
