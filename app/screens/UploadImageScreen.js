@@ -25,6 +25,7 @@ export default function UploadImageScreen() {
       likes: 0,
       image: image,
       name: auth.currentUser.email
+
     });
   };
 
