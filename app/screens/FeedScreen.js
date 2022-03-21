@@ -8,8 +8,8 @@ import {
   Button,
   AsyncStorage,
 } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
-import Card from '../components/Card';
+
+import FeedCard from '../components/FeedCard';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 
@@ -20,7 +20,7 @@ import AppButton from '../components/Button';
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
   const feedCollectionRef = collection(db, 'feed');
-  // const navigation = useNavigation();
+
   useEffect(() => {
     const getFeed = async () => {
       const data = await getDocs(feedCollectionRef);
@@ -33,21 +33,17 @@ function FeedScreen() {
     getFeed();
   }, []);
 
-  // const createPost = () => {
-  //   navigation.navigate('UploadImageScreen');
-  // };
-
   return (
     <Screen style={styles.screen}>
       <FlatList
         data={feedList}
         keyExtractor={(feedList) => feedList.id.toString()}
         renderItem={({ item }) => (
-          <Card
-
+          <FeedCard
             title={item.name}
-            subTitle={item.likes}
+            likes={item.likes}
             image={{ uri: item.image }}
+            email={item.email}
           />
         )}
       />
