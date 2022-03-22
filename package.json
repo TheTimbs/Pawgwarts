@@ -20,6 +20,8 @@
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.9",
     "formik": "^2.1.4",
+    "install": "^0.13.0",
+    "npm": "^8.5.5",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
