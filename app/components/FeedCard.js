@@ -8,18 +8,21 @@ import {
   updateDoc,
   query,
   where,
-  setDoc,
   increment,
-  onSnapshot,
+  arrayRemove,
+  arrayUnion
 } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
 import Text from './Text';
 import colors from '../config/colors';
+import {getAuth} from 'firebase/auth'
 
 function FeedCard({ title, likes, image, email }) {
   const [like, setLike] = useState(likes);
 
   async function addLike(email) {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
     const post = query(
       collection(db, 'feed'),
       where('email', '==', `${email}`),
@@ -29,8 +32,14 @@ function FeedCard({ title, likes, image, email }) {
 
     docs.forEach((document) => {
       const feedPost = doc(db, 'feed', document.id);
-      updateDoc(feedPost, { likes: increment(1) });
+      const arr = document.data().UsersLikes;
+      if(arr.includes(currentUser.email)){
+        updateDoc(feedPost,{likes: increment(-1), UsersLikes: arrayRemove(currentUser.email)})
+        setLike(document.data().likes  -1);
+      }else {
+      updateDoc(feedPost, { likes: increment(1), UsersLikes: arrayUnion(currentUser.email)});
       setLike(document.data().likes + 1);
+      }
     });
 
     const user = query(
