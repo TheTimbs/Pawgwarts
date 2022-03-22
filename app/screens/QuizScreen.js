@@ -9,6 +9,8 @@ import { db } from '../../firebase/firebase-config'
 
 import { getAuth } from 'firebase/auth'
 
+import QuizResult from './QuizResult';
+
 // house constants
 const gryffindog = "GryffinDog"
 const sloberin = "Sloberin"
@@ -35,10 +37,15 @@ const allQuestions = [
   {
     question: "Which of these magical events would you most like to experience?",
     options: [{ answer: "The Triwizard Tournament", house: gryffindog }, { answer: "The Quidditch World Cup", house: sloberin }, { answer: "The Yule Ball", house: ravenPaw }, { answer: "Christmas at Hogwarts", house: hufflepup }],
+  },
+  {
+    question: "You are making a PowerPoint presentation for a class project. You...",
+    options: [{ answer: "Take charger, organize everyone, and end up doing almost everything", house: gryffindog }, { answer: "Do as little as you can. Ah, the perks of group projects", house: sloberin }, { answer: "Do a little of everything", house: ravenPaw }, { answer: "Do most of the research and writing, but let other people make it flash", house: hufflepup }]
   }
 ]
 
 const PersonalityQuiz = () => {
+  const [selectedHouse, setSelectedHouse] = useState('')
   const [questions, setQuestions] = useState();
   const [qNum, setQNum] = useState(0);
   const [options, setOptions] = useState([])
@@ -65,13 +72,13 @@ const PersonalityQuiz = () => {
     setHouse({ ...house, [`${selectedHouse}`]: value })
     console.log("++ logging house ++", house)
 
-    if (qNum !== 4) {
+    if (qNum !== 5) {
       setQNum(qNum + 1)
       setOptions(allQuestions[qNum + 1].options)
     }
-    // if (qNum === 4) {
-    //   handleShowHouse()
-    // }
+    if (qNum === 5) {
+      handleShowHouse()
+    }
   }
 
   const handleShowHouse = async () => {
@@ -81,6 +88,7 @@ const PersonalityQuiz = () => {
     for (const [key, value] of Object.entries(house)) {
       if (value === max) {
         selectedHouse = key;
+        setSelectedHouse(selectedHouse)
       }
     }
     const auth = getAuth()
@@ -91,37 +99,47 @@ const PersonalityQuiz = () => {
     console.log("your house is ", selectedHouse)
   }
 
+  const showHouse = () => {
+    return (
+      <QuizResult house={selectedHouse} />
+    )
+  }
+
   return (
     <View style={styles.container}>
-      {isLoading ? <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-        <Text style={{ fontSize: 32, fontWeight: '700' }}>LOADING...</Text>
-      </View> : questions && (
-        <View style={styles.parent}>
-          <View style={styles.top}>
-            <Text style={styles.question}>Q. {(questions[qNum].question)}</Text>
-          </View>
-          <View style={styles.options}>
+      {selectedHouse !== "" ? <QuizResult house={selectedHouse} />
+        // <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+        //   <Text style={{ fontSize: 32, fontWeight: '700' }}>LOADING...</Text>
+        // </View> 
+        : questions && (
+          <View style={styles.parent}>
+            <View style={styles.top}>
+              <Text style={styles.question}>Answer the Following Questions to be placed in a house: </Text>
+            </View>
+            <View style={styles.top}>
+              <Text style={styles.question}>Q. {(questions[qNum].question)}</Text>
+            </View>
+            <View style={styles.options}>
 
-            <TouchableOpacity style={styles.optionButtom} onPress={() => handlSelectedOption(options[0])}>
-              <Text style={styles.option}>{(options[0].answer)}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionButtom} onPress={() => handlSelectedOption(options[1])}>
-              <Text style={styles.option}>{(options[1].answer)}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionButtom} onPress={() => handlSelectedOption(options[2])}>
-              <Text style={styles.option}>{(options[2].answer)}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionButtom} onPress={() => handlSelectedOption(options[3])}>
-              <Text style={styles.option}>{(options[3].answer)}</Text>
-            </TouchableOpacity>
+              <TouchableOpacity style={styles.optionButton} onPress={() => handlSelectedOption(options[0])}>
+                <Text style={styles.option}>{(options[0].answer)}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.optionButton} onPress={() => handlSelectedOption(options[1])}>
+                <Text style={styles.option}>{(options[1].answer)}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.optionButton} onPress={() => handlSelectedOption(options[2])}>
+                <Text style={styles.option}>{(options[2].answer)}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.optionButton} onPress={() => handlSelectedOption(options[3])}>
+                <Text style={styles.option}>{(options[3].answer)}</Text>
+              </TouchableOpacity>
+              {/* {selectedHouse !== "" ? <QuizResult house={selectedHouse} /> : <Text> {qNum + 1}/6 </Text>} */}
+            </View>
+            <View style={styles.bottom}>
+              <Text> {qNum + 1}/6  </Text>
+            </View>
           </View>
-          <View style={styles.bottom}>
-            {qNum === 4 && <TouchableOpacity style={styles.button} onPress={handleShowHouse}>
-              <Text style={styles.buttonText}> Show My House </Text>
-            </TouchableOpacity>}
-          </View>
-        </View>
-      )}
+        )}
     </View>
   );
 };
@@ -144,16 +162,8 @@ const styles = StyleSheet.create({
   bottom: {
     marginBottom: 12,
     paddingVertical: 16,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-  button: {
-    backgroundColor: '#1A759F',
-    padding: 12,
-    paddingHorizontal: 16,
-    borderRadius: 16,
-    alignItems: 'center',
-    marginBottom: 30,
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   buttonText: {
     fontSize: 18,
@@ -168,7 +178,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: 'white',
   },
-  optionButtom: {
+  optionButton: {
     paddingVertical: 12,
     marginVertical: 6,
     backgroundColor: '#34A0A4',
