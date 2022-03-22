@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Image, Button } from 'react-native';
 import * as Yup from 'yup';
 import Screen from '../components/Screen';
@@ -13,52 +13,47 @@ import { TextInput } from 'react-native-gesture-handler';
 // });
 
 function LoginScreen(props) {
-  const [isSignedIn, setIsSignedIn] =useState('');
-  const [email,setEmail] = useState('');
-  const [password,setPassword] = useState('');
+  const [isSignedIn, setIsSignedIn] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const SignUser =() =>{
-    signInWithEmailAndPassword(auth,email,password)
-    .then(()=>{
-      setIsSignedIn(true);
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-
-  }
+  const SignUser = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        setIsSignedIn(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Screen style={styles.container}>
       <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
 
-
-        <TextInput
-          style={styles.TextInput}
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="email"
-          keyboardType="email-address"
-          name="email"
-          placeholder="Email"
-          textContentType="emailAddress"
-          onChangeText= {text => setEmail(text)}
-        />
-        <TextInput
-          style={styles.TextInput}
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="lock"
-          name="password"
-          placeholder="Password"
-          secureTextEntry = {true}
-          textContentType="password"
-          onChangeText= {text => setPassword(text)}
-        />
-        <Button
-        title="Sign In"
-        onPress={()=>SignUser()}
+      <TextInput
+        style={styles.TextInput}
+        autoCapitalize="none"
+        autoCorrect={false}
+        icon="email"
+        keyboardType="email-address"
+        name="email"
+        placeholder="Email"
+        textContentType="emailAddress"
+        onChangeText={(text) => setEmail(text)}
       />
+      <TextInput
+        style={styles.TextInput}
+        autoCapitalize="none"
+        autoCorrect={false}
+        icon="lock"
+        name="password"
+        placeholder="Password"
+        secureTextEntry={true}
+        textContentType="password"
+        onChangeText={(text) => setPassword(text)}
+      />
+      <Button title="Sign In" onPress={() => SignUser()} />
     </Screen>
   );
 }
@@ -74,10 +69,10 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 20,
   },
-  TextInput:{
-    height:50,
-    fontSize:20
-}
+  TextInput: {
+    height: 50,
+    fontSize: 20,
+  },
 });
 
 export default LoginScreen;
