@@ -15,7 +15,7 @@ import UploadImageScreen from './app/screens/UploadImageScreen';
 export default function App() {
   return (
     // <WelcomeScreen />
-    // <LoginScreen />
+    //<LoginScreen />
     // <RegisterScreen />
     //<AccountScreen />
     //<ListingsScreen />
