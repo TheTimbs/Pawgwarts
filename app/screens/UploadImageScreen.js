@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import { db, auth, storage } from '../../firebase/firebase-config';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import uuid from 'uuid';
@@ -19,13 +19,20 @@ export default function UploadImageScreen() {
   const [image, setImage] = useState(null);
 
   const feedCollectionRef = collection(db, 'feed');
+  const userCollectionRef = doc(db, 'users', auth.currentUser.uid);
 
   const createPost = async () => {
+    const user = await getDoc(userCollectionRef);
+    if (user.exists()) {
+      console.log(user.data());
+    } else {
+      console.log('user not here');
+    }
     await addDoc(feedCollectionRef, {
       likes: 0,
       image: image,
-      name: auth.currentUser.email
-
+      name: user.data().name,
+      email: auth.currentUser.email,
     });
   };
 
