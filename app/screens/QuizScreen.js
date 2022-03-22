@@ -3,26 +3,38 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { doc, setDoc, updateDoc } from 'firebase/firestore'
+
+import { db } from '../../firebase/firebase-config'
+
+import { getAuth } from 'firebase/auth'
+
+// house constants
+const gryffindog = "GryffinDog"
+const sloberin = "Sloberin"
+const ravenPaw = "RavenPaw"
+const hufflepup = "HufflePup"
+
 const allQuestions = [
   {
     question: "What’s your favorite color?",
-    options: ["Red", "Green", "Blue", "Yellow"],
+    options: [{ answer: "Red", house: gryffindog }, { answer: "Green", house: sloberin }, { answer: "Blue", house: ravenPaw }, { answer: "Yellow", house: hufflepup }],
   },
   {
     question: "You're locked in a duel with a skilled opponent. They fire an unknown spell at you, and you shout…",
-    options: ["Expelliarmus!", "Protego!", "Stupefy!", "Crucio!"],
+    options: [{ answer: "Expelliarmus!", house: gryffindog }, { answer: "Protego!", house: sloberin }, { answer: "Stupefy!", house: ravenPaw }, { answer: "Crucio!", house: hufflepup }],
   },
   {
     question: "Which of your skills are you most proud of?",
-    options: ["My Ability to Absorb new Information", "My ability to make new friends", "My ability to get what I want", "My ability to keep secrets"],
+    options: [{ answer: "My Ability to Absorb new Information", house: gryffindog }, { answer: "My ability to make new friends", house: sloberin }, { answer: "My ability to get what I want", house: ravenPaw }, { answer: "My ability to keep secrets", house: hufflepup }],
   },
   {
     question: "What would you see in the Mirror of Erised?",
-    options: ["Myself, surrounded by riches", "Myself, surrounded by my lovign family and friends", "Myself, knowledgable above all", "Myself, experiencign a marvellous adventure"],
+    options: [{ answer: "Myself, surrounded by riches", house: gryffindog }, { answer: "Myself, surrounded by my lovign family and friends", house: sloberin }, { answer: "Myself, knowledgable above all", house: ravenPaw }, { answer: "Myself, experiencign a marvellous adventure", house: hufflepup }],
   },
   {
     question: "Which of these magical events would you most like to experience?",
-    options: ["The Triwizard Tournament", "The Quidditch World Cup", "The Yule Ball", "Christmas at Hogwarts"],
+    options: [{ answer: "The Triwizard Tournament", house: gryffindog }, { answer: "The Quidditch World Cup", house: sloberin }, { answer: "The Yule Ball", house: ravenPaw }, { answer: "Christmas at Hogwarts", house: hufflepup }],
   }
 ]
 
@@ -30,23 +42,13 @@ const PersonalityQuiz = () => {
   const [questions, setQuestions] = useState();
   const [qNum, setQNum] = useState(0);
   const [options, setOptions] = useState([])
-  const [house, setHouse] = useState({ GryffinDog: 0, Slobberin: 0, RavenPaw: 0, HufflePup: 0 })
+  const [house, setHouse] = useState({ GryffinDog: 0, Sloberin: 0, RavenPaw: 0, HufflePup: 0 })
   const [isLoading, setIsLoading] = useState(false)
-
-  // const getQuiz = () => {
-  //   setIsLoading(true)
-  //   // const url = 'https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986';
-  //   // const res = await fetch(url);
-  //   // const data = await res.json();
-  //   setQuestions(allQuestions);
-  //   setOptions(generateOptions(allQuestions[0]))
-  //   setIsLoading(false)
-  // };
 
   const getQuiz = () => {
     setIsLoading(true)
     setQuestions(allQuestions);
-    setOptions(generateOptions(allQuestions[0]))
+    setOptions(allQuestions[0].options)
     setIsLoading(false)
   };
 
@@ -54,25 +56,39 @@ const PersonalityQuiz = () => {
     getQuiz();
   }, []);
 
-  const generateOptions = (_question) => {
-    const options = [..._question.options]
-    return options
-  }
+  const handlSelectedOption = (option) => {
+    const selectedHouse = option.house;
+    console.log("house associated with selected answer: ", selectedHouse)
 
-  const handlSelectedOption = (_option) => {
-    const selectedHouse = "GryffinDog";
-    setHouse(house[`${selectedHouse}`]++)
+    let value = ++house[`${selectedHouse}`]
+    console.log(value)
+    setHouse({ ...house, [`${selectedHouse}`]: value })
+    console.log("++ logging house ++", house)
+
     if (qNum !== 4) {
       setQNum(qNum + 1)
-      setOptions(generateOptions(questions[qNum + 1]))
+      setOptions(allQuestions[qNum + 1].options)
     }
-    if (qNum === 4) {
-      handleShowHouse()
-    }
+    // if (qNum === 4) {
+    //   handleShowHouse()
+    // }
   }
 
-  const handleShowHouse = () => {
-    return <Text> Your House is: </Text>
+  const handleShowHouse = async () => {
+    let arr = Object.values(house);
+    let max = Math.max(...arr);
+    let selectedHouse = ''
+    for (const [key, value] of Object.entries(house)) {
+      if (value === max) {
+        selectedHouse = key;
+      }
+    }
+    const auth = getAuth()
+    const currrentUser = auth.currentUser
+    const docRef = doc(db, "users", currrentUser.uid)
+    await updateDoc(docRef, { house: selectedHouse })
+
+    console.log("your house is ", selectedHouse)
   }
 
   return (
@@ -87,31 +103,22 @@ const PersonalityQuiz = () => {
           <View style={styles.options}>
 
             <TouchableOpacity style={styles.optionButtom} onPress={() => handlSelectedOption(options[0])}>
-              <Text style={styles.option}>{(options[0])}</Text>
+              <Text style={styles.option}>{(options[0].answer)}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.optionButtom} onPress={() => handlSelectedOption(options[1])}>
-              <Text style={styles.option}>{(options[1])}</Text>
+              <Text style={styles.option}>{(options[1].answer)}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.optionButtom} onPress={() => handlSelectedOption(options[2])}>
-              <Text style={styles.option}>{(options[2])}</Text>
+              <Text style={styles.option}>{(options[2].answer)}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.optionButtom} onPress={() => handlSelectedOption(options[3])}>
-              <Text style={styles.option}>{(options[3])}</Text>
+              <Text style={styles.option}>{(options[3].answer)}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.bottom}>
-            {/* <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>PREV</Text>
-            </TouchableOpacity> */}
-
-            {/* {qNum !== 4 && <TouchableOpacity style={styles.button} onPress={handleNextPress}>
-              <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>} */}
-
             {qNum === 4 && <TouchableOpacity style={styles.button} onPress={handleShowHouse}>
               <Text style={styles.buttonText}> Show My House </Text>
             </TouchableOpacity>}
-
           </View>
         </View>
       )}
