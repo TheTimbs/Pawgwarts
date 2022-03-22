@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { db, storage, auth } from '../../firebase/firebase-config';
 import Screen from '../components/Screen';
 import { Form, FormField, SubmitButton } from '../components/forms';
-import { asyncstorage } from '@react-native-async-storage/async-storage';
+// import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import { TextInput } from 'react-native-gesture-handler';
 import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
