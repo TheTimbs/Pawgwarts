@@ -27,6 +27,7 @@ function RegisterScreen() {
       name: name,
       email: email,
       likes: 0,
+      house: '',
     });
 
     setEmail('');
