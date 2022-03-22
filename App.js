@@ -17,14 +17,16 @@ export default function App() {
   return (
     // <WelcomeScreen />
     // <LoginScreen />
-    // <RegisterScreen />
+   // <RegisterScreen />
     //<AccountScreen />
     //<ListingsScreen />
     //<MessagesScreen />
     //<ViewImageScreen />
+
     //<FeedScreen />
     //<UploadImageScreen />
     <QuizScreen />
+
 
   );
 }
