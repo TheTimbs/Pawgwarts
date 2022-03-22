@@ -12,7 +12,7 @@ import {
   arrayRemove,
   arrayUnion
 } from 'firebase/firestore';
-import { db } from '../../firebase/firebase-config';
+import { db} from '../../firebase/firebase-config';
 import Text from './Text';
 import colors from '../config/colors';
 import {getAuth} from 'firebase/auth'
@@ -23,6 +23,10 @@ function FeedCard({ title, likes, image, email }) {
   async function addLike(email) {
     const auth = getAuth();
     const currentUser = auth.currentUser;
+    const userRef = doc(db,'users', currentUser.uid);
+    const userSnap = await getDoc(userRef);
+    const title = userSnap.data().house
+    const houseRef = doc(db, 'houses ', title);
     const post = query(
       collection(db, 'feed'),
       where('email', '==', `${email}`),
@@ -32,12 +36,15 @@ function FeedCard({ title, likes, image, email }) {
 
     docs.forEach((document) => {
       const feedPost = doc(db, 'feed', document.id);
+
       const arr = document.data().UsersLikes;
       if(arr.includes(currentUser.email)){
         updateDoc(feedPost,{likes: increment(-1), UsersLikes: arrayRemove(currentUser.email)})
+        updateDoc(houseRef, {points:increment(-1)})
         setLike(document.data().likes  -1);
       }else {
       updateDoc(feedPost, { likes: increment(1), UsersLikes: arrayUnion(currentUser.email)});
+      updateDoc(houseRef, {points:increment(1)})
       setLike(document.data().likes + 1);
       }
     });

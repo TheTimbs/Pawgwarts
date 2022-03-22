@@ -24,9 +24,9 @@ export default function App() {
     //<MessagesScreen />
     //<ViewImageScreen />
 
-    //<FeedScreen />
+    <FeedScreen />
     //<UploadImageScreen />
-    <QuizScreen />
+    //<QuizScreen />
 
 
   );
