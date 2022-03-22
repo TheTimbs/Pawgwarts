@@ -36,8 +36,10 @@ function RegisterScreen() {
       name: name,
       email: email,
       likes: 0,
+
       house: house,
       dog: [dogName, breed, DOB, image, taskCompleted],
+
     });
 
     setEmail('');

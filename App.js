@@ -11,17 +11,22 @@ import ViewImageScreen from './app/screens/ViewImageScreen';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import FeedScreen from './app/screens/FeedScreen';
 import UploadImageScreen from './app/screens/UploadImageScreen';
+import QuizScreen from './app/screens/QuizScreen'
 
 export default function App() {
   return (
     // <WelcomeScreen />
     // <LoginScreen />
-    <RegisterScreen />
+   // <RegisterScreen />
     //<AccountScreen />
     //<ListingsScreen />
     //<MessagesScreen />
     //<ViewImageScreen />
-    // <FeedScreen />
-    // <UploadImageScreen />
+
+    //<FeedScreen />
+    //<UploadImageScreen />
+    <QuizScreen />
+
+
   );
 }
