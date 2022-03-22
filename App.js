@@ -16,8 +16,9 @@ import QuizScreen from './app/screens/QuizScreen'
 export default function App() {
   return (
     // <WelcomeScreen />
-    // <LoginScreen />
-   // <RegisterScreen />
+    //<LoginScreen />
+    // <RegisterScreen />
+
     //<AccountScreen />
     //<ListingsScreen />
     //<MessagesScreen />
