@@ -39,7 +39,6 @@ function RegisterScreen() {
 
       house: house,
       dog: [dogName, breed, DOB, image, taskCompleted],
-
     });
 
     setEmail('');
