@@ -3,8 +3,9 @@ import { ImageBackground, StyleSheet, View, Image, Text } from 'react-native';
 import { useFonts } from 'expo-font';
 
 import Button from '../components/Button';
+import routes from '../navigation/routes';
 
-function WelcomeScreen(props) {
+function WelcomeScreen({ navigation }) {
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
   });
@@ -23,8 +24,17 @@ function WelcomeScreen(props) {
         <Text style={styles.tagline}>Pawgwarts</Text>
       </View>
       <View style={styles.buttonsContainer}>
-        <Button title="Login" color="blue" />
-        <Button title="Register" color="purple" />
+        <Button
+          title="Login"
+          color="blue"
+          onPress={() => navigation.navigate(routes.LOGIN)}
+        />
+
+        <Button
+          title="Register"
+          color="purple"
+          onPress={() => navigation.navigate(routes.REGISTER)}
+        />
       </View>
     </ImageBackground>
   );
