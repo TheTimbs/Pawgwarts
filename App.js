@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 
 import AccountScreen from './app/screens/AccountScreen';
 import ListingDetailsScreen from './app/screens/ListingDetailsScreen';
@@ -13,19 +14,31 @@ import FeedScreen from './app/screens/FeedScreen';
 import UploadImageScreen from './app/screens/UploadImageScreen';
 import QuizScreen from './app/screens/QuizScreen';
 import UserProfile from './app/screens/UserProfileScreen';
+import navigationTheme from './app/navigation/navigationTheme';
+import AppNavigator from './app/navigation/AppNavigator';
+import AccountNavigator from './app/navigation/AccountNavigator';
+import AuthNavigator from './app/navigation/AuthNavigator';
+import FeedNavigator from './app/navigation/FeedNavigator';
+import { SignOut } from './app/screens/SignOut';
 
 export default function App() {
   return (
-    // <WelcomeScreen />
-    // <LoginScreen />
+     //<WelcomeScreen />
+   // <LoginScreen />
     // <RegisterScreen />
-    // <AccountScreen />
-    //<ListingsScreen />
+    //<AccountScreen />
+    // <ListingsScreen />
     //<MessagesScreen />
     //<ViewImageScreen />
-    // <FeedScreen />
-    // <UploadImageScreen />
-    // <QuizScreen />
-    <UserProfile />
+    //<FeedScreen />
+    //<UploadImageScreen />
+    //<QuizScreen />
+    //<SignOut />
+    // <UserProfile />
+   <NavigationContainer theme={navigationTheme}>
+     <AuthNavigator />
+
+   </NavigationContainer>
+
   );
 }
