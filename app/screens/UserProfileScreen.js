@@ -70,11 +70,7 @@ function UserProfile() {
             <Text style={styles.text1}>House: {user.house}</Text>
             <Text style={styles.text1}>Current Likes: {user.likes}</Text>
             <Text style={styles.text1}>Task Completed: {user.dog[4]}</Text>
-          </View>
-        ) : (
-          <Text style={styles.header}>loading...</Text>
-        )}
-        <View>
+            <View>
           <Text style={styles.header}>Photos:</Text>
           {userPhoto.map((post) => (
             <View key={post.image}>
@@ -85,6 +81,12 @@ function UserProfile() {
             </View>
           ))}
         </View>
+          </View>
+
+        ) : (
+          <Text style={styles.header}>loading...</Text>
+        )}
+
       </View>
     </Screen>
   );
