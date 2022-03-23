@@ -11,7 +11,7 @@ import QuizScreen from "../screens/QuizScreen";
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => (
-  <Stack.Navigator>
+  <Stack.Navigator >
     <Stack.Screen
       name="Welcome"
       component={WelcomeScreen}
@@ -20,7 +20,7 @@ const AuthNavigator = () => (
     <Stack.Screen name="Login" component={LoginScreen} />
     <Stack.Screen name="Register" component={RegisterScreen} />
     <Stack.Screen name="Quiz" component={QuizScreen} />
-    <Stack.Screen name="App" component={AppNavigator}/>
+    <Stack.Screen options={{ headerShown: false }}name="App" component={AppNavigator}/>
   </Stack.Navigator>
 );
 
