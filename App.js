@@ -34,8 +34,7 @@ export default function App() {
     //<QuizScreen />
     //<SignOut />
     <NavigationContainer theme={navigationTheme}>
-      <AppNavigator />
+      <AuthNavigator />
     </NavigationContainer>
-
   );
 }
