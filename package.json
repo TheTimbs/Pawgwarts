@@ -10,9 +10,9 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-native-async-storage/async-storage": "1.15.0",
     "@react-native-community/hooks": "^2.8.1",
+    "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/stack": "^6.0.8",
     "apisauce": "^2.1.5",
@@ -26,8 +26,8 @@
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.9",
     "formik": "^2.1.4",
-    "lottie-react-native": "5.0.1",
     "install": "^0.13.0",
+    "lottie-react-native": "5.0.1",
     "npm": "^8.5.5",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -36,6 +36,7 @@
     "react-native-progress": "^5.0.0",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
+    "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.1",
     "yup": "^0.32.11"
