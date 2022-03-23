@@ -52,9 +52,9 @@ function UserProfile() {
           //   image={{ uri: user.dog[3] }}
           // />
           <View>
-            <Text>User Information:</Text>
-            <Text>Name: {user.name}</Text>
-            <Text>Email: {user.email}</Text>
+            <Text style={styles.header}>User Information:</Text>
+            <Text style={styles.text1}>Name: {user.name}</Text>
+            <Text style={styles.text1}>Email: {user.email}</Text>
 
             <Image
               source={{ uri: user.dog[3] }}
@@ -63,27 +63,28 @@ function UserProfile() {
                 height: 200,
                 borderRadius: 200 / 2,
                 alignSelf: 'center',
+                marginVertical: 20,
               }}
             />
-            <Text>Dog Information:</Text>
-            <Text>Dog Name: {user.dog[0]}</Text>
-            <Text>Dog Breed: {user.dog[1]}</Text>
-            <Text>Dog DOB: {user.dog[2]}</Text>
+            <Text style={styles.header}>Dog Information:</Text>
+            <Text style={styles.text1}>Dog Name: {user.dog[0]}</Text>
+            <Text style={styles.text1}>Dog Breed: {user.dog[1]}</Text>
+            <Text style={styles.text1}>Dog DOB: {user.dog[2]}</Text>
 
-            <Text>House: {user.house}</Text>
-            <Text>Current Likes: {user.likes}</Text>
-            <Text>Task Completed: {user.dog[4]}</Text>
+            <Text style={styles.text1}>House: {user.house}</Text>
+            <Text style={styles.text1}>Current Likes: {user.likes}</Text>
+            <Text style={styles.text1}>Task Completed: {user.dog[4]}</Text>
           </View>
         ) : (
           console.log('loading')
         )}
         <View>
-          <Text>Photos:</Text>
+          <Text style={styles.header}>Photos:</Text>
           {userPhoto.map((post) => (
             <View key={post.image}>
               <Image
                 source={{ uri: post.image }}
-                style={{ width: 200, height: 150 }}
+                style={{ width: 200, height: 150, alignSelf: 'center' }}
               />
             </View>
           ))}
@@ -103,6 +104,20 @@ const styles = StyleSheet.create({
   },
   container: {
     marginVertical: 20,
+  },
+  header: {
+    color: colors.primary,
+    fontSize: 25,
+    fontWeight: '800',
+    paddingVertical: 9,
+    alignSelf: 'center',
+  },
+  text1: {
+    color: colors.gold,
+    fontSize: 20,
+    fontWeight: '500',
+    paddingVertical: 3,
+    alignSelf: 'center',
   },
 });
 
