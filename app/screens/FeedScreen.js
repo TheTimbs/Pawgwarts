@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  Button,
-  AsyncStorage,
-} from 'react-native';
+import { FlatList, StyleSheet, View, Text, Image, Button } from 'react-native';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 
 import FeedCard from '../components/FeedCard';
 import colors from '../config/colors';

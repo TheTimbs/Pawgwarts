@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 
 import AccountScreen from './app/screens/AccountScreen';
 import ListingDetailsScreen from './app/screens/ListingDetailsScreen';
@@ -11,7 +12,12 @@ import ViewImageScreen from './app/screens/ViewImageScreen';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import FeedScreen from './app/screens/FeedScreen';
 import UploadImageScreen from './app/screens/UploadImageScreen';
-import QuizScreen from './app/screens/QuizScreen'
+import QuizScreen from './app/screens/QuizScreen';
+import navigationTheme from './app/navigation/navigationTheme';
+import AppNavigator from './app/navigation/AppNavigator';
+import AccountNavigator from './app/navigation/AccountNavigator';
+import AuthNavigator from './app/navigation/AuthNavigator';
+import FeedNavigator from './app/navigation/FeedNavigator';
 
 export default function App() {
   return (
@@ -20,14 +26,15 @@ export default function App() {
     // <RegisterScreen />
 
     //<AccountScreen />
-    //<ListingsScreen />
+    // <ListingsScreen />
     //<MessagesScreen />
     //<ViewImageScreen />
 
     //<FeedScreen />
     //<UploadImageScreen />
-    <QuizScreen />
-
-
+    //<QuizScreen />
+    <NavigationContainer theme={navigationTheme}>
+      <AppNavigator />
+    </NavigationContainer>
   );
 }
