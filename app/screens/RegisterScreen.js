@@ -9,7 +9,7 @@ import { Form, FormField, SubmitButton } from '../components/forms';
 import { TextInput } from 'react-native-gesture-handler';
 import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
+import {useNavigation} from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import uuid from 'uuid';
@@ -29,6 +29,7 @@ function RegisterScreen() {
   const [DOB, setDOB] = useState('');
   const [image, setImage] = useState(null);
   const [taskCompleted, setTaskCompleted] = useState(0);
+  const navigation = useNavigation();
 
   const RegisterUser = async () => {
     const user = await createUserWithEmailAndPassword(auth, email, password);
@@ -48,6 +49,7 @@ function RegisterScreen() {
     setBreed('');
     setDOB('');
     setImage('');
+    navigation.navigate('Quiz');
   };
 
   const pickImage = async () => {
