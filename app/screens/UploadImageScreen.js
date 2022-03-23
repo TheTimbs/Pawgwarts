@@ -33,7 +33,8 @@ export default function UploadImageScreen() {
       image: image,
       name: user.data().name,
       email: auth.currentUser.email,
-      UsersLikes:[]
+      UsersLikes:[],
+      house:user.data().house
     });
   };
 

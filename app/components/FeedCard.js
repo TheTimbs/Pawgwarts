@@ -12,7 +12,7 @@ import {
   arrayRemove,
   arrayUnion
 } from 'firebase/firestore';
-import { db } from '../../firebase/firebase-config';
+import { db} from '../../firebase/firebase-config';
 import Text from './Text';
 import colors from '../config/colors';
 import {getAuth} from 'firebase/auth'
@@ -23,6 +23,7 @@ function FeedCard({ title, likes, image, email }) {
   async function addLike(email) {
     const auth = getAuth();
     const currentUser = auth.currentUser;
+
     const post = query(
       collection(db, 'feed'),
       where('email', '==', `${email}`),
@@ -30,28 +31,36 @@ function FeedCard({ title, likes, image, email }) {
     );
     const docs = await getDocs(post);
 
-    docs.forEach((document) => {
+   docs.forEach(async(document) => {
       const feedPost = doc(db, 'feed', document.id);
+      const feedData = await getDoc(feedPost);
+      const house = feedData.data().house;
+      const houseRef = doc(db, 'houses ',house)
+
+      const user = query(
+        collection(db, 'users'),
+        where('email', '==', `${email}`)
+      );
+      const userDocs = await getDocs(user);
+      let userPost = "";
+      userDocs.forEach((document) => {
+         userPost = doc(db, 'users', document.id);
+      });
+
       const arr = document.data().UsersLikes;
       if(arr.includes(currentUser.email)){
         updateDoc(feedPost,{likes: increment(-1), UsersLikes: arrayRemove(currentUser.email)})
+        updateDoc(houseRef, {points:increment(-1)})
+        updateDoc(userPost, { likes: increment(-1) });
         setLike(document.data().likes  -1);
       }else {
       updateDoc(feedPost, { likes: increment(1), UsersLikes: arrayUnion(currentUser.email)});
+      updateDoc(houseRef, {points:increment(1)});
+      updateDoc(userPost, { likes: increment(1) });
       setLike(document.data().likes + 1);
       }
     });
 
-    const user = query(
-      collection(db, 'users'),
-      where('email', '==', `${email}`)
-    );
-    const userDocs = await getDocs(user);
-
-    userDocs.forEach((document) => {
-      const userPost = doc(db, 'users', document.id);
-      updateDoc(userPost, { likes: increment(1) });
-    });
   }
 
   return (

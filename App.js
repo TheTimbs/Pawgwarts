@@ -18,23 +18,24 @@ import AppNavigator from './app/navigation/AppNavigator';
 import AccountNavigator from './app/navigation/AccountNavigator';
 import AuthNavigator from './app/navigation/AuthNavigator';
 import FeedNavigator from './app/navigation/FeedNavigator';
+import { SignOut } from './app/screens/SignOut';
 
 export default function App() {
   return (
     // <WelcomeScreen />
-    //<LoginScreen />
+    // <LoginScreen />
     // <RegisterScreen />
-
     //<AccountScreen />
     // <ListingsScreen />
     //<MessagesScreen />
     //<ViewImageScreen />
-
     //<FeedScreen />
     //<UploadImageScreen />
     //<QuizScreen />
+    //<SignOut />
     <NavigationContainer theme={navigationTheme}>
       <AppNavigator />
     </NavigationContainer>
+
   );
 }
