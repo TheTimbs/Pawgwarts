@@ -13,6 +13,7 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import FeedScreen from './app/screens/FeedScreen';
 import UploadImageScreen from './app/screens/UploadImageScreen';
 import QuizScreen from './app/screens/QuizScreen';
+import UserProfile from './app/screens/UserProfileScreen';
 import navigationTheme from './app/navigation/navigationTheme';
 import AppNavigator from './app/navigation/AppNavigator';
 import AccountNavigator from './app/navigation/AccountNavigator';
@@ -33,6 +34,7 @@ export default function App() {
     //<UploadImageScreen />
     //<QuizScreen />
     //<SignOut />
+    // <UserProfile />
     <NavigationContainer theme={navigationTheme}>
       <AuthNavigator />
     </NavigationContainer>
