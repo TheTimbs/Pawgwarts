@@ -6,6 +6,7 @@ import colors from '../config/colors';
 import Icon from '../components/Icon';
 import routes from '../navigation/routes';
 import Screen from '../components/Screen';
+import { SignOut } from './SignOut';
 
 const menuItems = [
   {
@@ -63,10 +64,12 @@ function AccountScreen({ navigation }) {
           )}
         />
       </View>
-      <ListItem
+      {/* <ListItem
         title="Log Out"
         IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
-      />
+        onPress={()=> SignOut()}
+      /> */}
+      <SignOut>SignOut</SignOut>
     </Screen>
   );
 }
