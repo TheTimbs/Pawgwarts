@@ -23,6 +23,8 @@ import { SignOut } from './app/screens/SignOut';
 import TreatStore from './app/screens/TreatStoreScreen';
 import ToyStore from './app/screens/ToyStoreScreen';
 import AccessoriesStore from './app/screens/AccessoriesStoreScreen';
+import StoreScreen from './app/screens/StoreScreen';
+import StoreNavigator from './app/navigation/StoreNavigator';
 
 export default function App() {
   return (
@@ -43,6 +45,9 @@ export default function App() {
     // </NavigationContainer>
     // <TreatStore />
     // <ToyStore />
-    <AccessoriesStore />
+    // <AccessoriesStore />
+    <NavigationContainer>
+      <StoreNavigator />
+    </NavigationContainer>
   );
 }
