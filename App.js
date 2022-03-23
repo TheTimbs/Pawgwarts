@@ -22,6 +22,7 @@ import FeedNavigator from './app/navigation/FeedNavigator';
 import { SignOut } from './app/screens/SignOut';
 import TreatStore from './app/screens/TreatStoreScreen';
 import ToyStore from './app/screens/ToyStoreScreen';
+import AccessoriesStore from './app/screens/AccessoriesStoreScreen';
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
     //   <AuthNavigator />
     // </NavigationContainer>
     // <TreatStore />
-    <ToyStore />
+    // <ToyStore />
+    <AccessoriesStore />
   );
 }
