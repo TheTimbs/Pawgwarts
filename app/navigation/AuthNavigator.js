@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
+import FeedScreen from "../screens/FeedScreen";
+import AppNavigator from "./AppNavigator";
 
 const Stack = createStackNavigator();
 
@@ -16,6 +18,7 @@ const AuthNavigator = () => (
     />
     <Stack.Screen name="Login" component={LoginScreen} />
     <Stack.Screen name="Register" component={RegisterScreen} />
+    <Stack.Screen name="App" component={AppNavigator}/>
   </Stack.Navigator>
 );
 

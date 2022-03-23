@@ -22,8 +22,8 @@ import { SignOut } from './app/screens/SignOut';
 
 export default function App() {
   return (
-    // <WelcomeScreen />
-    // <LoginScreen />
+     //<WelcomeScreen />
+   // <LoginScreen />
     // <RegisterScreen />
     //<AccountScreen />
     // <ListingsScreen />
@@ -33,9 +33,10 @@ export default function App() {
     //<UploadImageScreen />
     //<QuizScreen />
     //<SignOut />
-    <NavigationContainer theme={navigationTheme}>
-      <AppNavigator />
-    </NavigationContainer>
+   <NavigationContainer theme={navigationTheme}>
+     <AuthNavigator />
+
+   </NavigationContainer>
 
   );
 }
