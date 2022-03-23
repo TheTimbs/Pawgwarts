@@ -22,7 +22,7 @@ import { SignOut } from './app/screens/SignOut';
 
 export default function App() {
   return (
-    // <WelcomeScreen />
+    //<WelcomeScreen />
     // <LoginScreen />
     // <RegisterScreen />
     //<AccountScreen />
