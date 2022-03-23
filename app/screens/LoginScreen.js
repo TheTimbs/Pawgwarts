@@ -6,6 +6,8 @@ import { Form, FormField, SubmitButton } from '../components/forms';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { auth } from '../../firebase/firebase-config';
 import { TextInput } from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native'
+import FeedNavigator from '../navigation/FeedNavigator';
 
 // const validationSchema = Yup.object().shape({
 //   email: Yup.string().required().email().label('Email'),
@@ -16,11 +18,13 @@ function LoginScreen(props) {
   const [isSignedIn, setIsSignedIn] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation();
 
   const SignUser = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         setIsSignedIn(true);
+        navigation.navigate('App');
       })
       .catch((err) => {
         console.log(err);
