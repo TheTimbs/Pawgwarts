@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Button } from 'react-native';
+import { StyleSheet, View, FlatList, Button, Text, Image } from 'react-native';
 import { ListItem, ListItemSeparator } from '../components/lists';
 import colors from '../config/colors';
 import Icon from '../components/Icon';
@@ -27,11 +27,25 @@ function UserProfile() {
     <Screen style={styles.screen}>
       <View style={styles.container}>
         {user.dog ? (
-          <ListItem
-            title={user.dog[0]}
-            subTitle={user.email}
-            image={{ uri: user.dog[3] }}
-          />
+          // <ListItem
+          //   title={user.dog[0]}
+          //   subTitle={user.email}
+          //   image={{ uri: user.dog[3] }}
+          // />
+          <View>
+            <Text>Name: {user.name}</Text>
+            <Text>Email: {user.email}</Text>
+            <Text>House: {user.house}</Text>
+            <Text>Current Likes: {user.likes}</Text>
+            <Text>Dog Name: {user.dog[0]}</Text>
+            <Text>Dog Breed: {user.dog[1]}</Text>
+            <Text>Dog DOB: {user.dog[2]}</Text>
+            <Image
+              source={{ uri: user.dog[3] }}
+              style={{ width: 500, height: 350 }}
+            />
+            <Text>Task Completed: {user.dog[4]}</Text>
+          </View>
         ) : (
           console.log('loading')
         )}
