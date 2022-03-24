@@ -20,6 +20,7 @@ import AccountNavigator from './app/navigation/AccountNavigator';
 import AuthNavigator from './app/navigation/AuthNavigator';
 import FeedNavigator from './app/navigation/FeedNavigator';
 import { SignOut } from './app/screens/SignOut';
+import TrainingYearsScreen from './app/screens/TrainingYearsScreen';
 import TreatStore from './app/screens/TreatStoreScreen';
 import ToyStore from './app/screens/ToyStoreScreen';
 import AccessoriesStore from './app/screens/AccessoriesStoreScreen';
@@ -37,9 +38,10 @@ export default function App() {
     //<ViewImageScreen />
     //<FeedScreen />
     //<UploadImageScreen />
-    //<QuizScreen />
+    // <QuizScreen />
     //<SignOut />
     // <UserProfile />
+    //<TrainingYearsScreen />
     // <NavigationContainer theme={navigationTheme}>
     //   <AuthNavigator />
     // </NavigationContainer>
