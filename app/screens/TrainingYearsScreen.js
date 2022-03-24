@@ -6,35 +6,34 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { db } from '../../firebase/firebase-config';
 import { getDocs, collection, doc } from 'firebase/firestore';
 
-import YearsScreen from './YearsScreen'
+import TrainingCategoriesScreen from './TrainingCategoriesScreen'
 
 const TrainingYearsScreen = () => {
-  const [yearCategories, setYearCategories] = useState([]);
-  console.log("+++ logging yearCategories.length +++", yearCategories.length);
+  const [trainingCategories, setTrainingCategories] = useState([]);
+  const [year, setYear] = useState("")
 
-  const getYearCategories = async (year) => {
+  const getTrainingCategories = async (year) => {
     const yearCollectionRef = collection(db, year);
     const data = await getDocs(yearCollectionRef);
     const mappedData = data.docs.map((doc) => ({
       ...doc.data()
     }));
     console.log(`+++ ${year} categories +++`, mappedData);
-    setYearCategories(mappedData);
-    console.log("+++ yearCatorgies state variable.length+++", yearCategories.length)
+    setTrainingCategories(mappedData);
+    setYear(year);
+    console.log("+++ yearCatorgies state variable.length+++", trainingCategories.length)
   }
-
-
 
   return (
     <View style={styles.container}>
-      {yearCategories.length !== 0 ? <YearsScreen categories={yearCategories} /> : <View style={styles.options}>
-        <TouchableOpacity style={styles.optionButton} onPress={() => getYearCategories("firstYears")}>
+      {trainingCategories.length !== 0 ? <TrainingCategoriesScreen categories={trainingCategories} year={year} /> : <View style={styles.options}>
+        <TouchableOpacity style={styles.optionButton} onPress={() => getTrainingCategories("firstYears")}>
           <Text style={styles.option}> First Year </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButton} onPress={() => getYearCategories("secondYears")}>
+        <TouchableOpacity style={styles.optionButton} onPress={() => getTrainingCategories("secondYears")}>
           <Text style={styles.option}> Second Year </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButton} onPress={() => getYearCategories("thirdYears")}>
+        <TouchableOpacity style={styles.optionButton} onPress={() => getTrainingCategories("thirdYears")}>
           <Text style={styles.option}> Third Year </Text>
         </TouchableOpacity>
       </View>}
