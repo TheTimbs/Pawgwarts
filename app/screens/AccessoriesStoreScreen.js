@@ -122,17 +122,20 @@ const styles = StyleSheet.create({
     color: colors.blue,
     fontSize: 17,
     fontWeight: '800',
-    paddingVertical: 10,
+    paddingVertical: 2,
     paddingHorizontal: 15,
     alignSelf: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
   },
   label: {
     color: colors.purple,
     fontSize: 25,
     fontWeight: '800',
-    paddingVertical: 3,
+    paddingVertical: 10,
     alignSelf: 'center',
+    textAlign: 'center',
   },
 });
 

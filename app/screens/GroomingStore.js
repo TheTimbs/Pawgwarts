@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     alignSelf: 'center',
     justifyContent: 'center',
+    textAlign: 'center',
   },
   label: {
     color: colors.purple,
@@ -86,6 +87,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     paddingVertical: 3,
     alignSelf: 'center',
+    textAlign: 'center',
   },
 });
 
