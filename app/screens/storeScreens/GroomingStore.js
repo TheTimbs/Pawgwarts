@@ -8,13 +8,12 @@ import {
   ScrollView,
 } from 'react-native';
 import { collection, doc, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase/firebase-config';
+import { db } from '../../../firebase/firebase-config';
 import * as Linking from 'expo-linking';
-import colors from '../config/colors';
-import Screen from '../components/Screen';
-import { ListItem } from '../components/lists';
+import colors from '../../config/colors';
+import Screen from '../../components/Screen';
 
-function TreatStore() {
+function GroomingStore() {
   const [products, setProducts] = useState([]);
 
   const storeCollectionRef = collection(db, 'store');
@@ -26,7 +25,7 @@ function TreatStore() {
         id: document.id,
       }));
       const filteredData = mappedData.filter(
-        (post) => post.category === 'treat'
+        (post) => post.category === 'grooming'
       );
       setProducts(filteredData);
     };
@@ -41,7 +40,7 @@ function TreatStore() {
     <Screen style={styles.screen}>
       <ScrollView>
         <View>
-          <Text style={styles.label}>Treat Recommendations:</Text>
+          <Text style={styles.label}>Grooming Recommendations:</Text>
           {products ? (
             products.map((item, i) => (
               <View key={i}>
@@ -92,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TreatStore;
+export default GroomingStore;
