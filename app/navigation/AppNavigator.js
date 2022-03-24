@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{LogBox} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -13,7 +13,9 @@ import TrainingNavigator from './TrainingNavigator';
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
+
   <Tab.Navigator>
+
     <Tab.Screen
       name="Home"
       component={FeedNavigator}
@@ -36,7 +38,9 @@ const AppNavigator = () => (
     />
     <Tab.Screen
       name="Training"
+
       component={TrainingNavigator}
+
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="wizard-hat" color={color} size={size} />
@@ -64,7 +68,9 @@ const AppNavigator = () => (
     /> */}
     <Tab.Screen
       name="Store"
+
       component={StoreNavigator}
+
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="shopping" color={color} size={size} />
