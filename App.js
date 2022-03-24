@@ -43,7 +43,7 @@ export default function App() {
     //<SignOut />
     // <UserProfile />
 
-    //<TrainingYearsScreen />
+    <TrainingYearsScreen />
 
 
     // <NavigationContainer theme={navigationTheme}>
@@ -52,9 +52,9 @@ export default function App() {
     // <TreatStore />
     // <ToyStore />
     // <AccessoriesStore />
-    <NavigationContainer>
-      <StoreNavigator />
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <StoreNavigator />
+    // </NavigationContainer>
 
 
   );
