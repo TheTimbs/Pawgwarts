@@ -1,8 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import FeedScreen from '../screens/FeedScreen';
-import ListingsScreen from '../screens/ListingsScreen';
-import ListingDetailsScreen from '../screens/ListingDetailsScreen';
+import UploadImageScreen from '../screens/UploadImageScreen';
 
 const Stack = createStackNavigator();
 
@@ -11,7 +10,7 @@ const FeedNavigator = () => (
     screenOptions={{ headerShown: false, presentation: 'modal' }}
   >
     <Stack.Screen name="MyFeed" component={FeedScreen} />
-    <Stack.Screen name="ListingDetails" component={ListingDetailsScreen} />
+    <Stack.Screen name="ListingDetails" component={UploadImageScreen} />
   </Stack.Navigator>
 );
 
