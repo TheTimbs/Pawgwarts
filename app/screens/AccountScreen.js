@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList,Text } from 'react-native';
 
 import { ListItem, ListItemSeparator } from '../components/lists';
 import colors from '../config/colors';
@@ -51,21 +51,28 @@ function AccountScreen(props) {
   },[])
   async function getUserInfo(){
   const userDoc = await getDoc(userRef);
+
   setInfo(userDoc.data());
+  console.log(info)
   setPic(userDoc.data().dog);
  }
 
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
-   {  pic ?  <ListItem
+   {  (pic && info) ?  (<ListItem
           title={info.name}
           subTitle={info.email}
-           image={{uri: pic[3]}}
+           image={{uri:pic[3]}}
            onPress={()=>navigation.navigate('info')}
-        /> : <ListItem
-        title="loading..."
-      /> }
+        /> ): (info && !pic) ?(
+        <ListItem
+        title={info.name}
+        subTitle={info.email}
+         image={require('../assets/DogLogo.png')}
+         onPress={()=>navigation.navigate('info')}
+        />
+        ): <Text> Loading...</Text>}
       </View>
       <View style={styles.container}>
         <FlatList

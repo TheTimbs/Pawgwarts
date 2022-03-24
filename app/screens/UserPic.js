@@ -10,7 +10,7 @@ import { getDocs, collection, doc } from 'firebase/firestore';
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
 
-function userPic() {
+function UserPic() {
   const [userPhoto, setUserPhoto] = useState([]);
   const feedCollectionRef = collection(db, 'feed');
   const navigation = useNavigation();
@@ -52,11 +52,11 @@ function userPic() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.lightGreen,
+    backgroundColor: colors.blue,
     justifyContent:'center'
 
   },
 
 });
 
-export default userPic;
+export default UserPic;
