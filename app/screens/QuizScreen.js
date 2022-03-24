@@ -99,12 +99,6 @@ const PersonalityQuiz = () => {
     console.log("your house is ", selectedHouse)
   }
 
-  const showHouse = () => {
-    return (
-      <QuizResult house={selectedHouse} />
-    )
-  }
-
   return (
     <View style={styles.container}>
       {selectedHouse !== "" ? <QuizResult house={selectedHouse} />

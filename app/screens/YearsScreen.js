@@ -1,27 +1,17 @@
-import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../../firebase/firebase-config';
+import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const TrainingsMainCategories = () => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.options}>
-        <TouchableOpacity style={styles.optionButton}>
-          <Text style={styles.option}> First Year </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButton}>
-          <Text style={styles.option}> Second Year </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButton}>
-          <Text style={styles.option}> Third Year </Text>
-        </TouchableOpacity>
-      </View>
+function yearsScreen(props) {
+  return (<View style={styles.container}>
+    <View style={styles.options}>
+      {props.categories.map(category => (<TouchableOpacity key={category.title} style={styles.optionButton}>
+        <Text style={styles.option}> {category.title} </Text>
+      </TouchableOpacity>))}
     </View>
-  );
-};
-
-export default TrainingsMainCategories;
+  </View>)
+}
 
 
 
@@ -68,3 +58,4 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 });
+export default yearsScreen;

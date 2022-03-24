@@ -20,8 +20,7 @@ import AccountNavigator from './app/navigation/AccountNavigator';
 import AuthNavigator from './app/navigation/AuthNavigator';
 import FeedNavigator from './app/navigation/FeedNavigator';
 import { SignOut } from './app/screens/SignOut';
-import TrainingsMainCategories from './app/screens/TrainingMainCategories';
-import FirstYearScreen from './app/screens/FirstYearScreen';
+import TrainingYearsScreen from './app/screens/TrainingYearsScreen';
 
 export default function App() {
   return (
@@ -34,16 +33,13 @@ export default function App() {
     //<ViewImageScreen />
     //<FeedScreen />
     //<UploadImageScreen />
-    //<QuizScreen />
+    // <QuizScreen />
     //<SignOut />
     // <UserProfile />
+    <TrainingYearsScreen />
+
     //  <NavigationContainer theme={navigationTheme}>
     //    <AuthNavigator />
-
     //  </NavigationContainer>
-    // <TrainingsMainCategories />
-    <FirstYearScreen />
-
-
   );
 }
