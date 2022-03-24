@@ -1,5 +1,12 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, View, Image, Text } from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  ScrollView,
+} from 'react-native';
 import { useFonts } from 'expo-font';
 
 import Button from '../components/Button';
@@ -7,25 +14,64 @@ import routes from '../navigation/routes';
 
 function StoreScreen({ navigation }) {
   return (
-    <View>
-      <View style={styles.buttonsContainer}>
-        <Button
-          title="Accessories"
-          color="purple"
-          onPress={() => navigation.navigate('AccessoriesStore')}
-        />
-        <Button
-          title="Toys"
-          color="purple"
-          onPress={() => navigation.navigate('ToyStore')}
-        />
-        <Button
-          title="Treats"
-          color="purple"
-          onPress={() => navigation.navigate('TreatStore')}
-        />
+    <ScrollView>
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={styles.buttonsContainer}>
+          <Image
+            source={require('../assets/apparel.jpeg')}
+            style={{
+              width: 300,
+              height: 150,
+              alignSelf: 'center',
+            }}
+          />
+          <Button
+            title="Accessories"
+            color="purple"
+            onPress={() => navigation.navigate('AccessoriesStore')}
+          />
+          <Image
+            source={require('../assets/toys.jpeg')}
+            style={{
+              width: 300,
+              height: 150,
+              alignSelf: 'center',
+            }}
+          />
+          <Button
+            title="Toys"
+            color="purple"
+            onPress={() => navigation.navigate('ToyStore')}
+          />
+          <Image
+            source={require('../assets/treats.jpeg')}
+            style={{
+              width: 300,
+              height: 150,
+              alignSelf: 'center',
+            }}
+          />
+          <Button
+            title="Treats"
+            color="purple"
+            onPress={() => navigation.navigate('TreatStore')}
+          />
+          <Image
+            source={require('../assets/grooming.jpeg')}
+            style={{
+              width: 300,
+              height: 150,
+              alignSelf: 'center',
+            }}
+          />
+          <Button
+            title="Grooming"
+            color="purple"
+            onPress={() => navigation.navigate('GroomingStore')}
+          />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -36,8 +82,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonsContainer: {
-    padding: 20,
+    padding: 10,
     width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 100,
   },
   logo: {
     width: 100,

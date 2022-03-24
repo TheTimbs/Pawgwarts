@@ -13,7 +13,7 @@ import * as Linking from 'expo-linking';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 
-function ToyStore() {
+function GroomingStore() {
   const [products, setProducts] = useState([]);
 
   const storeCollectionRef = collection(db, 'store');
@@ -24,7 +24,9 @@ function ToyStore() {
         ...document.data(),
         id: document.id,
       }));
-      const filteredData = mappedData.filter((post) => post.category === 'toy');
+      const filteredData = mappedData.filter(
+        (post) => post.category === 'grooming'
+      );
       setProducts(filteredData);
     };
     getItems();
@@ -38,7 +40,7 @@ function ToyStore() {
     <Screen style={styles.screen}>
       <ScrollView>
         <View>
-          <Text style={styles.label}>Toy Recommendations:</Text>
+          <Text style={styles.label}>Grooming Recommendations:</Text>
           {products ? (
             products.map((item, i) => (
               <View key={i}>
@@ -87,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ToyStore;
+export default GroomingStore;

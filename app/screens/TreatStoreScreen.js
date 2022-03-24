@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Button, Text, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Button,
+  Text,
+  Image,
+  ScrollView,
+} from 'react-native';
 import { collection, doc, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
 import * as Linking from 'expo-linking';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
+import { ListItem } from '../components/lists';
 
 function TreatStore() {
   const [products, setProducts] = useState([]);
@@ -31,23 +39,30 @@ function TreatStore() {
 
   return (
     <Screen style={styles.screen}>
-      <View>
-        <Text style={styles.label}>Treat Recommendations:</Text>
-        {products.map((item, i) => (
-          <View key={i}>
-            <Text style={styles.header}>{item.name}</Text>
-            <Image
-              source={{ uri: item.image }}
-              style={{
-                width: 200,
-                height: 200,
-                alignSelf: 'center',
-              }}
-            />
-            <Button title="Link to Amazon" onPress={() => handleLink(i)} />
-          </View>
-        ))}
-      </View>
+      <ScrollView>
+        <View>
+          <Text style={styles.label}>Treat Recommendations:</Text>
+          {products ? (
+            products.map((item, i) => (
+              <View key={i}>
+                <Text style={styles.header} onPress={() => handleLink(i)}>
+                  {item.name}
+                </Text>
+                <Image
+                  source={{ uri: item.image }}
+                  style={{
+                    width: 200,
+                    height: 200,
+                    alignSelf: 'center',
+                  }}
+                />
+              </View>
+            ))
+          ) : (
+            <Text>Loading</Text>
+          )}
+        </View>
+      </ScrollView>
     </Screen>
   );
 }
