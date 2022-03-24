@@ -43,8 +43,10 @@ function FeedCard({ title, likes, image, email }) {
       );
       const userDocs = await getDocs(user);
       let userPost = "";
+
       userDocs.forEach((document) => {
          userPost = doc(db, 'users', document.id);
+
       });
 
       const arr = document.data().UsersLikes;
