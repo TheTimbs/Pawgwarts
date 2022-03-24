@@ -8,10 +8,10 @@ import {
   ScrollView,
 } from 'react-native';
 import { collection, doc, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase/firebase-config';
+import { db } from '../../../firebase/firebase-config';
 import * as Linking from 'expo-linking';
-import colors from '../config/colors';
-import Screen from '../components/Screen';
+import colors from '../../config/colors';
+import Screen from '../../components/Screen';
 
 function AccessoriesStore() {
   const [beds, setBeds] = useState([]);
