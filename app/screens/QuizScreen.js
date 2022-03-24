@@ -104,7 +104,7 @@ const PersonalityQuiz = () => {
       {selectedHouse !== "" ? <QuizResult house={selectedHouse} />
         // <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
         //   <Text style={{ fontSize: 32, fontWeight: '700' }}>LOADING...</Text>
-        // </View> 
+        // </View>
         : questions && (
           <View style={styles.parent}>
             <View style={styles.top}>

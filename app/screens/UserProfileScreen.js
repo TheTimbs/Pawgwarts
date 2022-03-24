@@ -46,11 +46,7 @@ function UserProfile() {
     <Screen style={styles.screen}>
       <View style={styles.container}>
         {user.dog ? (
-          // <ListItem
-          //   title={user.dog[0]}
-          //   subTitle={user.email}
-          //   image={{ uri: user.dog[3] }}
-          // />
+
           <View>
             <Text style={styles.header}>User Information:</Text>
             <Text style={styles.text1}>Name: {user.name}</Text>
@@ -74,11 +70,7 @@ function UserProfile() {
             <Text style={styles.text1}>House: {user.house}</Text>
             <Text style={styles.text1}>Current Likes: {user.likes}</Text>
             <Text style={styles.text1}>Task Completed: {user.dog[4]}</Text>
-          </View>
-        ) : (
-          console.log('loading')
-        )}
-        <View>
+            <View>
           <Text style={styles.header}>Photos:</Text>
           {userPhoto.map((post) => (
             <View key={post.image}>
@@ -89,11 +81,13 @@ function UserProfile() {
             </View>
           ))}
         </View>
+          </View>
+
+        ) : (
+          <Text style={styles.header}>loading...</Text>
+        )}
+
       </View>
-      <ListItem
-        title="Log Out"
-        IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
-      />
     </Screen>
   );
 }
