@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     color: colors.gold,
     fontSize: 24,
     fontWeight: 'bold',
+<<<<<<< HEAD
     justifyContent: 'center',
     textAlign: 'center',
   },
@@ -111,5 +112,7 @@ const styles = StyleSheet.create({
     // fontWeight: 'bold',
     justifyContent: 'center',
     textAlign: 'center',
+=======
+>>>>>>> main
   },
 });

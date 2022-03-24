@@ -48,7 +48,7 @@ function TrainingCategoriesScreen(props) {
         {trainingsList.map(training => (<TouchableOpacity key={training.title} style={styles.optionButton} onPress={() => getSingleTraining(props.year, currentCategory, camelize(training.title))}>
           <Text style={styles.option}> {training.title} </Text>
         </TouchableOpacity>))}
-      </View>) : <TrainingScreen />}
+      </View>) : <TrainingScreen trainingDetails={singleTraining} />}
     </View>
   )
 }

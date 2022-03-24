@@ -4,11 +4,8 @@ import { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
-
 import { db } from '../../firebase/firebase-config';
-
 import { getAuth } from 'firebase/auth';
-
 import QuizResult from './QuizResult';
 
 // house constants
