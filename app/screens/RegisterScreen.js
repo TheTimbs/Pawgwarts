@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Button, Image, View, Text } from 'react-native';
+import { StyleSheet, Button, Image, View, Text, Platform } from 'react-native';
 import * as Yup from 'yup';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { db, storage, auth } from '../../firebase/firebase-config';
@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import uuid from 'uuid';
+import DatePicker from 'react-native-date-picker';
 
 // const validationSchema = Yup.object().shape({
 //   name: Yup.string().required().label('Name'),
@@ -30,6 +31,7 @@ function RegisterScreen() {
   const [DOB, setDOB] = useState('');
   const [image, setImage] = useState(null);
   const [taskCompleted, setTaskCompleted] = useState(0);
+
   const navigation = useNavigation();
 
   const RegisterUser = async () => {
