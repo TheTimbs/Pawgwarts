@@ -13,8 +13,6 @@ function yearsScreen(props) {
   </View>)
 }
 
-
-
 const styles = StyleSheet.create({
   container: {
     paddingTop: 40,
