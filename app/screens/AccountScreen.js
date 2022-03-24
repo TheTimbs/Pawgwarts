@@ -21,12 +21,12 @@ const menuItems = [
     targetScreen: routes.MESSAGES,
   },
   {
-    title: 'My Messages',
+    title: 'My pictures',
     icon: {
-      name: 'email',
+      name: 'image-area',
       backgroundColor: colors.secondary,
     },
-    targetScreen: routes.MESSAGES,
+    targetScreen: "MyPictures",
   },
   {
     title: 'My Dogs',

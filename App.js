@@ -27,7 +27,6 @@ import AccessoriesStore from './app/screens/AccessoriesStoreScreen';
 import StoreScreen from './app/screens/StoreScreen';
 import StoreNavigator from './app/navigation/StoreNavigator';
 
-
 export default function App() {
   return (
     //<WelcomeScreen />
@@ -42,10 +41,7 @@ export default function App() {
     // <QuizScreen />
     //<SignOut />
     // <UserProfile />
-
     //<TrainingYearsScreen />
-
-
     // <NavigationContainer theme={navigationTheme}>
     //   <AuthNavigator />
     // </NavigationContainer>
@@ -53,9 +49,7 @@ export default function App() {
     // <ToyStore />
     // <AccessoriesStore />
     <NavigationContainer>
-      <AppNavigator />
+      <AuthNavigator />
     </NavigationContainer>
-
-
   );
 }
