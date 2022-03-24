@@ -26,7 +26,7 @@ import ToyStore from './app/screens/ToyStoreScreen';
 import AccessoriesStore from './app/screens/AccessoriesStoreScreen';
 import StoreScreen from './app/screens/StoreScreen';
 import StoreNavigator from './app/navigation/StoreNavigator';
-import TrainingCategoriesScreen from './app/screens/TrainingCategoriesScreen';
+import QuizResult from './app/screens/QuizResult';
 
 export default function App() {
   return (
@@ -40,17 +40,18 @@ export default function App() {
     //<FeedScreen />
     //<UploadImageScreen />
     // <QuizScreen />
+    // <QuizResult />
     //<SignOut />
     // <UserProfile />
-    <TrainingYearsScreen />
-    // <NavigationContainer theme={navigationTheme}>
-    //   <AuthNavigator />
-    // </NavigationContainer>
+    //<TrainingYearsScreen />
+    <NavigationContainer theme={navigationTheme}>
+      <AuthNavigator />
+    </NavigationContainer>
     // <TreatStore />
     // <ToyStore />
     // <AccessoriesStore />
-//     <NavigationContainer>
-//       <AuthNavigator />
-//     </NavigationContainer>
+    // <NavigationContainer>
+    //   <StoreNavigator />
+    // </NavigationContainer>
   );
 }
