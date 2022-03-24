@@ -40,8 +40,7 @@ function UserProfile() {
     };
     getPhotos();
   }, []);
-  // console.log('userPhoto', userPhoto);
-  // console.log('auth', auth.currentUser);
+
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
@@ -71,7 +70,7 @@ function UserProfile() {
             <Text style={styles.text1}>Current Likes: {user.likes}</Text>
             <Text style={styles.text1}>Task Completed: {user.dog[4]}</Text>
             <View>
-          <Text style={styles.header}>Photos:</Text>
+          {/* <Text style={styles.header}>Photos:</Text>
           {userPhoto.map((post) => (
             <View key={post.image}>
               <Image
@@ -79,7 +78,7 @@ function UserProfile() {
                 style={{ width: 200, height: 150, alignSelf: 'center' }}
               />
             </View>
-          ))}
+          ))} */}
         </View>
           </View>
 
