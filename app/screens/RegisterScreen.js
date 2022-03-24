@@ -13,7 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import uuid from 'uuid';
-import DatePicker from 'react-native-date-picker';
 
 // const validationSchema = Yup.object().shape({
 //   name: Yup.string().required().label('Name'),
