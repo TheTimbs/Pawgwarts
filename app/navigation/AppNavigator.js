@@ -4,9 +4,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import AccountNavigator from './AccountNavigator';
 import FeedNavigator from './FeedNavigator';
-import ListingEditScreen from '../screens/ListingEditScreen';
-import NewListingButton from './NewListingButton';
-import routes from './routes';
+import StoreNavigator from './StoreNavigator';
+import TrainingNavigator from './TrainingNavigator';
+// import ListingEditScreen from '../screens/ListingEditScreen';
+// import NewListingButton from './NewListingButton';
+// import routes from './routes';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +38,9 @@ const AppNavigator = () => (
     />
     <Tab.Screen
       name="Training"
-      component={FeedNavigator}
+
+      component={TrainingNavigator}
+
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="wizard-hat" color={color} size={size} />
@@ -64,7 +68,9 @@ const AppNavigator = () => (
     /> */}
     <Tab.Screen
       name="Store"
-      component={AccountNavigator}
+
+      component={StoreNavigator}
+
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="shopping" color={color} size={size} />
