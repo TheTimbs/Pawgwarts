@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 
 import { ListItem, ListItemSeparator } from '../components/lists';
@@ -6,7 +6,11 @@ import colors from '../config/colors';
 import Icon from '../components/Icon';
 import routes from '../navigation/routes';
 import Screen from '../components/Screen';
-
+import { SignOut } from './SignOut';
+import { db,  } from '../../firebase/firebase-config';
+import { getDoc, collection, doc } from 'firebase/firestore';
+import { getAuth } from '@firebase/auth';
+import {useNavigation} from '@react-navigation/native'
 const menuItems = [
   {
     title: 'My Trainings',
@@ -34,15 +38,34 @@ const menuItems = [
   },
 ];
 
-function AccountScreen({ navigation }) {
+function AccountScreen(props) {
+ const auth = getAuth();
+ const user = auth.currentUser;
+ const userRef = doc(db,"users", user.uid);
+ const [info, setInfo] = useState();
+ const [pic, setPic] = useState();
+ const navigation = useNavigation();
+
+  useEffect(()=>{
+    getUserInfo();
+  },[])
+  async function getUserInfo(){
+  const userDoc = await getDoc(userRef);
+  setInfo(userDoc.data());
+  setPic(userDoc.data().dog);
+ }
+
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
-        <ListItem
-          title="Christopher Cruz"
-          subTitle="pawgwarts@gmail.com"
-          image={require('../assets/ChrisPic.jpeg')}
-        />
+   {  pic ?  <ListItem
+          title={info.name}
+          subTitle={info.email}
+           image={{uri: pic[3]}}
+           onPress={()=>navigation.navigate('info')}
+        /> : <ListItem
+        title="loading..."
+      /> }
       </View>
       <View style={styles.container}>
         <FlatList
@@ -63,10 +86,8 @@ function AccountScreen({ navigation }) {
           )}
         />
       </View>
-      <ListItem
-        title="Log Out"
-        IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
-      />
+
+      <SignOut>SignOut</SignOut>
     </Screen>
   );
 }
