@@ -42,15 +42,15 @@ export default function App() {
     // <QuizScreen />
     //<SignOut />
     // <UserProfile />
-    //<TrainingYearsScreen />
+    <TrainingYearsScreen />
     // <NavigationContainer theme={navigationTheme}>
     //   <AuthNavigator />
     // </NavigationContainer>
     // <TreatStore />
     // <ToyStore />
     // <AccessoriesStore />
-    <NavigationContainer>
-      <AuthNavigator />
-    </NavigationContainer>
+//     <NavigationContainer>
+//       <AuthNavigator />
+//     </NavigationContainer>
   );
 }
