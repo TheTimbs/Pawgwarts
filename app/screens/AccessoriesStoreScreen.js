@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Button, Text, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Button,
+  Text,
+  Image,
+  ScrollView,
+} from 'react-native';
 import { collection, doc, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
 import * as Linking from 'expo-linking';
@@ -26,8 +33,13 @@ function AccessoriesStore() {
         (post) =>
           post.category === 'accessories' && post.subcategory === 'leash'
       );
+      const apparel = mappedData.filter(
+        (post) =>
+          post.category === 'accessories' && post.subcategory === 'apparel'
+      );
       setBeds(beds);
       setLeash(leash);
+      setApparel(apparel);
     };
     getItems();
   }, []);
@@ -38,42 +50,65 @@ function AccessoriesStore() {
   const handleLinkLeash = (i) => {
     Linking.openURL(leash[i].link);
   };
+  const handleLinkApparel = (i) => {
+    Linking.openURL(apparel[i].link);
+  };
 
   return (
     <Screen style={styles.screen}>
-      <View>
-        <Text style={styles.label}>Accessory Recommendations:</Text>
-        <Text style={styles.label}>Beds:</Text>
-        {beds.map((item, i) => (
-          <View key={i}>
-            <Text style={styles.header}>{item.name}</Text>
-            <Image
-              source={{ uri: item.image }}
-              style={{
-                width: 250,
-                height: 200,
-                alignSelf: 'center',
-              }}
-            />
-            <Button title="Link to Amazon" onPress={() => handleLinkBed(i)} />
-          </View>
-        ))}
-        <Text style={styles.label}>Leash:</Text>
-        {leash.map((item, i) => (
-          <View key={i}>
-            <Text style={styles.header}>{item.name}</Text>
-            <Image
-              source={{ uri: item.image }}
-              style={{
-                width: 250,
-                height: 200,
-                alignSelf: 'center',
-              }}
-            />
-            <Button title="Link to Amazon" onPress={() => handleLinkLeash(i)} />
-          </View>
-        ))}
-      </View>
+      <ScrollView>
+        <View>
+          <Text style={styles.label}>Accessory Recommendations:</Text>
+          <Text style={styles.label}>Beds:</Text>
+          {beds.map((item, i) => (
+            <View key={i}>
+              <Text style={styles.header} onPress={() => handleLinkBed(i)}>
+                {item.name}
+              </Text>
+              <Image
+                source={{ uri: item.image }}
+                style={{
+                  width: 250,
+                  height: 200,
+                  alignSelf: 'center',
+                }}
+              />
+            </View>
+          ))}
+          <Text style={styles.label}>Leash:</Text>
+          {leash.map((item, i) => (
+            <View key={i}>
+              <Text style={styles.header} onPress={() => handleLinkLeash(i)}>
+                {item.name}
+              </Text>
+              <Image
+                source={{ uri: item.image }}
+                style={{
+                  width: 250,
+                  height: 200,
+                  alignSelf: 'center',
+                }}
+              />
+            </View>
+          ))}
+          <Text style={styles.label}>Apparel:</Text>
+          {apparel.map((item, i) => (
+            <View key={i}>
+              <Text style={styles.header} onPress={() => handleLinkApparel(i)}>
+                {item.name}
+              </Text>
+              <Image
+                source={{ uri: item.image }}
+                style={{
+                  width: 250,
+                  height: 200,
+                  alignSelf: 'center',
+                }}
+              />
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </Screen>
   );
 }
@@ -87,17 +122,20 @@ const styles = StyleSheet.create({
     color: colors.blue,
     fontSize: 17,
     fontWeight: '800',
-    paddingVertical: 10,
+    paddingVertical: 2,
     paddingHorizontal: 15,
     alignSelf: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
   },
   label: {
     color: colors.purple,
     fontSize: 25,
     fontWeight: '800',
-    paddingVertical: 3,
+    paddingVertical: 10,
     alignSelf: 'center',
+    textAlign: 'center',
   },
 });
 
