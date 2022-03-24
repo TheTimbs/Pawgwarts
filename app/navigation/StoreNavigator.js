@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 
 const StoreNavigator = () => (
   <Stack.Navigator>
-    <Stack.Screen name="Store" component={StoreScreen} />
+    <Stack.Screen options={{ headerLeft: null }} name="Store" component={StoreScreen} />
     <Stack.Screen name="AccessoriesStore" component={AccessoriesStore} />
     <Stack.Screen name="ToyStore" component={ToyStore} />
     <Stack.Screen name="TreatStore" component={TreatStore} />
