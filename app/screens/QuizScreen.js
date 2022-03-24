@@ -99,18 +99,12 @@ const PersonalityQuiz = () => {
     console.log("your house is ", selectedHouse)
   }
 
-  const showHouse = () => {
-    return (
-      <QuizResult house={selectedHouse} />
-    )
-  }
-
   return (
     <View style={styles.container}>
       {selectedHouse !== "" ? <QuizResult house={selectedHouse} />
         // <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
         //   <Text style={{ fontSize: 32, fontWeight: '700' }}>LOADING...</Text>
-        // </View> 
+        // </View>
         : questions && (
           <View style={styles.parent}>
             <View style={styles.top}>
