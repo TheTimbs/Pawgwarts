@@ -5,15 +5,16 @@ import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import FeedCard from '../components/FeedCard';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
-
+import {useNavigation} from '@react-navigation/native'
 import { db } from '../../firebase/firebase-config';
 import { getDocs, collection, doc } from 'firebase/firestore';
 import AppButton from '../components/Button';
+import NewListingButton from '../navigation/NewListingButton';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
   const feedCollectionRef = collection(db, 'feed');
-
+  const navigation = useNavigation();
   useEffect(() => {
     const getFeed = async () => {
       const data = await getDocs(feedCollectionRef);
@@ -39,8 +40,12 @@ function FeedScreen() {
             email={item.email}
           />
         )}
+
       />
-      <AppButton title="Upload Image" />
+         {/* <NewListingButton
+            style={styles.upload}
+            onPress={() => navigation.navigate('ListingDetails')}
+          /> */}
     </Screen>
   );
 }
@@ -49,7 +54,10 @@ const styles = StyleSheet.create({
   screen: {
     padding: 20,
     backgroundColor: colors.lightGreen,
+    justifyContent:'center'
+
   },
+
 });
 
 export default FeedScreen;

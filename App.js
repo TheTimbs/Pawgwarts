@@ -53,7 +53,7 @@ export default function App() {
     // <ToyStore />
     // <AccessoriesStore />
     <NavigationContainer>
-      <StoreNavigator />
+      <AppNavigator />
     </NavigationContainer>
 
 
