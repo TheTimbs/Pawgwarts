@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{LogBox} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -11,7 +11,9 @@ import routes from './routes';
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
+
   <Tab.Navigator>
+
     <Tab.Screen
       name="Home"
       component={FeedNavigator}
