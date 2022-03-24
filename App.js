@@ -21,10 +21,10 @@ import AuthNavigator from './app/navigation/AuthNavigator';
 import FeedNavigator from './app/navigation/FeedNavigator';
 import { SignOut } from './app/screens/SignOut';
 import TrainingYearsScreen from './app/screens/TrainingYearsScreen';
-import TreatStore from './app/screens/TreatStoreScreen';
-import ToyStore from './app/screens/ToyStoreScreen';
-import AccessoriesStore from './app/screens/AccessoriesStoreScreen';
-import StoreScreen from './app/screens/StoreScreen';
+import TreatStore from './app/screens/storeScreens/TreatStoreScreen';
+import ToyStore from './app/screens/storeScreens/ToyStoreScreen';
+import AccessoriesStore from './app/screens/storeScreens/AccessoriesStoreScreen';
+import StoreScreen from './app/screens/storeScreens/StoreScreen';
 import StoreNavigator from './app/navigation/StoreNavigator';
 import TrainingCategoriesScreen from './app/screens/TrainingCategoriesScreen';
 
@@ -50,7 +50,7 @@ export default function App() {
     // <ToyStore />
     // <AccessoriesStore />
     <NavigationContainer>
-      <AuthNavigator />
+      <AppNavigator />
     </NavigationContainer>
   );
 }
