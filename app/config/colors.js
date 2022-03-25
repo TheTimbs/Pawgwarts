@@ -11,4 +11,8 @@ export default {
   purple: 'darkorchid',
   secondary: '#4ecdc4',
   white: '#fff',
+  houseRed: '#DF0000',
+  houseBlue: '#0356C9',
+  houseYellow: '#FFCA0A',
+  houseGreen: '#05764E',
 };
