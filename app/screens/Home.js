@@ -9,23 +9,20 @@ function Home(props){
   const hRef = doc(db,'houses ',"HufflePup");
   const rRef = doc(db,'houses ',"RavenPaw");
   const sRef = doc(db,'houses ',"Sloberin");
-  const [gPoints, setGPoints] = useState(0);
-  const [hPoints, setHPoints] = useState(0);
-  const [rPoints, setRPoints] = useState(0);
-  const [sPoints, setSPoints] = useState(0);
+  const [points, setPoints] = useState([]);
+
   useEffect(()=>{
-    const getPoints = async() =>{
-      const dataG = await getDoc(gRef)
-      const dataH = await getDoc(hRef)
-      const dataR = await getDoc(rRef)
-      const dataS = await getDoc(sRef)
-      setGPoints(dataG.data().points)
-      setHPoints(dataH.data().points)
-      setRPoints(dataR.data().points)
-      setSPoints(dataS.data().points)
-    }
     getPoints();
   },[])
+
+  const getPoints = async() =>{
+    const dataG = await getDoc(gRef)
+    const dataH = await getDoc(hRef)
+    const dataR = await getDoc(rRef)
+    const dataS = await getDoc(sRef)
+    setPoints([dataG.data().points, dataH.data().points, dataR.data().points, dataS.data().points])
+
+  }
 
   return (
 
@@ -41,19 +38,19 @@ function Home(props){
            <View style={styles.bottom}>
               <View style={styles.box}>
                 <ImageBackground  style= {styles.inner} source={require('../assets/hufflepup.png')}/>
-                <Text style={styles.text}>Points: {hPoints}</Text>
+                <Text style={styles.text}>Points: {points[0]}</Text>
               </View>
               <View style={styles.box}>
                 <ImageBackground  style= {styles.inner} source={require('../assets/ravenpaw.jpeg')}/>
-                <Text style={styles.text}>Points: {rPoints}</Text>
+                <Text style={styles.text}>Points: {points[1]}</Text>
               </View>
               <View style={styles.box}>
                 <ImageBackground  style= {styles.inner} source={require('../assets/slobberin.jpeg')}/>
-                <Text style={styles.text}>Points: {sPoints}</Text>
+                <Text style={styles.text}>Points: {points[2]}</Text>
               </View>
               <View style={styles.box}>
                 <ImageBackground  style= {styles.inner} source={require('../assets/gryffindog.jpeg')}/>
-                <Text style={styles.text}>Points: {gPoints}</Text>
+                <Text style={styles.text}>Points: {points[3]}</Text>
               </View>
             </View>
 
