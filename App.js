@@ -44,7 +44,6 @@ export default function App() {
     //<SignOut />
     // <UserProfile />
     //<TrainingYearsScreen />
-
     // <NavigationContainer theme={navigationTheme}>
     //   <AuthNavigator />
     // </NavigationContainer>
