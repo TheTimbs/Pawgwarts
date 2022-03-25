@@ -21,13 +21,14 @@ import AuthNavigator from './app/navigation/AuthNavigator';
 import FeedNavigator from './app/navigation/FeedNavigator';
 import { SignOut } from './app/screens/SignOut';
 import TrainingYearsScreen from './app/screens/TrainingYearsScreen';
-import TreatStore from './app/screens/TreatStoreScreen';
-import ToyStore from './app/screens/ToyStoreScreen';
-import AccessoriesStore from './app/screens/AccessoriesStoreScreen';
-import StoreScreen from './app/screens/StoreScreen';
+import TreatStore from './app/screens/storeScreens/TreatStoreScreen';
+import ToyStore from './app/screens/storeScreens/ToyStoreScreen';
+import AccessoriesStore from './app/screens/storeScreens/AccessoriesStoreScreen';
+import StoreScreen from './app/screens/storeScreens/StoreScreen';
 import StoreNavigator from './app/navigation/StoreNavigator';
 import TrainingCategoriesScreen from './app/screens/TrainingCategoriesScreen';
 import Home from './app/screens/Home';
+import QuizResult from './app/screens/QuizResult';
 export default function App() {
   return (
     //<WelcomeScreen />
@@ -40,18 +41,20 @@ export default function App() {
     //<FeedScreen />
     //<UploadImageScreen />
     // <QuizScreen />
+    // <QuizResult />
     //<SignOut />
     // <UserProfile />
     //<TrainingYearsScreen />
+
     // <NavigationContainer theme={navigationTheme}>
     //   <AuthNavigator />
     // </NavigationContainer>
     // <TreatStore />
     // <ToyStore />
     // <AccessoriesStore />
-    // <NavigationContainer>
-    //   <AuthNavigator />
-    // </NavigationContainer>
-    <Home></Home>
+//     <Home></Home>
+    <NavigationContainer>
+      <AppNavigator />
+    </NavigationContainer>
   );
 }
