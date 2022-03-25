@@ -29,7 +29,6 @@ function RegisterScreen() {
   const [breed, setBreed] = useState('');
   const [DOB, setDOB] = useState('');
   const [image, setImage] = useState(null);
-  const [taskCompleted, setTaskCompleted] = useState(0);
 
   const navigation = useNavigation();
 
@@ -41,7 +40,10 @@ function RegisterScreen() {
       likes: 0,
 
       house: house,
-      dog: [dogName, breed, DOB, image, taskCompleted],
+      // dog: [dogName, breed, DOB, image, taskCompleted],
+      dog: { dogName: dogName, breed: breed, dob: DOB, image: image },
+      completedTrainings: [],
+      trainingsInProgress: [],
     });
 
     setEmail('');
