@@ -24,7 +24,7 @@ function UserProfile() {
       }
     };
     getUserInfo();
-  }, [user]);
+  }, []);
   // console.log('user', user);
 
   const feedCollectionRef = collection(db, 'feed');
