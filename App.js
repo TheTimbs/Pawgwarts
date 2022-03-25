@@ -52,9 +52,9 @@ export default function App() {
     // <TreatStore />
     // <ToyStore />
     // <AccessoriesStore />
-//     <Home></Home>
+    //     <Home></Home>
     <NavigationContainer>
-      <AppNavigator />
+      <AuthNavigator />
     </NavigationContainer>
   );
 }
