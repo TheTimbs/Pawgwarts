@@ -45,15 +45,15 @@ export default function App() {
     //<SignOut />
     // <UserProfile />
     //<TrainingYearsScreen />
-    // <NavigationContainer theme={navigationTheme}>
-    //   <AuthNavigator />
-    // </NavigationContainer>
+    <NavigationContainer theme={navigationTheme}>
+      <AuthNavigator />
+    </NavigationContainer>
     // <TreatStore />
     // <ToyStore />
     // <AccessoriesStore />
     //     <Home></Home>
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <AppNavigator />
+    // </NavigationContainer>
   );
 }
