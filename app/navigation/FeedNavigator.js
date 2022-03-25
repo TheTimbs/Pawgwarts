@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 const FeedNavigator = () => (
   <Stack.Navigator
-    screenOptions={{ headerShown: false, presentation: 'modal' }}
+    screenOptions={{ headerLeft:null, presentation: 'modal' }}
   >
     <Stack.Screen name="MyFeed" component={FeedScreen} />
     <Stack.Screen name="ListingDetails" component={UploadImageScreen} />

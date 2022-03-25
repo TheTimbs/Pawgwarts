@@ -26,8 +26,9 @@ import ToyStore from './app/screens/storeScreens/ToyStoreScreen';
 import AccessoriesStore from './app/screens/storeScreens/AccessoriesStoreScreen';
 import StoreScreen from './app/screens/storeScreens/StoreScreen';
 import StoreNavigator from './app/navigation/StoreNavigator';
+import TrainingCategoriesScreen from './app/screens/TrainingCategoriesScreen';
+import Home from './app/screens/Home';
 import QuizResult from './app/screens/QuizResult';
-
 export default function App() {
   return (
     //<WelcomeScreen />
@@ -50,6 +51,7 @@ export default function App() {
     // <TreatStore />
     // <ToyStore />
     // <AccessoriesStore />
+//     <Home></Home>
     <NavigationContainer>
       <AppNavigator />
     </NavigationContainer>
