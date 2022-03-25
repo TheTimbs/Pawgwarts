@@ -6,6 +6,7 @@ import AccountNavigator from './AccountNavigator';
 import FeedNavigator from './FeedNavigator';
 import StoreNavigator from './StoreNavigator';
 import TrainingNavigator from './TrainingNavigator';
+import Home from '../screens/Home';
 // import ListingEditScreen from '../screens/ListingEditScreen';
 // import NewListingButton from './NewListingButton';
 // import routes from './routes';
@@ -18,7 +19,7 @@ const AppNavigator = () => (
 
     <Tab.Screen
       name="Home"
-      component={FeedNavigator}
+      component={Home}
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="home" color={color} size={size} />
