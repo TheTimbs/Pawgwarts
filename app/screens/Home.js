@@ -33,10 +33,10 @@ function Home(props){
       source={require('../assets/BlueBackground.jpeg')} >
        <View style={styles.container}>
          <View style={styles.top}>
-           <Text>Hello</Text>
+           <Text style={styles.textHeader}>Welcome Erick</Text>
          </View>
           <View style={styles.center}>
-            <Text style={styles.text}>Team Current points</Text>
+            <Text style={styles.textHeader}>Houses Current Points</Text>
           </View>
            <View style={styles.bottom}>
               <View style={styles.box}>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     flex:1
   },
   top:{
-    height:'45%',
+    height:'50%',
     alignItems:'center',
     justifyContent:'center',
 
@@ -77,11 +77,14 @@ const styles = StyleSheet.create({
     height: '45%',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    backgroundColor:'black',
 
   },
   center:{
     height:'5%',
-    left:'25%'
+    justifyContent:"center",
+    alignItems:'center',
+    backgroundColor:"black"
   },
   box:{
     width: '50%',
@@ -89,9 +92,9 @@ const styles = StyleSheet.create({
   },
   inner:{
     flex:1,
-    width:"90%",
-    height:"90%",
-    left:"5%"
+    width:"100%",
+    height:"100%",
+    left:"5%",
   },
   text:{
   fontSize:20,
@@ -101,10 +104,8 @@ const styles = StyleSheet.create({
    height:'100%'
   },
   textHeader:{
-    top:'55%',
-    fontSize:40,
+    fontSize:30,
     color:"red",
-    left:10
     }
 
 
