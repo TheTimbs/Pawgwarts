@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Image, Button } from 'react-native';
+import { StyleSheet, Image, Button, Alert } from 'react-native';
 import * as Yup from 'yup';
 import Screen from '../components/Screen';
 import { Form, FormField, SubmitButton } from '../components/forms';
@@ -28,6 +28,7 @@ function LoginScreen(props) {
       })
       .catch((err) => {
         console.log(err);
+        Alert.alert("wrong email or password try again");
       });
   };
 
