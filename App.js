@@ -43,16 +43,18 @@ export default function App() {
     // <QuizResult />
     //<SignOut />
     // <UserProfile />
-    //<TrainingYearsScreen />
+    // <TrainingYearsScreen />
 
-    // <NavigationContainer theme={navigationTheme}>
-    //   <AuthNavigator />
-    // </NavigationContainer>
+    <NavigationContainer theme={navigationTheme}>
+      <AuthNavigator />
+    </NavigationContainer>
     // <TreatStore />
     // <ToyStore />
     // <AccessoriesStore />
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <AppNavigator />
+    // </NavigationContainer>
+
+    // <StoreScreen />
   );
 }

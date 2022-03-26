@@ -1,18 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase/firebase-config';
-import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Picker, Button } from 'react-native';
+import { getDocs, collection, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 function TrainingScreen(props) {
-  const [selectedValue, setSelectedValue] = useState("Start Training");
   const { trainingDetails } = props;
-  console.log("steps.length", trainingDetails.steps.length)
-  console.log("+++ props passed into SingleTraining Screen +++", props)
+  console.log("+++ props passed into SingleTraining Screen +++", props);
+  const [trainingCompleted, setTrainingCompleted] = useState(false);
+  const [trainingInProgress, setTrainingInProgress] = useState(false);
+  const [startTraining, setStartTraining] = useState(false);
+
+  // Dummy Training Data:
   const loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
   const steps = ["Lorem ipsum dolor sit amet", "consectetur adipiscing elit", "sed do eiusmod tempor incididunt"]
   const tips = ["Don't give up", "You got this!"]
   const tools = ["Lorem", "ipsum", "dolor"]
+
+  const getUserDetails = async () => {
+    console.log("+++ getUserDetails just ran +++")
+    const auth = getAuth();
+    const userId = auth.currentUser.uid;
+    const docRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(docRef);
+    const userDetails = userDoc.data()
+
+    const usersCompletedTrainings = userDetails.completedTrainings;
+    const usersTrainingsInProgress = userDetails.trainingsInProgress;
+
+    if (usersCompletedTrainings.includes(trainingDetails.title)) {
+      console.log("!!! This Training Exists in the users' completed Training array !!!");
+      setTrainingCompleted(true);
+    } else if ((usersTrainingsInProgress.includes(trainingDetails.title))) {
+      console.log("!!! this training doesn't exist in the users' trainingInProgress array !!!");
+      setTrainingInProgress(true)
+    } else {
+      setStartTraining(true)
+    }
+  }
+
+  useEffect(() => { getUserDetails() }, []);
+
+  // runs when clicked Start Training Button
+  const handleStartTraining = async () => {
+    setStartTraining(false)
+    setTrainingInProgress(true);
+
+    const auth = getAuth();
+    const userId = auth.currentUser.uid;
+    const docRef = doc(db, 'users', userId);
+    await updateDoc(docRef, { trainingsInProgress: arrayUnion(trainingDetails.title) });
+  };
+
+  // runs when clicked Mark Completed Button
+  const handleMarkCompleted = async () => {
+    setStartTraining(false);
+    setTrainingCompleted(true);
+
+    const auth = getAuth();
+    const userId = auth.currentUser.uid;
+    const docRef = doc(db, 'users', userId);
+    await updateDoc(docRef, { completedTrainings: arrayUnion(trainingDetails.title) });
+    await updateDoc(docRef, { trainingsInProgress: arrayRemove(trainingDetails.title) });
+  }
+
+
   return (
     <SafeAreaView style={styles.container}>
 
@@ -21,25 +74,15 @@ function TrainingScreen(props) {
         <Text> Dificulty: {trainingDetails.difficulty}/5 </Text>
       </View>
 
-      <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
-      </View>
-
-      <View style={styles.trainingDescriptionContainer}>
-        {trainingDetails.description ? <Text style={styles.bodyText}>{trainingDetails.description}</Text> : <Text style={styles.bodyText}>{loremIpsum}</Text>}
-      </View>
-
-      <Picker
-        style={styles.dropDown}
-        selectedValue={selectedValue}
-        onValueChange={(itemValue, itemIndex) =>
-          setSelectedValue(itemValue)
-        }>
-        <Picker.Item label="Start This Training" value="trainingStarted" />
-        <Picker.Item label="Mark Completed" value="trainingCompleted" />
-      </Picker>
-
       <ScrollView>
+        <View style={styles.logoContainer}>
+          <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
+        </View>
+
+        <View style={styles.trainingDescriptionContainer}>
+          {trainingDetails.description ? <Text style={styles.bodyText}>{trainingDetails.description}</Text> : <Text style={styles.bodyText}>{loremIpsum}</Text>}
+        </View>
+
         <Text style={styles.stepsTitle}>Steps</Text>
         {trainingDetails.steps[0] !== "" ? trainingDetails.steps.map(step => (<Text key={steps.indexOf(step)} style={bodyText}>Step {steps.indexOf(step) + 1}: {step}</Text>)) : steps.map(step => (<Text key={steps.indexOf(step)} style={styles.bodyText}>Step {steps.indexOf(step) + 1}: {step}</Text>))}
 
@@ -50,10 +93,8 @@ function TrainingScreen(props) {
         {trainingDetails.tools[0] !== "" ? trainingDetails.tools.map(tool => (<Text key={tools.indexOf(tool)} style={bodyText}>* {tool}</Text>)) : tools.map(tool => (<Text key={tools.indexOf(tool)} style={styles.bodyText}>* {tool}</Text>))}
 
       </ScrollView>
-      {/* {if we don't want to use the picker} */}
-      <View style={styles.buttons}>
-        <Button title='Start Training' />
-        <Button title='Mark Completed' />
+      <View style={styles.bottom}>
+        {startTraining ? <Button title='StartTraining' onPress={() => handleStartTraining()} /> : trainingCompleted ? <Text> You already completed this training </Text> : <Button title='In Progress: Mark Completed' onPress={handleMarkCompleted} />}
       </View>
     </SafeAreaView>
   )
@@ -93,10 +134,9 @@ const styles = StyleSheet.create({
   bodyText: {
     fontSize: 18,
   },
-  buttons: {
-    marginLeft: 0,
-    flexDirection: "row",
-    justifyContent: "space-between"
+  bottom: {
+    flexDirection: "column",
+    alignItems: 'center'
   },
 });
 
