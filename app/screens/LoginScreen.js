@@ -47,6 +47,8 @@ function LoginScreen(props) {
         name="email"
         placeholder="Email"
         textContentType="emailAddress"
+        inlineImageLeft="email"
+        inlineImagePadding={20}
         onChangeText={(text) => setEmail(text)}
       />
       <TextInput
@@ -84,7 +86,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     backgroundColor:"white",
     borderRadius:10,
-    margin:10
+    margin:10,
+    borderWidth:1,
+    borderColor:"#CBBEB3"
   },
   buttonsContainer: {
     padding: 20,

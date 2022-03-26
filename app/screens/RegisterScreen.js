@@ -174,10 +174,15 @@ function RegisterScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    backgroundColor: "#587b7f"
   },
   TextInput: {
     height: 50,
     fontSize: 20,
+    borderWidth:1,
+    borderColor:"#CBBEB3",
+    backgroundColor:'white',
+    borderRadius:10,
   },
   buttonsContainer: {
     padding: 20,
