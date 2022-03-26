@@ -5,16 +5,26 @@ import { getDoc, collection, doc, } from 'firebase/firestore';
 import { useEffect, useState } from 'react/cjs/react.development';
 
 function Home(props){
+  const userId = auth.currentUser.uid;
+  const currentUser = doc(db,'users', userId);
   const gRef = doc(db,'houses ',"GryffinDog");
   const hRef = doc(db,'houses ',"HufflePup");
   const rRef = doc(db,'houses ',"RavenPaw");
   const sRef = doc(db,'houses ',"Sloberin");
   const [points, setPoints] = useState([]);
+  const [user, setUser] = useState({});
 
   useEffect(()=>{
     getPoints();
+    getUser();
   },[])
 
+   const getUser= async()=>{
+     const userData = await getDoc(currentUser);
+     console.log(userData.data());
+     setUser(userData.data());
+
+   }
   const getPoints = async() =>{
     const dataG = await getDoc(gRef)
     const dataH = await getDoc(hRef)
@@ -23,22 +33,27 @@ function Home(props){
     setPoints([dataG.data().points, dataH.data().points, dataR.data().points, dataS.data().points])
 
   }
-
+ if(!user.dog){
+   return (
+     <Text>loading..</Text>
+   )
+ }else {
   return (
 
        <View style={styles.container}>
          <View style={styles.top}>
 
-             <Text style={styles.textHeader2}>Welcome Erick</Text>
+            <Text style={styles.textHeader2}>Welcome {user.name} and {user.dog.dogName}</Text>
 
            <View style={styles.box2}>
-                <Text style={styles.text2}>Currently in progress</Text>
-              </View>
+                <Text style={styles.text2}>No trainings in progress</Text>
+           </View>
          </View>
 
           <View style={styles.center}>
             <Text style={styles.textHeader}>Houses Current Points</Text>
           </View>
+
            <View style={styles.bottom}>
               <View style={styles.box}>
                 <ImageBackground  style= {styles.inner} source={require('../assets/hufflepup.png')}/>
@@ -62,6 +77,7 @@ function Home(props){
 
 
   );
+ }
 
 }
 const styles = StyleSheet.create({

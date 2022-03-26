@@ -54,7 +54,7 @@ export default function App() {
     // <AccessoriesStore />
     //     <Home></Home>
     <NavigationContainer>
-      <AppNavigator />
+      <AuthNavigator />
     </NavigationContainer>
   );
 }
