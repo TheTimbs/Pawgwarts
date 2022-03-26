@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Image, Button } from 'react-native';
+import { StyleSheet, Image, Alert, View } from 'react-native';
 import * as Yup from 'yup';
+import Button from '../components/Button';
 import Screen from '../components/Screen';
 import { Form, FormField, SubmitButton } from '../components/forms';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
@@ -28,6 +29,7 @@ function LoginScreen(props) {
       })
       .catch((err) => {
         console.log(err);
+        Alert.alert(err.message);
       });
   };
 
@@ -57,7 +59,9 @@ function LoginScreen(props) {
         textContentType="password"
         onChangeText={(text) => setPassword(text)}
       />
-      <Button title="Sign In" onPress={() => SignUser()} />
+       <View style={styles.buttonsContainer}>
+        <Button title="Sign In" onPress={() => SignUser()} color="blue" />
+      </View>
     </Screen>
   );
 }
@@ -76,6 +80,10 @@ const styles = StyleSheet.create({
   TextInput: {
     height: 50,
     fontSize: 20,
+  },
+  buttonsContainer: {
+    padding: 20,
+    width: '100%',
   },
 });
 
