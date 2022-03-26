@@ -90,7 +90,10 @@ function RegisterScreen() {
     setImage(downloadURL);
     return downloadURL;
   }
-
+  let boo = true;
+  if(email.length > 0 && password.length  >= 6 && name.length > 0 && dogName.length > 0 && breed.length > 0 && DOB.length > 0){
+    boo = false;
+  }
   return (
     <Screen style={styles.container}>
       <TextInput
@@ -163,7 +166,7 @@ function RegisterScreen() {
         />
       ) : null}
       <Button title="Confirm Profile Picture" onPress={uploadImage} />
-      <Button title="Register" onPress={() => RegisterUser()} />
+      <Button title="Register" onPress={() => RegisterUser()} disabled={boo} />
     </Screen>
   );
 }

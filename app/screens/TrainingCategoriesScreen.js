@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase/firebase-config';
 import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {useNavigation} from '@react-navigation/native'
 import TrainingScreen from './SingleTrainingScreen';
+import navigationTheme from '../navigation/navigationTheme';
+
 
 function TrainingCategoriesScreen(props) {
   console.log("+++ props passed into TrainingCategoriesScreen +++", props)
   const [trainingsList, setTrainingsList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState("")
   const [singleTraining, setSingleTraining] = useState({})
+  const navigation = useNavigation();
 
   // Turns title into camelCase
   function camelize(str) {
@@ -40,6 +43,7 @@ function TrainingCategoriesScreen(props) {
 
   return (
     <View style={styles.container}>
+      <Button onPress={()=> navigation.pop()} title="back"/>
       {trainingsList.length === 0 ? <View style={styles.options}>
         {props.categories.map(category => (<TouchableOpacity key={category.title} style={styles.optionButton} onPress={() => getTrainingsList(props.year, camelize(category.title))}>
           <Text style={styles.option}> {category.title} </Text>
@@ -56,7 +60,7 @@ function TrainingCategoriesScreen(props) {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 40,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     height: '100%',
   },
   top: {
