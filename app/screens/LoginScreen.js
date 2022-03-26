@@ -35,6 +35,7 @@ function LoginScreen(props) {
 
   return (
     <Screen style={styles.container}>
+
       <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
 
       <TextInput
@@ -69,6 +70,7 @@ function LoginScreen(props) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    backgroundColor: "#587b7f"
   },
   logo: {
     width: 75,
@@ -80,6 +82,9 @@ const styles = StyleSheet.create({
   TextInput: {
     height: 50,
     fontSize: 20,
+    backgroundColor:"white",
+    borderRadius:10,
+    margin:10
   },
   buttonsContainer: {
     padding: 20,
