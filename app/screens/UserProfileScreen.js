@@ -52,7 +52,7 @@ function UserProfile() {
             <Text style={styles.text1}>Email: {user.email}</Text>
 
             <Image
-              source={{ uri: user.dog[3] }}
+              source={{ uri: user.dog.image }}
               style={{
                 width: 200,
                 height: 200,

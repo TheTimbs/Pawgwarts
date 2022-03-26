@@ -29,6 +29,7 @@ function RegisterScreen() {
   const [breed, setBreed] = useState('');
   const [DOB, setDOB] = useState('');
   const [image, setImage] = useState(null);
+  const [confirmed, setCon] = useState(false);
 
   const navigation = useNavigation();
 
@@ -88,6 +89,8 @@ function RegisterScreen() {
     blob.close();
     const downloadURL = await getDownloadURL(fileRef);
     setImage(downloadURL);
+    setCon(true)
+
     return downloadURL;
   }
   let boo = true;
@@ -96,6 +99,7 @@ function RegisterScreen() {
   }
   return (
     <Screen style={styles.container}>
+      {name.length <= 0 ? <Text style={styles.TextError}>Name Required</Text> : <Text style={styles.Text}>Name:</Text>}
       <TextInput
         style={styles.TextInput}
         autoCorrect={false}
@@ -104,6 +108,7 @@ function RegisterScreen() {
         placeholder="Name"
         onChangeText={(text) => setName(text)}
       />
+       {email.length <= 0 ? <Text style={styles.TextError}>Email Required</Text> : <Text style={styles.Text}>Email:</Text>}
       <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
@@ -115,17 +120,19 @@ function RegisterScreen() {
         textContentType="emailAddress"
         onChangeText={(text) => setEmail(text)}
       />
+      {password.length <= 5 ? <Text style={styles.TextError}>Password Required </Text > : <Text style={styles.Text}>Password: </Text>}
       <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
         autoCorrect={false}
         icon="lock"
         name="password"
-        placeholder="Password"
+        placeholder="Password longer than 6 characters"
         secureTextEntry
         textContentType="password"
         onChangeText={(text) => setPassword(text)}
       />
+      {dogName.length <= 0 ? <Text style={styles.TextError}>Dog name Required </Text> : <Text style={styles.Text}>Dog name: </Text>}
       <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
@@ -135,6 +142,7 @@ function RegisterScreen() {
         placeholder="Dog Name"
         onChangeText={(text) => setDogName(text)}
       />
+       {breed.length <= 0 ? <Text style={styles.TextError}>Breed Required </Text> : <Text style={styles.Text}>Breed: </Text>}
       <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
@@ -144,6 +152,7 @@ function RegisterScreen() {
         placeholder="Dog Breed"
         onChangeText={(text) => setBreed(text)}
       />
+       {DOB.length <= 0 ? <Text style={styles.TextError}>Date of birth Required </Text> : <Text style={styles.Text}>Date of birth: </Text>}
       <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
@@ -165,7 +174,7 @@ function RegisterScreen() {
           }}
         />
       ) : null}
-      <Button title="Confirm Profile Picture" onPress={uploadImage} />
+      {!confirmed ? <Button title="Confirm Profile Picture" onPress={uploadImage} /> : <Text style={styles.Con}>Confirmed</Text>}
       <Button title="Register" onPress={() => RegisterUser()} disabled={boo} />
     </Screen>
   );
@@ -179,6 +188,19 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: 20,
   },
+  TextError:{
+    color:'red',
+    fontSize:20
+  },
+  Text:{
+    fontSize:20
+  },
+  Con:{
+    textAlign:'center',
+    justifyContent:'center',
+    alignItems:'center',
+    fontSize:30
+  }
 });
 
 export default RegisterScreen;
