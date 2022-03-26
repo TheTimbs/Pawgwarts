@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 const TrainingNavigator = () => (
   <Stack.Navigator
-    screenOptions={{ headerShown: false, presentation: 'modal' }}
+    screenOptions={{ headerLeft: null, presentation: 'modal' }}
   >
     <Stack.Screen name="Trainings" component={TrainingYearsScreen} />
   </Stack.Navigator>

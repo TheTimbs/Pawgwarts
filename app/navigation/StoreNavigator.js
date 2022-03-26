@@ -14,11 +14,16 @@ const Stack = createStackNavigator();
 const StoreNavigator = () => (
   <Stack.Navigator
     screenOptions={{
-      headerStyle: { backgroundColor: colors.purple },
+      headerStyle: { backgroundColor: colors.houseRed },
       headerTintColor: 'white',
+      headerTitleStyle: { fontSize: 25, fontFamily: 'Futura' },
     }}
   >
-    <Stack.Screen name="Store" component={StoreScreen} />
+    <Stack.Screen
+      options={{ headerLeft: null }}
+      name="Store"
+      component={StoreScreen}
+    />
     <Stack.Screen name="AccessoriesStore" component={AccessoriesStore} />
     <Stack.Screen name="ToyStore" component={ToyStore} />
     <Stack.Screen name="TreatStore" component={TreatStore} />
