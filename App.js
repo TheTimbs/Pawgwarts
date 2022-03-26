@@ -38,7 +38,7 @@ export default function App() {
     // <ListingsScreen />
     //<MessagesScreen />
     //<ViewImageScreen />
-    //<FeedScreen />
+   // <FeedScreen />
     //<UploadImageScreen />
     // <QuizScreen />
     // <QuizResult />
@@ -54,7 +54,7 @@ export default function App() {
     // <AccessoriesStore />
     //     <Home></Home>
     <NavigationContainer>
-      <AuthNavigator />
+      <AppNavigator />
     </NavigationContainer>
   );
 }

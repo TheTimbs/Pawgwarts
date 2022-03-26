@@ -26,12 +26,16 @@ function Home(props){
 
   return (
 
-       <ImageBackground blurRadius={1}  style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')} >
        <View style={styles.container}>
          <View style={styles.top}>
-           <Text style={styles.textHeader}>Welcome Erick</Text>
+
+             <Text style={styles.textHeader2}>Welcome Erick</Text>
+
+           <View style={styles.box2}>
+                <Text style={styles.text2}>Currently in progress</Text>
+              </View>
          </View>
+
           <View style={styles.center}>
             <Text style={styles.textHeader}>Houses Current Points</Text>
           </View>
@@ -55,14 +59,15 @@ function Home(props){
             </View>
 
        </View>
-     </ImageBackground>
+
 
   );
 
 }
 const styles = StyleSheet.create({
   container:{
-    flex:1
+    flex:1,
+    backgroundColor:'#587B7F'
   },
   top:{
     height:'50%',
@@ -74,14 +79,15 @@ const styles = StyleSheet.create({
     height: '45%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor:'black',
+    backgroundColor:'#0D1321',
 
   },
   center:{
     height:'5%',
     justifyContent:"center",
     alignItems:'center',
-    backgroundColor:"black"
+    backgroundColor:"#0D1321",
+
   },
   box:{
     width: '50%',
@@ -95,15 +101,35 @@ const styles = StyleSheet.create({
   },
   text:{
   fontSize:20,
-  color:"white"
+  color:"white",
+  textAlign:'center'
   },
   background: {
    height:'100%'
   },
   textHeader:{
     fontSize:30,
-    color:"red",
-    }
+    color:"white",
+    },
+  textHeader2:{
+    fontSize:30,
+    color:"black",
+    bottom:"10%",
+    textDecorationLine:'underline',
+    backgroundColor:'#54F2F2',
+    borderRadius:20
+    },
+    box2:{
+      width: '85%',
+      height: '25%',
+      backgroundColor:'#54F2F2',
+      borderRadius:20
+    },
+    text2:{
+      fontSize:20,
+      color:"black",
+      textAlign:'center'
+      },
 
 
 });
