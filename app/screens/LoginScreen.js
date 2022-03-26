@@ -28,7 +28,7 @@ function LoginScreen(props) {
       })
       .catch((err) => {
         console.log(err);
-        Alert.alert("wrong email or password try again");
+        Alert.alert(err.message);
       });
   };
 
