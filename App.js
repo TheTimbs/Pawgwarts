@@ -38,7 +38,7 @@ export default function App() {
     // <ListingsScreen />
     //<MessagesScreen />
     //<ViewImageScreen />
-    //<FeedScreen />
+   // <FeedScreen />
     //<UploadImageScreen />
     // <QuizScreen />
     // <QuizResult />

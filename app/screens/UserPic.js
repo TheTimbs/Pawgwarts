@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, StyleSheet, View, Text, Image, Button } from 'react-native';
+import { FlatList, StyleSheet, View, Text, Image, Button, TextComponent } from 'react-native';
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import FeedCard from '../components/FeedCard';
 import colors from '../config/colors';
@@ -29,9 +29,10 @@ function UserPic() {
     };
     getPhotos();
   }, []);
-  let i =0;
+
   return (
     <Screen style={styles.screen}>
+     {userPhoto.length === 0 ? <Text style = {styles.text}> You have yet to upload and picture to the feed </Text> :
       <FlatList
         data={userPhoto}
         keyExtractor={(i) => i++}
@@ -45,6 +46,7 @@ function UserPic() {
         )}
 
       />
+        }
     </Screen>
   );
 }
@@ -56,6 +58,9 @@ const styles = StyleSheet.create({
     justifyContent:'center'
 
   },
+  text:{
+    fontSize:40
+  }
 
 });
 
