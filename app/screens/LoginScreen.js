@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Image, Button, Alert } from 'react-native';
+
+import { StyleSheet, Image, Alert, View } from 'react-native';
+
 import * as Yup from 'yup';
+import Button from '../components/Button';
 import Screen from '../components/Screen';
 import { Form, FormField, SubmitButton } from '../components/forms';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
@@ -34,6 +37,7 @@ function LoginScreen(props) {
 
   return (
     <Screen style={styles.container}>
+
       <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
 
       <TextInput
@@ -45,6 +49,8 @@ function LoginScreen(props) {
         name="email"
         placeholder="Email"
         textContentType="emailAddress"
+        inlineImageLeft="email"
+        inlineImagePadding={20}
         onChangeText={(text) => setEmail(text)}
       />
       <TextInput
@@ -58,7 +64,9 @@ function LoginScreen(props) {
         textContentType="password"
         onChangeText={(text) => setPassword(text)}
       />
-      <Button title="Sign In" onPress={() => SignUser()} />
+       <View style={styles.buttonsContainer}>
+        <Button title="Sign In" onPress={() => SignUser()} color="blue" />
+      </View>
     </Screen>
   );
 }
@@ -66,6 +74,7 @@ function LoginScreen(props) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    backgroundColor: "#587b7f"
   },
   logo: {
     width: 75,
@@ -77,6 +86,15 @@ const styles = StyleSheet.create({
   TextInput: {
     height: 50,
     fontSize: 20,
+    backgroundColor:"white",
+    borderRadius:10,
+    margin:10,
+    borderWidth:1,
+    borderColor:"#CBBEB3"
+  },
+  buttonsContainer: {
+    padding: 20,
+    width: '100%',
   },
 });
 

@@ -21,7 +21,6 @@ function Home(props){
 
    const getUser= async()=>{
      const userData = await getDoc(currentUser);
-     console.log(userData.data());
      setUser(userData.data());
 
    }
