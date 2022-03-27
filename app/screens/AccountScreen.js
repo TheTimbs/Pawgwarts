@@ -63,7 +63,7 @@ function AccountScreen(props) {
    {  (pic && info) ?  (<ListItem
           title={info.name}
           subTitle={info.email}
-           image={{uri:pic[3]}}
+           image={{uri:pic.image}}
            onPress={()=>navigation.navigate('info')}
         /> ): (info && !pic) ?(
         <ListItem
