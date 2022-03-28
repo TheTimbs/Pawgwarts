@@ -135,18 +135,21 @@ function RegisterScreen() {
          <FormField
           autoCapitalize="none"
           autoCorrect={false}
+          icon="dog"
           name="dogName"
           placeholder="Dog Name"
         />
        <FormField
           autoCapitalize="none"
           autoCorrect={false}
+          icon="dog-side"
           name="breed"
           placeholder="Dog breed"
         />
         <FormField
           autoCapitalize="none"
           autoCorrect={false}
+          icon="cake"
           name="DOB"
           placeholder="Date of birth ex:00/00/0000"
         />
