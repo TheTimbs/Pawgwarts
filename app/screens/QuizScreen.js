@@ -117,7 +117,7 @@ const PersonalityQuiz = () => {
 
   const handlSelectedOption = (option) => {
     const selectedHouse = option.house;
-    console.log('house associated with selected answer: ', selectedHouse);
+    // console.log('house associated with selected answer: ', selectedHouse);
 
     let value = ++house[`${selectedHouse}`];
     // console.log(value);
