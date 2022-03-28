@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Image, View, Text, Platform, ScrollView } from 'react-native';
+import { StyleSheet, Image, View, Text, Platform,ScrollView } from 'react-native';
 import * as Yup from 'yup';
 import Button from '../components/Button';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
@@ -15,11 +15,11 @@ import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import uuid from 'uuid';
 
-// const validationSchema = Yup.object().shape({
-//   name: Yup.string().required().label('Name'),
-//   email: Yup.string().required().email().label('Email'),
-//   password: Yup.string().required().min(4).label('Password'),
-// });
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required().label('Name'),
+  email: Yup.string().required().email().label('Email'),
+  password: Yup.string().required().min(4).label('Password'),
+});
 
 function RegisterScreen() {
   const [email, setEmail] = useState('');
@@ -31,11 +31,12 @@ function RegisterScreen() {
   const [DOB, setDOB] = useState('');
   const [image, setImage] = useState(null);
   const [confirmed, setCon] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
 
   const RegisterUser = async () => {
+
     const user = await createUserWithEmailAndPassword(auth, email, password);
     const docRef = await setDoc(doc(db, 'users', `${user.user.uid}`), {
       name: name,
@@ -60,7 +61,6 @@ function RegisterScreen() {
   };
 
   const pickImage = async () => {
-    setCon(false);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -71,9 +71,16 @@ function RegisterScreen() {
     if (!result.cancelled) {
       setImage(result.uri);
     }
+    setCon(false);
+    setLoading(false);
   };
+   function close(){
 
+    setLoading(true);
+    console.log("done");
+    uploadImage()
   async function uploadImage() {
+    console.log("done");
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
@@ -92,11 +99,12 @@ function RegisterScreen() {
     blob.close();
     const downloadURL = await getDownloadURL(fileRef);
     setImage(downloadURL);
-    setCon(true)
 
-
+    setCon(true);
+     console.log("done");
     return downloadURL;
   }
+}
   let boo = true;
   if(email.length > 0 && password.length  >= 6 && name.length > 0 && dogName.length > 0 && breed.length > 0 && DOB.length > 0){
     boo = false;
@@ -181,9 +189,11 @@ function RegisterScreen() {
             }}
           />
         ) : null}
-         {!confirmed ? <Button title="Confirm Profile Picture" onPress={uploadImage} color="blue" /> : <Text style={styles.Con}>Confirmed</Text>}
+         {!confirmed && !loading  ? <Button title="Confirm Profile Picture" onPress={() => close()} color="blue" />
+         : loading && !confirmed  ? <Text style={styles.Con}>loading...</Text>
+         : <Text style={styles.Con}>confirmed</Text> }
 
-        {boo ? console.log(""): <Button title="Register" onPress={() => RegisterUser()} color="blue" disabled={boo}/>}
+        <Button title="Register" onPress={() => RegisterUser()} color="blue" />
       </View>
       </ScrollView>
     </Screen>
