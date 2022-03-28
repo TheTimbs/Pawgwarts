@@ -94,7 +94,6 @@ function UserProfile() {
               Task Completed: {user.completedTrainings.length}
             </Text>
             <View>
-
               {/* <Text style={styles.header}>Photos:</Text>
           {userPhoto.map((post) => (
             <View key={post.image}>
@@ -105,10 +104,6 @@ function UserProfile() {
             </View>
           ))} */}
             </View>
-
-
-        </View>
-
           </View>
         ) : (
           <Text style={styles.header}>loading...</Text>
