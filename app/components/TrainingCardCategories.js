@@ -9,16 +9,15 @@ import {
 } from 'react-native';
 import { useFonts } from 'expo-font';
 
-import AppText from '../components/Text';
+import AppText from './Text';
 import colors from '../config/colors';
 
-function TrainingCard({
+function TrainingCardCategories({
   navigation,
   navTarget,
   imgSource,
   title,
   styling,
-  backgroundColor,
   dbYear,
 }) {
   let [fontsLoaded] = useFonts({
@@ -28,6 +27,7 @@ function TrainingCard({
   if (!fontsLoaded) {
     return null;
   }
+  //const trainingImage = require(imgSource);
 
   return (
     <>
@@ -35,14 +35,11 @@ function TrainingCard({
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate(navTarget, dbYear)}
         >
-          <ImageBackground source={imgSource} style={styles.image} />
+          <ImageBackground source={{ uri: imgSource }} style={styles.image}>
+            <AppText style={styles.firstYeartext}>{title}</AppText>
+          </ImageBackground>
         </TouchableWithoutFeedback>
       </View>
-      <TouchableWithoutFeedback
-        onPress={() => navigation.navigate(navTarget, dbYear)}
-      >
-        <AppText style={styling}>{title}</AppText>
-      </TouchableWithoutFeedback>
     </>
   );
 }
@@ -59,6 +56,12 @@ const styles = StyleSheet.create({
   overlay: {
     backgroundColor: colors.dark,
   },
+  firstYeartext: {
+    color: colors.houseBlue,
+    fontWeight: 'bold',
+    fontSize: 60,
+    fontFamily: 'Harry-Potter',
+  },
 });
 
-export default TrainingCard;
+export default TrainingCardCategories;
