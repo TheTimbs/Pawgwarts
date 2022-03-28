@@ -61,6 +61,8 @@ function RegisterScreen() {
   };
 
   const pickImage = async () => {
+    setCon(false);
+    setLoading(false);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -71,39 +73,35 @@ function RegisterScreen() {
     if (!result.cancelled) {
       setImage(result.uri);
     }
-    setCon(false);
-    setLoading(false);
+
   };
    function close(){
-
     setLoading(true);
-    console.log("done");
     uploadImage()
-  async function uploadImage() {
-    console.log("done");
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        console.log(e);
-        reject(new TypeError('Network request failed'));
-      };
-      xhr.responseType = 'blob';
-      xhr.open('GET', image, true);
-      xhr.send(null);
-    });
-    const fileRef = ref(getStorage(), uuid.v4());
-    const result = await uploadBytes(fileRef, blob);
-    blob.close();
-    const downloadURL = await getDownloadURL(fileRef);
-    setImage(downloadURL);
+    async function uploadImage() {
+      console.log("done");
+      const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+          console.log(e);
+          reject(new TypeError('Network request failed'));
+        };
+        xhr.responseType = 'blob';
+        xhr.open('GET', image, true);
+        xhr.send(null);
+      });
+      const fileRef = ref(getStorage(), uuid.v4());
+      const result = await uploadBytes(fileRef, blob);
+      blob.close();
+      const downloadURL = await getDownloadURL(fileRef);
+      setImage(downloadURL);
 
-    setCon(true);
-     console.log("done");
-    return downloadURL;
-  }
+      setCon(true);
+      return downloadURL;
+    }
 }
   let boo = true;
   if(email.length > 0 && password.length  >= 6 && name.length > 0 && dogName.length > 0 && breed.length > 0 && DOB.length > 0){
