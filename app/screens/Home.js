@@ -3,6 +3,8 @@ import React from 'react';
 import { db, auth } from '../../firebase/firebase-config';
 import { getDoc, collection, doc, } from 'firebase/firestore';
 import { useEffect, useState } from 'react/cjs/react.development';
+import { useNavigation } from '@react-navigation/native';
+
 
 function Home(props) {
   const userId = auth.currentUser.uid;
@@ -13,11 +15,18 @@ function Home(props) {
   const sRef = doc(db, 'houses ', "Sloberin");
   const [points, setPoints] = useState([]);
   const [user, setUser] = useState({});
+  const navigation = useNavigation();
+
 
   useEffect(() => {
-    getPoints();
-    getUser();
-  }, [])
+    console.log("!!!! useeffect from Home.js ran !!!!")
+    const unsubscribe = navigation.addListener('focus', () => {
+      getPoints();
+      getUser();
+    })
+    console.log("++ user ++", user)
+    return unsubscribe;
+  }, [navigation])
 
   const getUser = async () => {
     const userData = await getDoc(currentUser);
@@ -39,7 +48,6 @@ function Home(props) {
     )
   } else {
     return (
-
       <View style={styles.container}>
         <View style={styles.top}>
 
@@ -76,11 +84,58 @@ function Home(props) {
 
       </View>
 
-
     );
   }
 
 }
+//   if (!user.dog) {
+//     return (
+//       <Text>loading..</Text>
+//     )
+//   } else {
+//     return (
+
+//       <View style={styles.container}>
+//         <View style={styles.top}>
+
+//           <Text style={styles.textHeader2}>Welcome {user.name} and {user.dog.dogName}</Text>
+
+//           <View style={styles.box2}>
+//             <Text style={styles.text2}>Trainings in Progress:</Text>
+//             {user.trainingsInProgress.map(training => (<Text key={user.trainingsInProgress.indexOf(training)}> {training} </Text>))}
+//           </View>
+//         </View>
+
+//         <View style={styles.center}>
+//           <Text style={styles.textHeader}>Houses Current Points</Text>
+//         </View>
+
+//         <View style={styles.bottom}>
+//           <View style={styles.box}>
+//             <ImageBackground style={styles.inner} source={require('../assets/hufflepup.png')} />
+//             <Text style={styles.text}>Points: {points[0]}</Text>
+//           </View>
+//           <View style={styles.box}>
+//             <ImageBackground style={styles.inner} source={require('../assets/ravenpaw.jpeg')} />
+//             <Text style={styles.text}>Points: {points[1]}</Text>
+//           </View>
+//           <View style={styles.box}>
+//             <ImageBackground style={styles.inner} source={require('../assets/slobberin.jpeg')} />
+//             <Text style={styles.text}>Points: {points[2]}</Text>
+//           </View>
+//           <View style={styles.box}>
+//             <ImageBackground style={styles.inner} source={require('../assets/gryffindog.jpeg')} />
+//             <Text style={styles.text}>Points: {points[3]}</Text>
+//           </View>
+//         </View>
+
+//       </View>
+
+
+//     );
+//   }
+
+// }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
