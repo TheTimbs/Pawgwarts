@@ -20,6 +20,8 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required().label('Name'),
   email: Yup.string().required().email().label('Email'),
   password: Yup.string().required().min(6).label('Password'),
+  passwordConfirmation: Yup.string()
+  .oneOf([Yup.ref('password'), null], 'Passwords must match'),
   dogName: Yup.string().required().label('Dog Name'),
   DOB: Yup.date().required("DOB is Required").min(10),
   breed: Yup.string().required().label('Dog breed'),
@@ -103,8 +105,26 @@ function RegisterScreen() {
     <Screen style={styles.container}>
        <ScrollView>
 
+       <View style={styles.buttonsContainer}>
+        <Button title="Select Profile Picture" onPress={pickImage} color="blue" />
+        {image ? (
+          <Image
+            source={{ uri: image }}
+            style={{
+              width: 150,
+              height: 150,
+              borderRadius: 150 / 2,
+              alignSelf: 'center',
+            }}
+          />
+        ) : null}
+         {!confirmed && !loading  ? <Button title="Confirm Profile Picture" onPress={() => close()} color="blue" />
+         : loading && !confirmed  ? <Text style={styles.Con}>loading...</Text>
+         : <Text style={styles.Con}>confirmed</Text> }
+       </View>
+
        <Form
-        initialValues={{ name: "", email: "", password: "",dogName: "", breed: "", DOB: "" }}
+        initialValues={{ name: "", email: "", password: "",dogName: "", breed: "", DOB: "", passwordConfirmation:"" }}
         onSubmit={(value) => RegisterUser(value)}
         validationSchema={validationSchema}
       >
@@ -132,6 +152,15 @@ function RegisterScreen() {
           secureTextEntry
           textContentType="password"
         />
+        <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock"
+          name="passwordConfirmation"
+          placeholder="Retype Password"
+          secureTextEntry
+          textContentType="password"
+        />
          <FormField
           autoCapitalize="none"
           autoCorrect={false}
@@ -153,92 +182,11 @@ function RegisterScreen() {
           name="DOB"
           placeholder="Date of birth ex:00/00/0000"
         />
-        <SubmitButton title="Register" />
+        <SubmitButton title="Register" color="blue" />
       </Form>
 
-      {/* {name.length <= 0 ? <Text style={styles.TextError}>Name Required</Text> : <Text style={styles.Text}>Name:</Text>}
-      <TextInput
-        style={styles.TextInput}
-        autoCorrect={false}
-        icon="account"
-        name="name"
-        placeholder="Name"
-        onChangeText={(text) => setName(text)}
-      />
-       {email.length <= 0 ? <Text style={styles.TextError}>Email Required</Text> : <Text style={styles.Text}>Email:</Text>}
-      <TextInput
-        style={styles.TextInput}
-        autoCapitalize="none"
-        autoCorrect={false}
-        icon="email"
-        keyboardType="email-address"
-        name="email"
-        placeholder="Email"
-        textContentType="emailAddress"
-        onChangeText={(text) => setEmail(text)}
-      />
-      {password.length <= 5 ? <Text style={styles.TextError}>Password Required </Text > : <Text style={styles.Text}>Password: </Text>}
-      <TextInput
-        style={styles.TextInput}
-        autoCapitalize="none"
-        autoCorrect={false}
-        icon="lock"
-        name="password"
-        placeholder="Password longer than 6 characters"
-        secureTextEntry
-        textContentType="password"
-        onChangeText={(text) => setPassword(text)}
-      />
-      {dogName.length <= 0 ? <Text style={styles.TextError}>Dog name Required </Text> : <Text style={styles.Text}>Dog name: </Text>}
-      <TextInput
-        style={styles.TextInput}
-        autoCapitalize="none"
-        autoCorrect={false}
-        icon="account"
-        name="dogName"
-        placeholder="Dog Name"
-        onChangeText={(text) => setDogName(text)}
-      />
-       {breed.length <= 0 ? <Text style={styles.TextError}>Breed Required </Text> : <Text style={styles.Text}>Breed: </Text>}
-      <TextInput
-        style={styles.TextInput}
-        autoCapitalize="none"
-        autoCorrect={false}
-        icon="account"
-        name="breed"
-        placeholder="Dog Breed"
-        onChangeText={(text) => setBreed(text)}
-      />
-       {DOB.length <= 0 ? <Text style={styles.TextError}>Date of birth Required </Text> : <Text style={styles.Text}>Date of birth: </Text>}
-      <TextInput
-        style={styles.TextInput}
-        autoCapitalize="none"
-        autoCorrect={false}
-        icon="account"
-        name="DOB"
-        placeholder="Date of Birth (mm-dd-yyyy)"
-        onChangeText={(text) => setDOB(text)}
-      />
 
-       <View style={styles.buttonsContainer}>
-        <Button title="Select Profile Picture" onPress={pickImage} color="blue" />
-        {image ? (
-          <Image
-            source={{ uri: image }}
-            style={{
-              width: 150,
-              height: 150,
-              borderRadius: 150 / 2,
-              alignSelf: 'center',
-            }}
-          />
-        ) : null}
-         {!confirmed && !loading  ? <Button title="Confirm Profile Picture" onPress={() => close()} color="blue" />
-         : loading && !confirmed  ? <Text style={styles.Con}>loading...</Text>
-         : <Text style={styles.Con}>confirmed</Text> }
 
-        <Button title="Register" onPress={() => RegisterUser()} color="blue" /> */}
-      {/* </View> */}
       </ScrollView>
     </Screen>
   );
