@@ -6,9 +6,10 @@ import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 function SingleTrainingScreen({ navigation, route }) {
-  const { year, trainingCategory, trainingTitle } = route.params;
+  const { year, trainingCategory, trainingTitle, userDetails, title } = route.params;
+  const usersCompletedTrainings = userDetails.completedTrainings;
+  const usersTrainingsInProgress = userDetails.trainingsInProgress;
   const [trainingDetails, setTrainingDetails] = useState({});
-
 
   const [trainingCompleted, setTrainingCompleted] = useState(false);
   const [trainingInProgress, setTrainingInProgress] = useState(false);
@@ -24,39 +25,21 @@ function SingleTrainingScreen({ navigation, route }) {
     const trainingDocRef = doc(db, year, trainingCategory, 'trainings', trainingTitle);
     const docSnap = await getDoc(trainingDocRef);
     const trainingData = docSnap.data();
-    console.log("// [getSingleTraining] - single training data:", trainingData);
     setTrainingDetails(trainingData);
-    // <TrainingScreen trainingDetails={singleTraining} />
   }
 
-  const getUserDetails = async () => {
-    console.log("+++ getUserDetails just ran +++")
-    const auth = getAuth();
-    const userId = auth.currentUser.uid;
-    const docRef = doc(db, 'users', userId);
-    const userDoc = await getDoc(docRef);
-    const userDetails = userDoc.data()
-
-    const usersCompletedTrainings = userDetails.completedTrainings;
-    const usersTrainingsInProgress = userDetails.trainingsInProgress;
-
-    if (usersCompletedTrainings.includes(trainingDetails.title)) {
-      console.log("!!! This Training Exists in the users' completed Training array !!!");
+  const setStateVariables = () => {
+    if (usersCompletedTrainings.includes(title)) {
       setTrainingCompleted(true);
-    } else if ((usersTrainingsInProgress.includes(trainingDetails.title))) {
-      console.log("!!! this training doesn't exist in the users' trainingInProgress array !!!");
+    } else if ((usersTrainingsInProgress.includes(title))) {
       setTrainingInProgress(true)
     } else {
       setStartTraining(true)
     }
   }
 
-  const setTraining = () => {
-    getSingleTraining(year, trainingCategory, trainingTitle);
-    getUserDetails()
+  useEffect(() => { getSingleTraining(year, trainingCategory, trainingTitle); setStateVariables() }, []);
 
-  }
-  useEffect(() => { setTraining() }, []);
 
   // runs when clicked Start Training Button
   const handleStartTraining = async () => {
@@ -67,7 +50,6 @@ function SingleTrainingScreen({ navigation, route }) {
     const userId = auth.currentUser.uid;
     const docRef = doc(db, 'users', userId);
     await updateDoc(docRef, { trainingsInProgress: arrayUnion(trainingDetails.title) });
-    navigation.reset({index: 0,route:[{name:"home"}]});
   };
 
   // runs when clicked Mark Completed Button
@@ -82,8 +64,6 @@ function SingleTrainingScreen({ navigation, route }) {
     await updateDoc(docRef, { trainingsInProgress: arrayRemove(trainingDetails.title) });
 
   }
-
-
   return (
     Object.keys(trainingDetails).length === 0 ? <Text> ... Loading </Text> :
       <SafeAreaView style={styles.container}>
