@@ -67,6 +67,7 @@ function SingleTrainingScreen({ navigation, route }) {
     const userId = auth.currentUser.uid;
     const docRef = doc(db, 'users', userId);
     await updateDoc(docRef, { trainingsInProgress: arrayUnion(trainingDetails.title) });
+    navigation.reset({index: 0,route:[{name:"home"}]});
   };
 
   // runs when clicked Mark Completed Button
@@ -79,6 +80,7 @@ function SingleTrainingScreen({ navigation, route }) {
     const docRef = doc(db, 'users', userId);
     await updateDoc(docRef, { completedTrainings: arrayUnion(trainingDetails.title) });
     await updateDoc(docRef, { trainingsInProgress: arrayRemove(trainingDetails.title) });
+
   }
 
 
