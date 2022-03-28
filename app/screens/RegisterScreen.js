@@ -32,6 +32,7 @@ function RegisterScreen() {
   const [image, setImage] = useState(null);
   const [confirmed, setCon] = useState(false);
 
+
   const navigation = useNavigation();
 
   const RegisterUser = async () => {
@@ -59,6 +60,7 @@ function RegisterScreen() {
   };
 
   const pickImage = async () => {
+    setCon(false);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -180,7 +182,8 @@ function RegisterScreen() {
           />
         ) : null}
          {!confirmed ? <Button title="Confirm Profile Picture" onPress={uploadImage} color="blue" /> : <Text style={styles.Con}>Confirmed</Text>}
-        <Button title="Register" onPress={() => RegisterUser()} color="blue" />
+
+        {boo ? console.log(""): <Button title="Register" onPress={() => RegisterUser()} color="blue" disabled={boo}/>}
       </View>
       </ScrollView>
     </Screen>
