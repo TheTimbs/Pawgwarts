@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../../firebase/firebase-config';
-import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
+import { getDocs, collection, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const TrainingsScreen = ({ navigation, route }) => {
   const { year, trainingCategory } = route.params;
   const [trainingsList, setTrainingsList] = useState([]);
+  const [userDetails, setUserDetails] = useState({});
 
   function camelize(str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
@@ -21,13 +23,24 @@ const TrainingsScreen = ({ navigation, route }) => {
     setTrainingsList(trainings);
   };
 
-  useEffect(() => { getTrainingsList(year, trainingCategory) }, [])
+  const getUserDetails = async () => {
+    const auth = getAuth();
+    const userId = auth.currentUser.uid;
+    const docRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(docRef);
+    const userDetails = userDoc.data();
+    setUserDetails(userDetails)
+  }
+
+  useEffect(() => { getUserDetails(); getTrainingsList(year, trainingCategory); }, [])
+
+  console.log("userDetails from the trainings screen", userDetails)
 
   return (
     <View style={styles.container}>
       {trainingsList.length === 0 ? <Text> Loading... </Text> :
         <View style={styles.options}>
-          {trainingsList.map(training => (<TouchableOpacity key={training.title} style={styles.optionButton} onPress={() => navigation.navigate('SingleTraining', { year: year, trainingCategory: trainingCategory, trainingTitle: camelize(training.title) })}>
+          {trainingsList.map(training => (<TouchableOpacity key={training.title} style={styles.optionButton} onPress={() => navigation.navigate('SingleTraining', { year: year, trainingCategory: trainingCategory, trainingTitle: camelize(training.title), userDetails: userDetails, title: training.title })}>
             <Text style={styles.option}> {training.title} </Text>
           </TouchableOpacity>))}
         </View>
