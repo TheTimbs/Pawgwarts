@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Button, Image, View, Text, Platform } from 'react-native';
+import { StyleSheet, Image, View, Text, Platform, ScrollView } from 'react-native';
 import * as Yup from 'yup';
+import Button from '../components/Button';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { db, storage, auth } from '../../firebase/firebase-config';
 import Screen from '../components/Screen';
@@ -29,6 +30,8 @@ function RegisterScreen() {
   const [breed, setBreed] = useState('');
   const [DOB, setDOB] = useState('');
   const [image, setImage] = useState(null);
+  const [confirmed, setCon] = useState(false);
+
 
   const navigation = useNavigation();
 
@@ -57,6 +60,7 @@ function RegisterScreen() {
   };
 
   const pickImage = async () => {
+    setCon(false);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -88,11 +92,19 @@ function RegisterScreen() {
     blob.close();
     const downloadURL = await getDownloadURL(fileRef);
     setImage(downloadURL);
+    setCon(true)
+
+
     return downloadURL;
   }
-
+  let boo = true;
+  if(email.length > 0 && password.length  >= 6 && name.length > 0 && dogName.length > 0 && breed.length > 0 && DOB.length > 0){
+    boo = false;
+  }
   return (
     <Screen style={styles.container}>
+       <ScrollView>
+      {name.length <= 0 ? <Text style={styles.TextError}>Name Required</Text> : <Text style={styles.Text}>Name:</Text>}
       <TextInput
         style={styles.TextInput}
         autoCorrect={false}
@@ -101,6 +113,7 @@ function RegisterScreen() {
         placeholder="Name"
         onChangeText={(text) => setName(text)}
       />
+       {email.length <= 0 ? <Text style={styles.TextError}>Email Required</Text> : <Text style={styles.Text}>Email:</Text>}
       <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
@@ -112,17 +125,19 @@ function RegisterScreen() {
         textContentType="emailAddress"
         onChangeText={(text) => setEmail(text)}
       />
+      {password.length <= 5 ? <Text style={styles.TextError}>Password Required </Text > : <Text style={styles.Text}>Password: </Text>}
       <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
         autoCorrect={false}
         icon="lock"
         name="password"
-        placeholder="Password"
+        placeholder="Password longer than 6 characters"
         secureTextEntry
         textContentType="password"
         onChangeText={(text) => setPassword(text)}
       />
+      {dogName.length <= 0 ? <Text style={styles.TextError}>Dog name Required </Text> : <Text style={styles.Text}>Dog name: </Text>}
       <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
@@ -132,6 +147,7 @@ function RegisterScreen() {
         placeholder="Dog Name"
         onChangeText={(text) => setDogName(text)}
       />
+       {breed.length <= 0 ? <Text style={styles.TextError}>Breed Required </Text> : <Text style={styles.Text}>Breed: </Text>}
       <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
@@ -141,6 +157,7 @@ function RegisterScreen() {
         placeholder="Dog Breed"
         onChangeText={(text) => setBreed(text)}
       />
+       {DOB.length <= 0 ? <Text style={styles.TextError}>Date of birth Required </Text> : <Text style={styles.Text}>Date of birth: </Text>}
       <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
@@ -150,20 +167,25 @@ function RegisterScreen() {
         placeholder="Date of Birth (mm-dd-yyyy)"
         onChangeText={(text) => setDOB(text)}
       />
-      <Button title="Select Profile Picture" onPress={pickImage} />
-      {image ? (
-        <Image
-          source={{ uri: image }}
-          style={{
-            width: 150,
-            height: 150,
-            borderRadius: 150 / 2,
-            alignSelf: 'center',
-          }}
-        />
-      ) : null}
-      <Button title="Confirm Profile Picture" onPress={uploadImage} />
-      <Button title="Register" onPress={() => RegisterUser()} />
+
+       <View style={styles.buttonsContainer}>
+        <Button title="Select Profile Picture" onPress={pickImage} color="blue" />
+        {image ? (
+          <Image
+            source={{ uri: image }}
+            style={{
+              width: 150,
+              height: 150,
+              borderRadius: 150 / 2,
+              alignSelf: 'center',
+            }}
+          />
+        ) : null}
+         {!confirmed ? <Button title="Confirm Profile Picture" onPress={uploadImage} color="blue" /> : <Text style={styles.Con}>Confirmed</Text>}
+
+        {boo ? console.log(""): <Button title="Register" onPress={() => RegisterUser()} color="blue" disabled={boo}/>}
+      </View>
+      </ScrollView>
     </Screen>
   );
 }
@@ -171,11 +193,33 @@ function RegisterScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    backgroundColor: "#587b7f"
   },
   TextInput: {
     height: 50,
     fontSize: 20,
+    borderWidth:1,
+    borderColor:"#CBBEB3",
+    backgroundColor:'white',
+    borderRadius:10,
   },
+  buttonsContainer: {
+    padding: 20,
+    width: '100%',
+  },
+  TextError:{
+    color:'red',
+    fontSize:20
+  },
+  Text:{
+    fontSize:20
+  },
+  Con:{
+    textAlign:'center',
+    justifyContent:'center',
+    alignItems:'center',
+    fontSize:30
+  }
 });
 
 export default RegisterScreen;
