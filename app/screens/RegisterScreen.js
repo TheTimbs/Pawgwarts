@@ -44,7 +44,6 @@ function RegisterScreen() {
       name: value.name,
       email: value.email,
       likes: 0,
-
       house: house,
       // dog: [dogName, breed, DOB, image, taskCompleted],
       dog: { dogName: value.dogName, breed: value.breed, dob: value.DOB, image: image },
