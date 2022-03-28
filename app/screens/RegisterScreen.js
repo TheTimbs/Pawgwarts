@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Image, View, Text, Platform } from 'react-native';
+import { StyleSheet, Image, View, Text, Platform, ScrollView } from 'react-native';
 import * as Yup from 'yup';
 import Button from '../components/Button';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
@@ -32,6 +32,7 @@ function RegisterScreen() {
   const [image, setImage] = useState(null);
   const [confirmed, setCon] = useState(false);
 
+
   const navigation = useNavigation();
 
   const RegisterUser = async () => {
@@ -59,6 +60,7 @@ function RegisterScreen() {
   };
 
   const pickImage = async () => {
+    setCon(false);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -92,6 +94,7 @@ function RegisterScreen() {
     setImage(downloadURL);
     setCon(true)
 
+
     return downloadURL;
   }
   let boo = true;
@@ -100,6 +103,7 @@ function RegisterScreen() {
   }
   return (
     <Screen style={styles.container}>
+       <ScrollView>
       {name.length <= 0 ? <Text style={styles.TextError}>Name Required</Text> : <Text style={styles.Text}>Name:</Text>}
       <TextInput
         style={styles.TextInput}
@@ -178,9 +182,10 @@ function RegisterScreen() {
           />
         ) : null}
          {!confirmed ? <Button title="Confirm Profile Picture" onPress={uploadImage} color="blue" /> : <Text style={styles.Con}>Confirmed</Text>}
-        <Button title="Register" onPress={() => RegisterUser()} color="blue" />
-      </View>
 
+        {boo ? console.log(""): <Button title="Register" onPress={() => RegisterUser()} color="blue" disabled={boo}/>}
+      </View>
+      </ScrollView>
     </Screen>
   );
 }
