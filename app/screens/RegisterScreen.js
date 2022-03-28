@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Image, View, Text, Platform,ScrollView } from 'react-native';
 import * as Yup from 'yup';
+import { date, object } from "yup"
 import Button from '../components/Button';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { db, storage, auth } from '../../firebase/firebase-config';
@@ -18,44 +19,38 @@ import uuid from 'uuid';
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label('Name'),
   email: Yup.string().required().email().label('Email'),
-  password: Yup.string().required().min(4).label('Password'),
+  password: Yup.string().required().min(6).label('Password'),
+  dogName: Yup.string().required().label('Dog Name'),
+  DOB: Yup.date().required("DOB is Required").min(10),
+  breed: Yup.string().required().label('Dog breed'),
+
+
 });
 
 function RegisterScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+
   const [house, setHouse] = useState('');
-  const [dogName, setDogName] = useState('');
-  const [breed, setBreed] = useState('');
-  const [DOB, setDOB] = useState('');
   const [image, setImage] = useState(null);
   const [confirmed, setCon] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const navigation = useNavigation();
 
-  const RegisterUser = async () => {
-
-    const user = await createUserWithEmailAndPassword(auth, email, password);
+  const RegisterUser = async (value) => {
+    console.log(value)
+    const user = await createUserWithEmailAndPassword(auth, value.email, value.password);
     const docRef = await setDoc(doc(db, 'users', `${user.user.uid}`), {
-      name: name,
-      email: email,
+      name: value.name,
+      email: value.email,
       likes: 0,
 
       house: house,
       // dog: [dogName, breed, DOB, image, taskCompleted],
-      dog: { dogName: dogName, breed: breed, dob: DOB, image: image },
+      dog: { dogName: value.dogName, breed: value.breed, dob: value.DOB, image: image },
       completedTrainings: [],
       trainingsInProgress: [],
     });
 
-    setEmail('');
-    setName('');
-    setPassword('');
-    setDogName('');
-    setBreed('');
-    setDOB('');
+
     setImage('');
     navigation.navigate('Quiz');
   };
@@ -103,14 +98,62 @@ function RegisterScreen() {
       return downloadURL;
     }
 }
-  let boo = true;
-  if(email.length > 0 && password.length  >= 6 && name.length > 0 && dogName.length > 0 && breed.length > 0 && DOB.length > 0){
-    boo = false;
-  }
+
   return (
     <Screen style={styles.container}>
        <ScrollView>
-      {name.length <= 0 ? <Text style={styles.TextError}>Name Required</Text> : <Text style={styles.Text}>Name:</Text>}
+
+       <Form
+        initialValues={{ name: "", email: "", password: "",dogName: "", breed: "", DOB: "" }}
+        onSubmit={(value) => RegisterUser(value)}
+        validationSchema={validationSchema}
+      >
+        <FormField
+          autoCorrect={false}
+          icon="account"
+          name="name"
+          placeholder="Name"
+        />
+        <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="email"
+          keyboardType="email-address"
+          name="email"
+          placeholder="Email"
+          textContentType="emailAddress"
+        />
+        <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock"
+          name="password"
+          placeholder="Password"
+          secureTextEntry
+          textContentType="password"
+        />
+         <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          name="dogName"
+          placeholder="Dog Name"
+        />
+       <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          name="breed"
+          placeholder="Dog breed"
+        />
+        <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          name="DOB"
+          placeholder="Date of birth ex:00/00/0000"
+        />
+        <SubmitButton title="Register" />
+      </Form>
+
+      {/* {name.length <= 0 ? <Text style={styles.TextError}>Name Required</Text> : <Text style={styles.Text}>Name:</Text>}
       <TextInput
         style={styles.TextInput}
         autoCorrect={false}
@@ -191,8 +234,8 @@ function RegisterScreen() {
          : loading && !confirmed  ? <Text style={styles.Con}>loading...</Text>
          : <Text style={styles.Con}>confirmed</Text> }
 
-        <Button title="Register" onPress={() => RegisterUser()} color="blue" />
-      </View>
+        <Button title="Register" onPress={() => RegisterUser()} color="blue" /> */}
+      {/* </View> */}
       </ScrollView>
     </Screen>
   );
