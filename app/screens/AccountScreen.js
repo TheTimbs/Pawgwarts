@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, FlatList,Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, FlatList, Text } from 'react-native';
 
 import { ListItem, ListItemSeparator } from '../components/lists';
 import colors from '../config/colors';
@@ -7,10 +7,10 @@ import Icon from '../components/Icon';
 import routes from '../navigation/routes';
 import Screen from '../components/Screen';
 import { SignOut } from './SignOut';
-import { db,  } from '../../firebase/firebase-config';
+import { db } from '../../firebase/firebase-config';
 import { getDoc, collection, doc } from 'firebase/firestore';
 import { getAuth } from '@firebase/auth';
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 const menuItems = [
   {
     title: 'My Trainings',
@@ -26,7 +26,7 @@ const menuItems = [
       name: 'image-area',
       backgroundColor: colors.secondary,
     },
-    targetScreen: "MyPictures",
+    targetScreen: 'MyPictures',
   },
   {
     title: 'My Dogs',
@@ -39,40 +39,55 @@ const menuItems = [
 ];
 
 function AccountScreen(props) {
- const auth = getAuth();
- const user = auth.currentUser;
- const userRef = doc(db,"users", user.uid);
- const [info, setInfo] = useState();
- const [pic, setPic] = useState();
- const navigation = useNavigation();
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const userRef = doc(db, 'users', user.uid);
+  const [info, setInfo] = useState();
+  const [pic, setPic] = useState();
+  const navigation = useNavigation();
 
-  useEffect(()=>{
+  useEffect(() => {
     getUserInfo();
-  },[])
-  async function getUserInfo(){
-  const userDoc = await getDoc(userRef);
+  }, []);
 
-  setInfo(userDoc.data());
-  console.log(info)
-  setPic(userDoc.data().dog);
- }
+  async function getUserInfo() {
+    const userDoc = await getDoc(userRef);
+
+    setInfo(userDoc.data());
+    // console.log(info);
+    setPic(userDoc.data().dog);
+  }
+
+  // below function will rerender component after navigation
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getUserInfo();
+    });
+    console.log('accountscreen');
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
-   {  (pic && info) ?  (<ListItem
-          title={info.name}
-          subTitle={info.email}
-           image={{uri:pic.image}}
-           onPress={()=>navigation.navigate('info')}
-        /> ): (info && !pic) ?(
-        <ListItem
-        title={info.name}
-        subTitle={info.email}
-         image={require('../assets/DogLogo.png')}
-         onPress={()=>navigation.navigate('info')}
-        />
-        ): <Text> Loading...</Text>}
+
+        {pic && info ? (
+          <ListItem
+            title={info.name}
+            subTitle={info.email}
+            image={{ uri: info.dog.image }}
+            onPress={() => navigation.navigate('info')}
+          />
+        ) : info && !pic ? (
+          <ListItem
+            title={info.name}
+            subTitle={info.email}
+            image={require('../assets/DogLogo.png')}
+            onPress={() => navigation.navigate('info')}
+          />
+        ) : (
+          <Text> Loading...</Text>
+
       </View>
       <View style={styles.container}>
         <FlatList
