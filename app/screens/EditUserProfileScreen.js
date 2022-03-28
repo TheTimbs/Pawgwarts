@@ -16,10 +16,12 @@ import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getAuth } from '@firebase/auth';
 import uuid from 'uuid';
+import { useNavigation } from '@react-navigation/native';
 
 const EditUserProfile = () => {
   const [user, setUser] = useState([]);
   const [image, setImage] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -33,6 +35,7 @@ const EditUserProfile = () => {
     };
     getUserInfo();
   }, []);
+  console.log('edituserprofilescreen');
 
   const updatePhoto = async () => {
     const imageRef = doc(db, 'users', auth.currentUser.uid);
@@ -40,6 +43,7 @@ const EditUserProfile = () => {
     await updateDoc(imageRef, {
       'dog.image': image,
     });
+    navigation.navigate('info');
   };
 
   const pickImage = async () => {

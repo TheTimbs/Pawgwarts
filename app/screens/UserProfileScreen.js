@@ -13,19 +13,35 @@ function UserProfile() {
   const [userPhoto, setUserPhoto] = useState([]);
   const navigation = useNavigation();
 
+  // useEffect(() => {
+  //   const getUserInfo = async () => {
+  //     const userRef = doc(db, 'users', auth.currentUser.uid);
+  //     const userSnap = await getDoc(userRef);
+  //     if (userSnap.exists()) {
+  //       setUser(userSnap.data());
+  //     } else {
+  //       console.log('No such document');
+  //     }
+  //   };
+  //   getUserInfo();
+  // }, []);
+
   useEffect(() => {
-    const getUserInfo = async () => {
-      const userRef = doc(db, 'users', auth.currentUser.uid);
-      const userSnap = await getDoc(userRef);
-      if (userSnap.exists()) {
-        setUser(userSnap.data());
-      } else {
-        console.log('No such document');
-      }
-    };
-    getUserInfo();
-  }, []);
-  // console.log('user', user);
+    const unsubscribe = navigation.addListener('focus', () => {
+      const getUserInfo = async () => {
+        const userRef = doc(db, 'users', auth.currentUser.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          setUser(userSnap.data());
+        } else {
+          console.log('No such document');
+        }
+      };
+      getUserInfo();
+    });
+    console.log('userprofilescreen');
+    return unsubscribe;
+  }, [navigation]);
 
   const feedCollectionRef = collection(db, 'feed');
   useEffect(() => {

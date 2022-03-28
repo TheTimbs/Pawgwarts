@@ -49,13 +49,23 @@ function AccountScreen(props) {
   useEffect(() => {
     getUserInfo();
   }, []);
+
   async function getUserInfo() {
     const userDoc = await getDoc(userRef);
 
     setInfo(userDoc.data());
-    console.log(info);
+    // console.log(info);
     setPic(userDoc.data().dog);
   }
+
+  // below function will rerender component after navigation
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getUserInfo();
+    });
+    console.log('accountscreen');
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <Screen style={styles.screen}>
