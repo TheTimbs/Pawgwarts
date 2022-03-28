@@ -210,8 +210,8 @@ export default PersonalityQuiz;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 40,
-    paddingHorizontal: 20,
+    // paddingTop: 40,
+    // paddingHorizontal: 20,
     height: '100%',
   },
   top: {
