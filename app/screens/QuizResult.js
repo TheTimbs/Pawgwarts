@@ -5,7 +5,7 @@ import Screen from '../components/Screen';
 export default function QuizResult(props) {
   const navigation = useNavigation();
   return (
-    <Screen style={styles.screen}>
+    <Screen style={styles.container}>
       <View>
         <View>
           <Text style={styles.sectionTitle}> Your house is {props.house} </Text>
@@ -74,6 +74,16 @@ export default function QuizResult(props) {
               </Text>
             </View>
           ) : null}
+          <Text>
+            As a fellow {props.house}, we are quite competitive. Each week on
+            this app, you will find a weekly challenge on top of the Feed
+            screen. Each dog can post a picture of them taking on the challenge
+            of the week and the app allows users to "throw bones" at photos you
+            like. At the end of each week, a trophy will be given out to the
+            house that has received the highest number of likes. We encourage
+            you to tackle these challenges and post a picture of the completed
+            look! Best of luck!{' '}
+          </Text>
           <Text style={styles.text}>Continue Home to enter Pawgwartz!</Text>
           <Button
             title="Home"
@@ -86,18 +96,12 @@ export default function QuizResult(props) {
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#E8EAED',
-  // },
-  screen: {
-    padding: 20,
+  container: {
+    // paddingTop: 40,
+    // paddingHorizontal: 20,
+    height: '100%',
     backgroundColor: colors.medium,
   },
-  // Wrapper: {
-  //   paddingTop: 80,
-  //   paddingHorizontal: 20,
-  // },
   sectionTitle: {
     color: colors.gold,
     fontSize: 24,
