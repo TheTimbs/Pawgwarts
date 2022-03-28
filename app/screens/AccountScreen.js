@@ -70,6 +70,7 @@ function AccountScreen(props) {
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
+
         {pic && info ? (
           <ListItem
             title={info.name}
@@ -86,7 +87,7 @@ function AccountScreen(props) {
           />
         ) : (
           <Text> Loading...</Text>
-        )}
+
       </View>
       <View style={styles.container}>
         <FlatList
