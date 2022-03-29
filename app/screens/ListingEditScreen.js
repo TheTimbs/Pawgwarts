@@ -80,6 +80,7 @@ const categories = [
   },
 ];
 
+// TODO: remove
 function ListingEditScreen() {
   const location = useLocation();
   const [uploadVisible, setUploadVisible] = useState(false);

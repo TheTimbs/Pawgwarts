@@ -7,6 +7,8 @@ import FeedNavigator from './FeedNavigator';
 import StoreNavigator from './StoreNavigator';
 import TrainingNavigator from './TrainingNavigator';
 import Home from '../screens/Home';
+
+// o: remove if not being used
 // import ListingEditScreen from '../screens/ListingEditScreen';
 // import NewListingButton from './NewListingButton';
 // import routes from './routes';
@@ -49,6 +51,7 @@ const AppNavigator = () => (
         headerShown: false,
       }}
     />
+    {/* o: remove if not being used */}
     {/* <Tab.Screen
       name="ListingEdit"
       component={ListingEditScreen}

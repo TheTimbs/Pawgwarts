@@ -11,6 +11,7 @@ import { db } from '../../firebase/firebase-config';
 import { getDoc, collection, doc } from 'firebase/firestore';
 import { getAuth } from '@firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+
 const menuItems = [
   {
     title: 'My Trainings',

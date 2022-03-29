@@ -10,6 +10,7 @@ const TrainingsScreen = ({ navigation, route }) => {
   const [trainingsList, setTrainingsList] = useState([]);
   const [userDetails, setUserDetails] = useState({});
 
+  // o: utility function
   function camelize(str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
       if (+match === 0) return '';
@@ -38,7 +39,10 @@ const TrainingsScreen = ({ navigation, route }) => {
     setUserDetails(userDetails)
   }
 
-  useEffect(() => { getUserDetails(); getTrainingsList(year, trainingCategory); }, [])
+  useEffect(() => { 
+    getUserDetails(); 
+    getTrainingsList(year, trainingCategory); 
+  }, [])
 
   console.log("userDetails from the trainings screen", userDetails)
 
@@ -66,6 +70,7 @@ const TrainingsScreen = ({ navigation, route }) => {
             />
           ))}
         </View>
+        // o: remove if not being used
         // <View style={styles.options}>
         //   {trainingsList.map((training) => (
         //     <TouchableOpacity

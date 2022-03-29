@@ -7,6 +7,7 @@ import GroomingStore from '../screens/storeScreens/GroomingStore';
 import StoreScreen from '../screens/storeScreens/StoreScreen';
 import ToyStore from '../screens/storeScreens/ToyStoreScreen';
 import TreatStore from '../screens/storeScreens/TreatStoreScreen';
+// o: remove if not being used
 // import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createStackNavigator();

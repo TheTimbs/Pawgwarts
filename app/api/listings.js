@@ -19,7 +19,8 @@ export const addListing = (listing, onUploadProgress) => {
     })
   );
 
-  if (listing.location)
+  // o: small detail but prefer braces over longer if statements like this
+  if (listing.location) 
     data.append("location", JSON.stringify(listing.location));
 
   return client.post(endpoint, data, {

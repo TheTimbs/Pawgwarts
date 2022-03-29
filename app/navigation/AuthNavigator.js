@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
+// o: remove if not being used
 import FeedScreen from "../screens/FeedScreen";
 import AppNavigator from "./AppNavigator";
 import QuizScreen from "../screens/QuizScreen";

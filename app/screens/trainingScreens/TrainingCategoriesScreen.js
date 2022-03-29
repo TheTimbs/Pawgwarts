@@ -10,6 +10,7 @@ function TrainingCategoriesScreen({ navigation, route }) {
   const year = route.params.year;
   const [trainingCategories, setTrainingCategories] = useState([]);
 
+  // o: export into utility function since its being used in multiple places
   function camelize(str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
       if (+match === 0) return '';
@@ -17,6 +18,7 @@ function TrainingCategoriesScreen({ navigation, route }) {
     });
   }
 
+  // o: consider moving into useEffect
   const getTrainingCategories = async (trainingYear) => {
     const yearCollectionRef = collection(db, trainingYear);
     const data = await getDocs(yearCollectionRef);
@@ -46,10 +48,12 @@ function TrainingCategoriesScreen({ navigation, route }) {
                 year: year,
                 trainingCategory: camelize(category.title),
               }}
+              // o: remove if not used
             //styling={trainingTextStylings.firstYearsText}
             />
           ))}
         </View>
+        // o: remove if not used
         // <View style={styles.options}>
         //   {trainingCategories.map((category) => (
         //     <TouchableOpacity

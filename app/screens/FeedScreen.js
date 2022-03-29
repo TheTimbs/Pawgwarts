@@ -47,6 +47,7 @@ function FeedScreen() {
         )}
 
       />
+      {/* o: remove if not being used */}
          {/* <NewListingButton
             style={styles.upload}
             onPress={() => navigation.navigate('ListingDetails')}

@@ -114,6 +114,7 @@ const EditUserProfile = () => {
               />
             )}
             <Button title="Select New Profile Picture" onPress={pickImage} />
+            {/* o: remove if not being used */}
             {/* {image ? (
               <Image
                 source={{ uri: image }}
@@ -127,6 +128,7 @@ const EditUserProfile = () => {
             ) : null} */}
             <Button title="Confirm New Profile Picture" onPress={uploadImage} />
             <Button title="Update" onPress={() => updatePhoto()} />
+            {/* o: remove if not being used */}
             {/* <Text style={styles.header}>Dog Information:</Text>
             <Text style={styles.text1}>Dog Name: {user.dog.dogName}</Text>
             <Text style={styles.text1}>Dog Breed: {user.dog.breed}</Text>
@@ -139,6 +141,8 @@ const EditUserProfile = () => {
             </Text> */}
           </View>
         ) : (
+          // o: you can use props.children to handle loading if you
+          //  are doing this in more than one place
           <Text style={styles.header}>loading...</Text>
         )}
       </View>
