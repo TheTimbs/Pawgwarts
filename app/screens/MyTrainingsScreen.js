@@ -8,9 +8,17 @@ import { db, auth } from '../../firebase/firebase-config';
 import { getDoc, collection, doc, getDocs } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 
-function MyTrainings() {
+function MyTrainings({ route }) {
   const [user, setUser] = useState([]);
   const navigation = useNavigation();
+  const { year, trainingCategory } = route.params;
+
+  function camelize(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+      if (+match === 0) return '';
+      return index === 0 ? match.toLowerCase() : match.toUpperCase();
+    });
+  }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -51,9 +59,22 @@ function MyTrainings() {
               Completed Trainings: {user.completedTrainings.length}
             </Text>
             {user.completedTrainings.map((training, i) => (
-              <View key={i}>
-                <Text style={styles.text1}>{training}</Text>
-              </View>
+              // <View key={i}>
+              //   <Text style={styles.text1}>{training}</Text>
+              // </View>
+              <TouchableOpacity
+                key={i}
+                onPress={() =>
+                  navigation.navigate('SingleTraining', {
+                    // year: year,
+                    // trainingCategory: trainingCategory,
+                    trainingTitle: camelize(training),
+                    title: training,
+                  })
+                }
+              >
+                <Text> {training} </Text>
+              </TouchableOpacity>
             ))}
 
             <Text style={styles.header}>
