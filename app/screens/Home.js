@@ -2,7 +2,7 @@ import { ImageBackground, StyleSheet, View, Image, Text, } from 'react-native';
 import React from 'react';
 import { db, auth } from '../../firebase/firebase-config';
 import { getDoc, collection, doc, } from 'firebase/firestore';
-import { useEffect, useState } from 'react/cjs/react.development';
+import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 
