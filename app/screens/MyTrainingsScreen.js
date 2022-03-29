@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Button, Text, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Button,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import { ListItem, ListItemSeparator } from '../components/lists';
 import colors from '../config/colors';
 import Icon from '../components/Icon';
@@ -51,9 +59,15 @@ function MyTrainings() {
               Completed Trainings: {user.completedTrainings.length}
             </Text>
             {user.completedTrainings.map((training, i) => (
-              <View key={i}>
-                <Text style={styles.text1}>{training}</Text>
-              </View>
+              // <View key={i}>
+              //   <Text style={styles.text1}>{training}</Text>
+              // </View>
+              <TouchableOpacity
+                key={i}
+                onPress={() => navigation.navigate('EditUserProfile')}
+              >
+                <Text style={styles.text1}> {training} </Text>
+              </TouchableOpacity>
             ))}
 
             <Text style={styles.header}>
