@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, StyleSheet, View, Text, Image, Button } from 'react-native';
-import { AsyncStorage } from '@react-native-async-storage/async-storage';
-
+import { AsyncStorage } from '@react-native-async-storage/async-storage'
 import FeedCard from '../components/FeedCard';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 import {useNavigation} from '@react-navigation/native'
 import { db } from '../../firebase/firebase-config';
-import { getDocs, collection, doc } from 'firebase/firestore';
+import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
 import { useTimer } from 'react-timer-hook';
 
+
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
   const feedCollectionRef = collection(db, 'feed');
+  const challengeCollectionRef = doc(db, 'challenge', 'date');
   const navigation = useNavigation();
+  const today = new Date();
 
+  console.log(today);
+  const getDate = async () =>{
+    const data = await getDoc(challengeCollectionRef);
+    console.log(data.data().setDate)
+    console.log(new Date(data.data().setDate))
+    const boo  = (new Date(today) > new Date(data.data().setDate))
+    console.log(boo);
+  }
 
   useEffect(() => {
     const getFeed = async () => {
@@ -26,6 +36,7 @@ function FeedScreen() {
         id: doc.id,
       }));
       setFeedList(mappedData);
+      getDate();
     };
     getFeed();
   }, []);
