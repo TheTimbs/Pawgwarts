@@ -9,33 +9,53 @@ const TrainingsScreen = ({ navigation, route }) => {
 
   function camelize(str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
-      if (+match === 0) return "";
+      if (+match === 0) return '';
       return index === 0 ? match.toLowerCase() : match.toUpperCase();
     });
   }
 
   const getTrainingsList = async (year, trainingCategory) => {
-    const trainingCollectionRef = collection(db, year, trainingCategory, 'trainings');
+    const trainingCollectionRef = collection(
+      db,
+      year,
+      trainingCategory,
+      'trainings'
+    );
     const trainingDocsRef = await getDocs(trainingCollectionRef);
     const trainings = trainingDocsRef.docs.map((doc) => ({ ...doc.data() }));
     setTrainingsList(trainings);
   };
 
-  useEffect(() => { getTrainingsList(year, trainingCategory) }, [])
+  useEffect(() => {
+    getTrainingsList(year, trainingCategory);
+  }, []);
 
   return (
     <View style={styles.container}>
-      {trainingsList.length === 0 ? <Text> Loading... </Text> :
+      {trainingsList.length === 0 ? (
+        <Text> Loading... </Text>
+      ) : (
         <View style={styles.options}>
-          {trainingsList.map(training => (<TouchableOpacity key={training.title} style={styles.optionButton} onPress={() => navigation.navigate('SingleTraining', { year: year, trainingCategory: trainingCategory, trainingTitle: camelize(training.title) })}>
-            <Text style={styles.option}> {training.title} </Text>
-          </TouchableOpacity>))}
+          {trainingsList.map((training) => (
+            <TouchableOpacity
+              key={training.title}
+              style={styles.optionButton}
+              onPress={() =>
+                navigation.navigate('SingleTraining', {
+                  year: year,
+                  trainingCategory: trainingCategory,
+                  trainingTitle: camelize(training.title),
+                })
+              }
+            >
+              <Text style={styles.option}> {training.title} </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-      }
+      )}
     </View>
-  )
-}
-
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -54,7 +74,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingVertical: 16,
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   buttonText: {
     fontSize: 18,

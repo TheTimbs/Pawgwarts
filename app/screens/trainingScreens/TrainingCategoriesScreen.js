@@ -29,7 +29,6 @@ function TrainingCategoriesScreen({ navigation, route }) {
     getTrainingCategories(year);
   }, []);
 
-  console.log('My categories son:', trainingCategories);
   return (
     <View style={styles.container}>
       {trainingCategories.length === 0 ? (
@@ -40,10 +39,13 @@ function TrainingCategoriesScreen({ navigation, route }) {
             <TrainingCardCategories
               key={category.title}
               navigation={navigation}
-              navTarget={'TrainingCategories'}
+              navTarget={'Trainings'}
               imgSource={category.image}
               title={category.title}
-              dbYear={{ year: 'firstYears' }}
+              dbYear={{
+                year: 'firstYears',
+                trainingCategory: camelize(category.title),
+              }}
               //styling={trainingTextStylings.firstYearsText}
             />
           ))}

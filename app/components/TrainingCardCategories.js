@@ -17,7 +17,6 @@ function TrainingCardCategories({
   navTarget,
   imgSource,
   title,
-  styling,
   dbYear,
 }) {
   let [fontsLoaded] = useFonts({
