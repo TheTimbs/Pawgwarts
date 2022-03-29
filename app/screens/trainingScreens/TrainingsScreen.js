@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../../firebase/firebase-config';
 import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import TrainingCardCategories from '../../components/TrainingCardCategories';
 
 const TrainingsScreen = ({ navigation, route }) => {
   const { year, trainingCategory } = route.params;
@@ -37,21 +38,38 @@ const TrainingsScreen = ({ navigation, route }) => {
       ) : (
         <View style={styles.options}>
           {trainingsList.map((training) => (
-            <TouchableOpacity
+            <TrainingCardCategories
               key={training.title}
-              style={styles.optionButton}
-              onPress={() =>
-                navigation.navigate('SingleTraining', {
-                  year: year,
-                  trainingCategory: trainingCategory,
-                  trainingTitle: camelize(training.title),
-                })
-              }
-            >
-              <Text style={styles.option}> {training.title} </Text>
-            </TouchableOpacity>
+              navigation={navigation}
+              navTarget={'SingleTraining'}
+              imgSource={training.images[0]}
+              title={training.title}
+              dbYear={{
+                year: 'firstYears',
+                trainingCategory: trainingCategory,
+                trainingTitle: camelize(training.title),
+              }}
+              //styling={trainingTextStylings.firstYearsText}
+            />
           ))}
         </View>
+        // <View style={styles.options}>
+        //   {trainingsList.map((training) => (
+        //     <TouchableOpacity
+        //       key={training.title}
+        //       style={styles.optionButton}
+        //       onPress={() =>
+        //         navigation.navigate('SingleTraining', {
+        //           year: year,
+        //           trainingCategory: trainingCategory,
+        //           trainingTitle: camelize(training.title),
+        //         })
+        //       }
+        //     >
+        //       <Text style={styles.option}> {training.title} </Text>
+        //     </TouchableOpacity>
+        //   ))}
+        // </View>
       )}
     </View>
   );
@@ -59,44 +77,6 @@ const TrainingsScreen = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 40,
-    paddingHorizontal: 20,
-    height: '100%',
-  },
-  top: {
-    marginVertical: 16,
-  },
-  options: {
-    marginVertical: 16,
-    flex: 1,
-  },
-  bottom: {
-    marginBottom: 12,
-    paddingVertical: 16,
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: 'white',
-  },
-  question: {
-    fontSize: 28,
-  },
-  option: {
-    fontSize: 18,
-    fontWeight: '500',
-    color: 'white',
-  },
-  optionButton: {
-    paddingVertical: 12,
-    marginVertical: 6,
-    backgroundColor: '#34A0A4',
-    paddingHorizontal: 12,
-    borderRadius: 12,
-  },
-  parent: {
     height: '100%',
   },
 });
