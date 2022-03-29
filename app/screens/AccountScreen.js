@@ -63,7 +63,6 @@ function AccountScreen(props) {
     const unsubscribe = navigation.addListener('focus', () => {
       getUserInfo();
     });
-    console.log('accountscreen');
     return unsubscribe;
   }, [navigation]);
 
