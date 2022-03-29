@@ -86,7 +86,7 @@ function LoginScreen(props) {
         onChangeText={(text) => setPassword(text)}
       /> */}
        <View style={styles.buttonsContainer}>
-       <SubmitButton title="Register" color="blue" />
+       <SubmitButton title="Sign in" color="blue" />
       </View>
      </Form>
     </Screen>
