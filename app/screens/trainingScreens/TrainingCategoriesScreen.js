@@ -43,10 +43,10 @@ function TrainingCategoriesScreen({ navigation, route }) {
               imgSource={category.image}
               title={category.title}
               dbYear={{
-                year: 'firstYears',
+                year: year,
                 trainingCategory: camelize(category.title),
               }}
-              //styling={trainingTextStylings.firstYearsText}
+            //styling={trainingTextStylings.firstYearsText}
             />
           ))}
         </View>
