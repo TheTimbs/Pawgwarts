@@ -117,7 +117,6 @@ function StoreScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    //padding: 20,
     backgroundColor: colors.white,
   },
   background: {
@@ -125,13 +124,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  // buttonsContainer: {
-  //   padding: 10,
-  //   width: '100%',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   paddingHorizontal: 100,
-  // },
   image: {
     alignItems: 'center',
     height: 200,

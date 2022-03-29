@@ -5,17 +5,27 @@ import TrainingCategoriesScreen from '../screens/trainingScreens/TrainingCategor
 import TrainingsScreen from '../screens/trainingScreens/TrainingsScreen';
 import SingleTrainingScreen from '../screens/trainingScreens/SingleTrainingScreen';
 import Home from '../screens/Home';
-
+import colors from '../config/colors';
 
 const Stack = createStackNavigator();
 
 const TrainingNavigator = () => (
   <Stack.Navigator
-    // screenOptions={{ headerLeft: null, presentation: 'modal' }}
+    screenOptions={{
+      headerStyle: { backgroundColor: colors.houseBlue },
+      headerTintColor: 'white',
+      headerTitleStyle: { fontSize: 25, fontFamily: 'Futura' },
+    }}
   >
-    <Stack.Screen name="Training Years" component={TrainingYearsScreen}
-    options={{headerLeft: null}} />
-    <Stack.Screen name="TrainingCategories" component={TrainingCategoriesScreen} />
+    <Stack.Screen
+      name="Training Years"
+      component={TrainingYearsScreen}
+      options={{ headerLeft: null }}
+    />
+    <Stack.Screen
+      name="TrainingCategories"
+      component={TrainingCategoriesScreen}
+    />
     <Stack.Screen name="Trainings" component={TrainingsScreen} />
     <Stack.Screen name="SingleTraining" component={SingleTrainingScreen} />
     <Stack.Screen name="home" component={Home} />
