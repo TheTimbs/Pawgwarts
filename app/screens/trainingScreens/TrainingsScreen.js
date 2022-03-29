@@ -56,11 +56,13 @@ const TrainingsScreen = ({ navigation, route }) => {
               imgSource={training.images[0]}
               title={training.title}
               dbYear={{
-                year: 'firstYears',
+                year: year,
                 trainingCategory: trainingCategory,
                 trainingTitle: camelize(training.title),
+                userDetails: userDetails,
+                title: training.title,
               }}
-              //styling={trainingTextStylings.firstYearsText}
+            //styling={trainingTextStylings.firstYearsText}
             />
           ))}
         </View>
