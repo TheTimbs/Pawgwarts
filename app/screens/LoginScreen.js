@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
-
 import { StyleSheet, Image, Alert, View } from 'react-native';
-
 import * as Yup from 'yup';
+import { Form, FormField, SubmitButton } from '../components/forms';
 import Button from '../components/Button';
 import Screen from '../components/Screen';
-import { Form, FormField, SubmitButton } from '../components/forms';
+
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { auth } from '../../firebase/firebase-config';
 import { TextInput } from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native'
 import FeedNavigator from '../navigation/FeedNavigator';
 
-// const validationSchema = Yup.object().shape({
-//   email: Yup.string().required().email().label('Email'),
-//   password: Yup.string().required().min(4).label('Password'),
-// });
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label('Email'),
+  password: Yup.string().required().min(6).label('Password'),
+});
 
 function LoginScreen(props) {
   const [isSignedIn, setIsSignedIn] = useState('');
@@ -23,8 +22,8 @@ function LoginScreen(props) {
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
-  const SignUser = () => {
-    signInWithEmailAndPassword(auth, email, password)
+  const SignUser = (value) => {
+    signInWithEmailAndPassword(auth, value.email, value.password)
       .then(() => {
         setIsSignedIn(true);
         navigation.navigate('App');
@@ -39,8 +38,12 @@ function LoginScreen(props) {
     <Screen style={styles.container}>
 
       <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
-
-      <TextInput
+      <Form
+        initialValues={{email: "", password: "", }}
+        onSubmit={(value) => SignUser(value)}
+        validationSchema={validationSchema}
+      >
+      {/* <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
         autoCorrect={false}
@@ -52,8 +55,26 @@ function LoginScreen(props) {
         inlineImageLeft="email"
         inlineImagePadding={20}
         onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
+      /> */}
+       <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="email"
+          keyboardType="email-address"
+          name="email"
+          placeholder="Email"
+          textContentType="emailAddress"
+        />
+        <FormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock"
+          name="password"
+          placeholder="Password"
+          secureTextEntry
+          textContentType="password"
+        />
+      {/* <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
         autoCorrect={false}
@@ -63,10 +84,11 @@ function LoginScreen(props) {
         secureTextEntry={true}
         textContentType="password"
         onChangeText={(text) => setPassword(text)}
-      />
+      /> */}
        <View style={styles.buttonsContainer}>
-        <Button title="Sign In" onPress={() => SignUser()} color="blue" />
+       <SubmitButton title="Sign in" color="blue" />
       </View>
+     </Form>
     </Screen>
   );
 }

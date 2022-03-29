@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "build": "expo build:web"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.15.0",
@@ -27,6 +28,7 @@
     "expo-location": "~14.0.1",
     "expo-permissions": "~13.1.0",
     "expo-status-bar": "~1.2.0",
+    "expo-updates": "~0.11.6",
     "firebase": "^9.6.9",
     "formik": "^2.1.4",
     "install": "^0.13.0",
@@ -42,11 +44,13 @@
     "react-native-svg": "12.1.1",
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.1",
+    "react-timer-hook": "^3.0.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "babel-preset-expo": "9.0.2"
+    "babel-preset-expo": "9.0.2",
+    "expo-cli": "^5.3.0"
   },
   "private": true
 }

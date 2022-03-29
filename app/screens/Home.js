@@ -2,8 +2,9 @@ import { ImageBackground, StyleSheet, View, Image, Text, } from 'react-native';
 import React from 'react';
 import { db, auth } from '../../firebase/firebase-config';
 import { getDoc, collection, doc, } from 'firebase/firestore';
-import { useEffect, useState } from 'react/cjs/react.development';
+import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 function Home(props) {
@@ -15,33 +16,48 @@ function Home(props) {
   const sRef = doc(db, 'houses ', "Sloberin");
   const [points, setPoints] = useState([]);
   const [user, setUser] = useState({});
+  const [randomDogFact, setRandomDogFact] = useState("")
   const navigation = useNavigation();
 
 
   useEffect(() => {
-    console.log("!!!! useeffect from Home.js ran !!!!")
+    console.log("!!! useeffect from Home.js ran !!!")
     const unsubscribe = navigation.addListener('focus', () => {
       getPoints();
       getUser();
+      getRandomFact()
     })
-    console.log("++ user ++", user)
+    console.log("// [Home.js/useEffect()] - user: ", user)
     return unsubscribe;
   }, [navigation])
 
   const getUser = async () => {
     const userData = await getDoc(currentUser);
     setUser(userData.data());
-    console.log("User data", user)
-
   }
+
   const getPoints = async () => {
     const dataG = await getDoc(gRef)
     const dataH = await getDoc(hRef)
     const dataR = await getDoc(rRef)
     const dataS = await getDoc(sRef)
     setPoints([dataG.data().points, dataH.data().points, dataR.data().points, dataS.data().points])
-
   }
+
+  const getRandomNum = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+  const getRandomFact = async () => {
+    const docRef = doc(db, "dogFacts", "allFacts");
+    const docSnap = await getDoc(docRef);
+    const allFacts = docSnap.data().facts;
+    const randomFact = allFacts[getRandomNum(0, allFacts.length - 1)];
+    console.log("// [Home.js/getRandomFact()] - randomFact: ", randomFact);
+    console.log("// [Home.js/getRandomFact()] - randomFact type: ", typeof randomFact);
+    setRandomDogFact(randomFact);
+  }
+
   if (!user.dog) {
     return (
       <Text>loading..</Text>
@@ -51,12 +67,18 @@ function Home(props) {
       <View style={styles.container}>
         <View style={styles.top}>
 
-          <Text style={styles.textHeader2}>Welcome {user.name} and {user.dog.dogName}</Text>
+          <Text style={styles.WelcomeHeader}>Welcome, {user.name} and {user.dog.dogName}!</Text>
 
-          <View style={styles.box2}>
-            <Text style={styles.text2}>Trainings in Progress:</Text>
+          <View style={styles.dogFactContainer}>
+            <Text style={styles.dogFactHeaderText}> DumbleDog's Random Dog Fact </Text>
+            <Text style={styles.dogFactText}> {randomDogFact}</Text>
+          </View>
+
+          <View style={styles.trainingsContainer}>
+            <Text style={styles.text2}>Your Trainings in Progress:</Text>
             {user.trainingsInProgress.map(training => (<Text key={user.trainingsInProgress.indexOf(training)}> {training} </Text>))}
           </View>
+
         </View>
 
         <View style={styles.center}>
@@ -98,21 +120,46 @@ const styles = StyleSheet.create({
     height: '50%',
     alignItems: 'center',
     justifyContent: 'center',
-
+  },
+  WelcomeHeader: {
+    fontSize: 30,
+    color: "white",
+    marginBottom: 6,
+  },
+  dogFactContainer: {
+    backgroundColor: '#871419',
+    borderRadius: 20,
+    padding: 5,
+    paddingBottom: 6,
+    marginBottom: 6,
+  },
+  dogFactHeaderText: {
+    color: '#fec536',
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  dogFactText: {
+    color: 'white',
+    fontSize: 15,
+  },
+  trainingsContainer: {
+    marginTop: 5,
+    width: '85%',
+    backgroundColor: '#76b5c5',
+    borderRadius: 20,
+    paddingBottom: 5,
   },
   bottom: {
     height: '45%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: '#0D1321',
-
   },
   center: {
     height: '5%',
     justifyContent: "center",
     alignItems: 'center',
     backgroundColor: "#0D1321",
-
   },
   box: {
     width: '50%',
@@ -123,6 +170,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     left: "5%",
+    // borderRadius: 10,
   },
   text: {
     fontSize: 20,
@@ -135,20 +183,6 @@ const styles = StyleSheet.create({
   textHeader: {
     fontSize: 30,
     color: "white",
-  },
-  textHeader2: {
-    fontSize: 30,
-    color: "black",
-    bottom: "10%",
-    textDecorationLine: 'underline',
-    backgroundColor: '#54F2F2',
-    borderRadius: 20
-  },
-  box2: {
-    width: '85%',
-    height: '25%',
-    backgroundColor: '#54F2F2',
-    borderRadius: 20
   },
   text2: {
     fontSize: 20,

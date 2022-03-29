@@ -10,11 +10,14 @@ import { db } from '../../firebase/firebase-config';
 import { getDocs, collection, doc } from 'firebase/firestore';
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
+import { useTimer } from 'react-timer-hook';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
   const feedCollectionRef = collection(db, 'feed');
   const navigation = useNavigation();
+
+
   useEffect(() => {
     const getFeed = async () => {
       const data = await getDocs(feedCollectionRef);
@@ -26,6 +29,8 @@ function FeedScreen() {
     };
     getFeed();
   }, []);
+
+
 
   return (
     <Screen style={styles.screen}>
