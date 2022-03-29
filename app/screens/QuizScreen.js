@@ -117,12 +117,12 @@ const PersonalityQuiz = () => {
 
   const handlSelectedOption = (option) => {
     const selectedHouse = option.house;
-    console.log('house associated with selected answer: ', selectedHouse);
+    // console.log('house associated with selected answer: ', selectedHouse);
 
     let value = ++house[`${selectedHouse}`];
-    console.log(value);
+    // console.log(value);
     setHouse({ ...house, [`${selectedHouse}`]: value });
-    console.log('++ logging house ++', house);
+    // console.log('++ logging house ++', house);
 
     if (qNum !== 5) {
       setQNum(qNum + 1);
@@ -210,8 +210,8 @@ export default PersonalityQuiz;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 40,
-    paddingHorizontal: 20,
+    // paddingTop: 40,
+    // paddingHorizontal: 20,
     height: '100%',
   },
   top: {
