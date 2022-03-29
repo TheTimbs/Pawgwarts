@@ -71,7 +71,7 @@ function SingleTrainingScreen({ navigation, route }) {
 
         <View style={styles.top}>
           <Text style={styles.trainingTitle}> {trainingDetails.title} </Text>
-          <Text> Dificulty: {trainingDetails.difficulty}/5 </Text>
+          <Text> Difficulty: {trainingDetails.difficulty}/5 </Text>
         </View>
 
         <ScrollView>
