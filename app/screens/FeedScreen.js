@@ -5,7 +5,7 @@ import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import FeedCard from '../components/FeedCard';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase/firebase-config';
 import { getDocs, collection, doc } from 'firebase/firestore';
 import AppButton from '../components/Button';
@@ -16,7 +16,6 @@ function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
   const feedCollectionRef = collection(db, 'feed');
   const navigation = useNavigation();
-
 
   useEffect(() => {
     const getFeed = async () => {
@@ -29,9 +28,7 @@ function FeedScreen() {
     };
     getFeed();
   }, []);
-
-
-
+  console.log(feedList);
   return (
     <Screen style={styles.screen}>
       <FlatList
@@ -45,9 +42,8 @@ function FeedScreen() {
             email={item.email}
           />
         )}
-
       />
-         {/* <NewListingButton
+      {/* <NewListingButton
             style={styles.upload}
             onPress={() => navigation.navigate('ListingDetails')}
           /> */}
@@ -58,11 +54,9 @@ function FeedScreen() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.lightGreen,
-    justifyContent:'center'
-
+    backgroundColor: colors.medium,
+    justifyContent: 'center',
   },
-
 });
 
 export default FeedScreen;
