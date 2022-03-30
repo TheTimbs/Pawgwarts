@@ -130,7 +130,7 @@ function AccessoriesStore() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.houseRed,
   },
   header: {
     color: colors.gold,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Harry-Potter',
   },
   container: {
-    borderColor: colors.houseRed,
+    borderColor: colors.primary,
     borderWidth: 3,
     padding: 10,
     margin: 10,
