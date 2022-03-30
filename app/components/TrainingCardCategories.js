@@ -26,7 +26,7 @@ function TrainingCardCategories({
   if (!fontsLoaded) {
     return null;
   }
-  //const trainingImage = require(imgSource);
+
 
   return (
     <>
