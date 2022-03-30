@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, StyleSheet, View, Text, Image, Button } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  Button,
+  Pressable,
+} from 'react-native';
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 
 import FeedCard from '../components/FeedCard';
@@ -10,6 +18,7 @@ import { db } from '../../firebase/firebase-config';
 import { getDocs, collection, doc } from 'firebase/firestore';
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
+import { AntDesign } from '@expo/vector-icons';
 import { useTimer } from 'react-timer-hook';
 
 function FeedScreen() {
@@ -52,10 +61,16 @@ function FeedScreen() {
             style={styles.upload}
             onPress={() => navigation.navigate('ListingDetails')}
           /> */}
-      <Button
+      {/* <Button
         title="Upload"
         onPress={() => navigation.navigate('UploadImageScreen')}
-      />
+      /> */}
+      <Pressable
+        style={styles.buttonStyle}
+        onPress={() => navigation.navigate('UploadImageScreen')}
+      >
+        <AntDesign name="pluscircle" size={50} color="black" />
+      </Pressable>
     </Screen>
   );
 }
@@ -65,6 +80,15 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colors.medium,
     justifyContent: 'center',
+  },
+  buttonStyle: {
+    flex: 1,
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    justifyContent: 'flex-end',
+    bottom: 1,
+    padding: 15,
+    backgroundColor: 'transparent',
   },
 });
 
