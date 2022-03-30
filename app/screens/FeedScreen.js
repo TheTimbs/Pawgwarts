@@ -69,7 +69,7 @@ function FeedScreen() {
         style={styles.buttonStyle}
         onPress={() => navigation.navigate('UploadImageScreen')}
       >
-        <AntDesign name="pluscircle" size={50} color="black" />
+        <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
       </Pressable>
     </Screen>
   );
@@ -78,7 +78,7 @@ function FeedScreen() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.medium,
+    backgroundColor: colors.primary,
     justifyContent: 'center',
   },
   buttonStyle: {
