@@ -100,7 +100,6 @@ function FeedScreen() {
   // console.log(feedList);
   return (
     <Screen style={styles.screen}>
-      <View style={styles.RectangleShapeView}></View>
       <FlatList
         data={feedList}
         keyExtractor={(feedList) => feedList.id.toString()}

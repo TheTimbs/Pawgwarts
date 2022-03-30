@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
+import colors from '../config/colors';
 
 function Home(props) {
   const userId = auth.currentUser.uid;
@@ -78,7 +79,11 @@ function Home(props) {
     return <Text>loading..</Text>;
   } else {
     return (
-      <View style={styles.container}>
+      <ImageBackground
+        blurRadius={3}
+        style={styles.container}
+        source={require('../assets/BlueBackground.jpeg')}
+      >
         <View style={styles.top}>
           <Text style={styles.WelcomeHeader}>
             Welcome, {user.name} and {user.dog.dogName}!
@@ -125,31 +130,31 @@ function Home(props) {
               style={styles.houseImages}
               source={require('../assets/hufflepuffportrait.jpg')}
             />
-            <Text style={styles.text}>Points: {points[0]}</Text>
+            <Text style={styles.text}>HufflePup: {points[0]}</Text>
           </View>
           <View style={styles.box}>
             <Image
               style={styles.houseImages}
               source={require('../assets/ravenclawportrait.jpg')}
             />
-            <Text style={styles.text}>Points: {points[1]}</Text>
+            <Text style={styles.text}>RavenPaw: {points[1]}</Text>
           </View>
           <View style={styles.box}>
             <Image
               style={styles.houseImages}
               source={require('../assets/slytherinportrait.jpg')}
             />
-            <Text style={styles.text}>Points: {points[2]}</Text>
+            <Text style={styles.text}>Slobberin: {points[2]}</Text>
           </View>
           <View style={styles.box}>
             <Image
               style={styles.houseImages}
               source={require('../assets/gryffindorportrait.jpg')}
             />
-            <Text style={styles.text}>Points: {points[3]}</Text>
+            <Text style={styles.text}>GryffinDog: {points[3]}</Text>
           </View>
         </View>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -160,54 +165,61 @@ const styles = StyleSheet.create({
     backgroundColor: '#587B7F',
   },
   top: {
-    marginTop: 40,
+    marginTop: 65,
     height: '45%',
     alignItems: 'center',
   },
   WelcomeHeader: {
     fontSize: 45,
-    color: 'white',
+    color: colors.gold,
     marginBottom: 6,
     paddingTop: 6,
     fontFamily: 'Harry-Potter',
+    textAlign: 'center',
   },
   dogFactContainer: {
     backgroundColor: '#871419',
     borderRadius: 15,
-    padding: 5,
+    padding: 8,
     paddingBottom: 6,
     marginBottom: 6,
+    width: '85%',
   },
   dogFactHeaderText: {
-    color: '#fec536',
+    color: colors.gold,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 34,
+    fontFamily: 'Harry-Potter',
   },
   dogFactText: {
     color: 'white',
     fontSize: 15,
+    textAlign: 'center',
   },
   trainings: {
     marginTop: 5,
     width: '85%',
-    backgroundColor: '#76b5c5',
+    backgroundColor: colors.gold,
     borderRadius: 15,
     paddingBottom: 5,
   },
   trainingsHeaderText: {
-    fontSize: 20,
+    fontSize: 34,
     textAlign: 'center',
     fontWeight: 'bold',
     paddingBottom: 5,
     paddingTop: 10,
+    fontFamily: 'Harry-Potter',
+    color: '#871419',
   },
   trainingsText: {
     fontSize: 15,
     textAlign: 'center',
-    color: 'blue',
+    color: 'black',
+    textDecorationLine: 'underline',
   },
   bottom: {
-    height: '45%',
+    height: '42%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: '#0D1321',
@@ -230,16 +242,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   text: {
-    fontSize: 20,
-    color: 'white',
+    fontSize: 23,
+    color: colors.gold,
     textAlign: 'center',
+    fontFamily: 'Harry-Potter',
   },
   background: {
     height: '100%',
   },
   textHeader: {
-    fontSize: 30,
-    color: 'white',
+    fontSize: 36,
+    color: colors.gold,
+    fontFamily: 'Harry-Potter',
   },
   text2: {
     fontSize: 20,
