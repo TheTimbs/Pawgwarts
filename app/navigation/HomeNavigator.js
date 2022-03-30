@@ -10,7 +10,7 @@ const HomeNavigator = () => (
   <Stack.Navigator
     screenOptions={{ headerLeft: null }}
   >
-    <Stack.Screen name="home" component={Home} />
+    <Stack.Screen name="home" component={Home} options={{ headerShown: false }} />
     <Stack.Screen name="SingleTraining" component={SingleTrainingScreen} />
 
   </Stack.Navigator>

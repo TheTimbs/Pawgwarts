@@ -17,7 +17,7 @@ function SingleTrainingScreen({ navigation, route }) {
   const titleCamelCased = camelize(title);
   const usersCompletedTrainings = [];
   const usersTrainingsInProgress = [];
-  userDetails.completedTrainings.forEach(training => completedTrainings.push(training.title))
+  userDetails.completedTrainings.forEach(training => usersCompletedTrainings.push(training.title))
   userDetails.trainingsInProgress.forEach(training => usersTrainingsInProgress.push(training.title))
 
 

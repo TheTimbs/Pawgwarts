@@ -13,7 +13,7 @@ function Home(props) {
   const gRef = doc(db, 'houses ', "GryffinDog");
   const hRef = doc(db, 'houses ', "HufflePup");
   const rRef = doc(db, 'houses ', "RavenPaw");
-  const sRef = doc(db, 'houses ', "Sloberin");
+  const sRef = doc(db, 'houses ', "Slobberin");
   const [points, setPoints] = useState([]);
   const [user, setUser] = useState({});
   const [randomDogFact, setRandomDogFact] = useState("")
@@ -127,7 +127,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#587B7F'
   },
   top: {
-    height: '50%',
+    marginTop: 40,
+    height: '45%',
     alignItems: 'center',
   },
   WelcomeHeader: {
