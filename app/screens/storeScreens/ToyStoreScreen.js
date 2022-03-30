@@ -41,7 +41,7 @@ function ToyStore() {
           <Text style={styles.label}>Toy Recommendations:</Text>
           {products ? (
             products.map((item, i) => (
-              <View key={i}>
+              <View key={i} style={styles.container}>
                 <Text style={styles.header} onPress={() => handleLink(i)}>
                   {item.name}
                 </Text>
@@ -51,6 +51,8 @@ function ToyStore() {
                     width: 200,
                     height: 200,
                     alignSelf: 'center',
+                    borderColor: colors.blue,
+                    borderWidth: 3,
                   }}
                 />
               </View>
@@ -67,10 +69,10 @@ function ToyStore() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.houseBlue,
   },
   header: {
-    color: colors.blue,
+    color: colors.gold,
     fontSize: 17,
     fontWeight: '800',
     paddingVertical: 10,
@@ -80,12 +82,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   label: {
-    color: colors.purple,
+    color: colors.white,
     fontSize: 25,
     fontWeight: '800',
     paddingVertical: 3,
     alignSelf: 'center',
     textAlign: 'center',
+  },
+  container: {
+    borderColor: colors.blue,
+    borderWidth: 3,
+    padding: 10,
+    margin: 10,
   },
 });
 

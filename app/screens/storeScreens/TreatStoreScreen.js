@@ -44,7 +44,7 @@ function TreatStore() {
           <Text style={styles.label}>Treat Recommendations:</Text>
           {products ? (
             products.map((item, i) => (
-              <View key={i}>
+              <View key={i} style={styles.container}>
                 <Text style={styles.header} onPress={() => handleLink(i)}>
                   {item.name}
                 </Text>
@@ -54,6 +54,8 @@ function TreatStore() {
                     width: 200,
                     height: 200,
                     alignSelf: 'center',
+                    borderColor: colors.houseYellow,
+                    borderWidth: 3,
                   }}
                 />
               </View>
@@ -70,7 +72,7 @@ function TreatStore() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.gold,
   },
   header: {
     color: colors.blue,
@@ -83,12 +85,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   label: {
-    color: colors.purple,
+    color: colors.houseBlue,
     fontSize: 25,
     fontWeight: '800',
     paddingVertical: 3,
     alignSelf: 'center',
     textAlign: 'center',
+  },
+  container: {
+    borderColor: colors.houseYellow,
+    borderWidth: 5,
+    padding: 10,
+    margin: 10,
   },
 });
 

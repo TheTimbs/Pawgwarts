@@ -43,7 +43,7 @@ function GroomingStore() {
           <Text style={styles.label}>Grooming Recommendations:</Text>
           {products ? (
             products.map((item, i) => (
-              <View key={i}>
+              <View key={i} style={styles.container}>
                 <Text style={styles.header} onPress={() => handleLink(i)}>
                   {item.name}
                 </Text>
@@ -53,6 +53,8 @@ function GroomingStore() {
                     width: 200,
                     height: 200,
                     alignSelf: 'center',
+                    borderColor: 'darkgreen',
+                    borderWidth: 3,
                   }}
                 />
               </View>
@@ -69,10 +71,10 @@ function GroomingStore() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.houseGreen,
   },
   header: {
-    color: colors.blue,
+    color: colors.gold,
     fontSize: 17,
     fontWeight: '800',
     paddingVertical: 10,
@@ -82,12 +84,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   label: {
-    color: colors.purple,
+    color: colors.white,
     fontSize: 25,
     fontWeight: '800',
     paddingVertical: 3,
     alignSelf: 'center',
     textAlign: 'center',
+  },
+  container: {
+    borderColor: 'darkgreen',
+    borderWidth: 3,
+    padding: 10,
+    margin: 10,
   },
 });
 

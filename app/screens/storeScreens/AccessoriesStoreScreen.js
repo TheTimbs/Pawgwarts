@@ -61,7 +61,7 @@ function AccessoriesStore() {
           <Text style={styles.label}>Accessory Recommendations:</Text>
           <Text style={styles.label}>Beds:</Text>
           {beds.map((item, i) => (
-            <View key={i}>
+            <View key={i} style={styles.container}>
               <Text style={styles.header} onPress={() => handleLinkBed(i)}>
                 {item.name}
               </Text>
@@ -71,13 +71,15 @@ function AccessoriesStore() {
                   width: 250,
                   height: 200,
                   alignSelf: 'center',
+                  borderColor: colors.houseRed,
+                  borderWidth: 3,
                 }}
               />
             </View>
           ))}
           <Text style={styles.label}>Leash:</Text>
           {leash.map((item, i) => (
-            <View key={i}>
+            <View key={i} style={styles.container}>
               <Text style={styles.header} onPress={() => handleLinkLeash(i)}>
                 {item.name}
               </Text>
@@ -87,13 +89,15 @@ function AccessoriesStore() {
                   width: 250,
                   height: 200,
                   alignSelf: 'center',
+                  borderColor: colors.houseRed,
+                  borderWidth: 3,
                 }}
               />
             </View>
           ))}
           <Text style={styles.label}>Apparel:</Text>
           {apparel.map((item, i) => (
-            <View key={i}>
+            <View key={i} style={styles.container}>
               <Text style={styles.header} onPress={() => handleLinkApparel(i)}>
                 {item.name}
               </Text>
@@ -103,6 +107,8 @@ function AccessoriesStore() {
                   width: 250,
                   height: 200,
                   alignSelf: 'center',
+                  borderColor: colors.houseRed,
+                  borderWidth: 3,
                 }}
               />
             </View>
@@ -116,10 +122,10 @@ function AccessoriesStore() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.primary,
   },
   header: {
-    color: colors.blue,
+    color: colors.gold,
     fontSize: 17,
     fontWeight: '800',
     paddingVertical: 2,
@@ -130,12 +136,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   label: {
-    color: colors.purple,
+    color: colors.white,
     fontSize: 25,
     fontWeight: '800',
     paddingVertical: 10,
     alignSelf: 'center',
     textAlign: 'center',
+  },
+  container: {
+    borderColor: colors.houseRed,
+    borderWidth: 3,
+    padding: 10,
+    margin: 10,
   },
 });
 
