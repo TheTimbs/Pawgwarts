@@ -12,6 +12,7 @@ import { db } from '../../../firebase/firebase-config';
 import * as Linking from 'expo-linking';
 import colors from '../../config/colors';
 import Screen from '../../components/Screen';
+import { useFonts } from 'expo-font';
 
 function ToyStore() {
   const [products, setProducts] = useState([]);
@@ -33,6 +34,13 @@ function ToyStore() {
   const handleLink = (i) => {
     Linking.openURL(products[i].link);
   };
+
+  let [fontsLoaded] = useFonts({
+    'Harry-Potter': require('../../assets/fonts/HarryPotter.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <Screen style={styles.screen}>
@@ -73,21 +81,23 @@ const styles = StyleSheet.create({
   },
   header: {
     color: colors.gold,
-    fontSize: 17,
+    fontSize: 25,
     fontWeight: '800',
     paddingVertical: 10,
     paddingHorizontal: 15,
     alignSelf: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    fontFamily: 'Harry-Potter',
   },
   label: {
     color: colors.white,
-    fontSize: 25,
+    fontSize: 40,
     fontWeight: '800',
     paddingVertical: 3,
     alignSelf: 'center',
     textAlign: 'center',
+    fontFamily: 'Harry-Potter',
   },
   container: {
     borderColor: colors.blue,

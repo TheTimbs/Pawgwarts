@@ -13,6 +13,7 @@ import * as Linking from 'expo-linking';
 import colors from '../../config/colors';
 import Screen from '../../components/Screen';
 import { ListItem } from '../../components/lists';
+import { useFonts } from 'expo-font';
 
 function TreatStore() {
   const [products, setProducts] = useState([]);
@@ -36,6 +37,13 @@ function TreatStore() {
   const handleLink = (i) => {
     Linking.openURL(products[i].link);
   };
+
+  let [fontsLoaded] = useFonts({
+    'Harry-Potter': require('../../assets/fonts/HarryPotter.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <Screen style={styles.screen}>
@@ -72,29 +80,31 @@ function TreatStore() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.gold,
+    backgroundColor: colors.houseYellow,
   },
   header: {
     color: colors.blue,
-    fontSize: 17,
+    fontSize: 25,
     fontWeight: '800',
     paddingVertical: 10,
     paddingHorizontal: 15,
     alignSelf: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    fontFamily: 'Harry-Potter',
   },
   label: {
     color: colors.houseBlue,
-    fontSize: 25,
+    fontSize: 40,
     fontWeight: '800',
     paddingVertical: 3,
     alignSelf: 'center',
     textAlign: 'center',
+    fontFamily: 'Harry-Potter',
   },
   container: {
-    borderColor: colors.houseYellow,
-    borderWidth: 5,
+    borderColor: 'yellow',
+    borderWidth: 3,
     padding: 10,
     margin: 10,
   },
