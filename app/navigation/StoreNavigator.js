@@ -24,10 +24,26 @@ const StoreNavigator = () => (
       name="Store"
       component={StoreScreen}
     />
-    <Stack.Screen name="AccessoriesStore" component={AccessoriesStore} />
-    <Stack.Screen name="ToyStore" component={ToyStore} />
-    <Stack.Screen name="TreatStore" component={TreatStore} />
-    <Stack.Screen name="GroomingStore" component={GroomingStore} />
+    <Stack.Screen
+      name="AccessoriesStore"
+      component={AccessoriesStore}
+      options={{ headerStyle: { backgroundColor: colors.houseRed } }}
+    />
+    <Stack.Screen
+      name="ToyStore"
+      component={ToyStore}
+      options={{ headerStyle: { backgroundColor: colors.houseBlue } }}
+    />
+    <Stack.Screen
+      name="TreatStore"
+      component={TreatStore}
+      options={{ headerStyle: { backgroundColor: colors.houseYellow } }}
+    />
+    <Stack.Screen
+      name="GroomingStore"
+      component={GroomingStore}
+      options={{ headerStyle: { backgroundColor: colors.houseGreen } }}
+    />
   </Stack.Navigator>
 );
 

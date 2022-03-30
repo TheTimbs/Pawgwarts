@@ -6,6 +6,7 @@ import {
   Text,
   Platform,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import * as Yup from 'yup';
 import { date, object } from 'yup';
@@ -114,7 +115,13 @@ function RegisterScreen() {
   }
 
   return (
-    <Screen style={styles.container}>
+
+    <ImageBackground
+      blurRadius={3}
+      style={styles.container}
+      source={require('../assets/BlueBackground.jpeg')}
+    >
+      {/* <Screen style={styles.container}> */}
       <ScrollView>
         <View style={styles.buttonsContainer}>
           <Button
@@ -216,7 +223,8 @@ function RegisterScreen() {
           <SubmitButton title="Register" color="blue" />
         </Form>
       </ScrollView>
-    </Screen>
+      {/* </Screen> */}
+    </ImageBackground>
   );
 }
 
@@ -224,6 +232,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     backgroundColor: '#587b7f',
+    flex: 1,
   },
   TextInput: {
     height: 50,

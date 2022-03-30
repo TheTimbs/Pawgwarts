@@ -12,6 +12,7 @@ import { db } from '../../../firebase/firebase-config';
 import * as Linking from 'expo-linking';
 import colors from '../../config/colors';
 import Screen from '../../components/Screen';
+import { useFonts } from 'expo-font';
 
 function AccessoriesStore() {
   const [beds, setBeds] = useState([]);
@@ -54,6 +55,13 @@ function AccessoriesStore() {
     Linking.openURL(apparel[i].link);
   };
 
+  let [fontsLoaded] = useFonts({
+    'Harry-Potter': require('../../assets/fonts/HarryPotter.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <Screen style={styles.screen}>
       <ScrollView>
@@ -61,7 +69,7 @@ function AccessoriesStore() {
           <Text style={styles.label}>Accessory Recommendations:</Text>
           <Text style={styles.label}>Beds:</Text>
           {beds.map((item, i) => (
-            <View key={i}>
+            <View key={i} style={styles.container}>
               <Text style={styles.header} onPress={() => handleLinkBed(i)}>
                 {item.name}
               </Text>
@@ -71,13 +79,15 @@ function AccessoriesStore() {
                   width: 250,
                   height: 200,
                   alignSelf: 'center',
+                  borderColor: colors.houseRed,
+                  borderWidth: 3,
                 }}
               />
             </View>
           ))}
           <Text style={styles.label}>Leash:</Text>
           {leash.map((item, i) => (
-            <View key={i}>
+            <View key={i} style={styles.container}>
               <Text style={styles.header} onPress={() => handleLinkLeash(i)}>
                 {item.name}
               </Text>
@@ -87,13 +97,15 @@ function AccessoriesStore() {
                   width: 250,
                   height: 200,
                   alignSelf: 'center',
+                  borderColor: colors.houseRed,
+                  borderWidth: 3,
                 }}
               />
             </View>
           ))}
           <Text style={styles.label}>Apparel:</Text>
           {apparel.map((item, i) => (
-            <View key={i}>
+            <View key={i} style={styles.container}>
               <Text style={styles.header} onPress={() => handleLinkApparel(i)}>
                 {item.name}
               </Text>
@@ -103,6 +115,8 @@ function AccessoriesStore() {
                   width: 250,
                   height: 200,
                   alignSelf: 'center',
+                  borderColor: colors.houseRed,
+                  borderWidth: 3,
                 }}
               />
             </View>
@@ -116,11 +130,11 @@ function AccessoriesStore() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.houseRed,
   },
   header: {
-    color: colors.blue,
-    fontSize: 17,
+    color: colors.gold,
+    fontSize: 25,
     fontWeight: '800',
     paddingVertical: 2,
     paddingHorizontal: 15,
@@ -128,14 +142,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
+    fontFamily: 'Harry-Potter',
   },
   label: {
-    color: colors.purple,
-    fontSize: 25,
+    color: colors.white,
+    fontSize: 40,
     fontWeight: '800',
     paddingVertical: 10,
     alignSelf: 'center',
     textAlign: 'center',
+    fontFamily: 'Harry-Potter',
+  },
+  container: {
+    borderColor: colors.primary,
+    borderWidth: 3,
+    padding: 10,
+    margin: 10,
   },
 });
 
