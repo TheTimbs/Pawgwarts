@@ -17,97 +17,107 @@ import { getDoc, collection, doc, getDocs } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 
 function MyTrainings() {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      const getUserInfo = async () => {
-        const userRef = doc(db, 'users', auth.currentUser.uid);
-        const userSnap = await getDoc(userRef);
-        if (userSnap.exists()) {
-          setUser(userSnap.data());
-        } else {
-          console.log('No such document');
-        }
-      };
-      getUserInfo();
-    });
-    console.log('userprofilescreen');
-    return unsubscribe;
-  }, [navigation]);
-  // console.log('usercompletedtraining', user.completedTrainings);
-  // console.log('userpendingtrainings', user.trainingsInProgress);
-  return (
-    <Screen style={styles.screen}>
-      <View style={styles.container}>
-        {user.dog ? (
-          <View>
-            <Text style={styles.header}>My Trainings</Text>
-            <Text style={styles.text1}>Welcome, {user.dog.dogName}</Text>
-            <Image
-              source={{ uri: user.dog.image }}
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 100 / 2,
-                alignSelf: 'center',
-                marginVertical: 10,
-              }}
-            />
-            <Text style={styles.header}>
-              Completed Trainings: {user.completedTrainings.length}
-            </Text>
-            {user.completedTrainings.map((training, i) => (
-              // <View key={i}>
-              //   <Text style={styles.text1}>{training}</Text>
-              // </View>
-              <TouchableOpacity
-                key={i}
-                onPress={() => navigation.navigate('EditUserProfile')}
-              >
-                <Text style={styles.text1}> {training} </Text>
-              </TouchableOpacity>
-            ))}
 
-            <Text style={styles.header}>
-              Trainings in Progress: {user.trainingsInProgress.length}
-            </Text>
-            {user.trainingsInProgress.map((training, i) => (
-              <View key={i}>
-                <Text style={styles.text1}>{training}</Text>
-              </View>
-            ))}
-          </View>
-        ) : (
-          <Text style={styles.header}>loading...</Text>
-        )}
+  const getUser = async () => {
+    const userId = auth.currentUser.uid;
+    const currentUser = doc(db, 'users', userId);
+    const userData = await getDoc(currentUser);
+    setUser(userData.data());
+  }
+  useEffect(() => {
+    console.log("!!! useeffect from Home.js ran !!!")
+    const unsubscribe = navigation.addListener('focus', () => {
+      getUser();
+    })
+    console.log("// [MyTraininsScreen/useEffect()] - user: ", user)
+    return unsubscribe;
+  }, [navigation])
+
+  console.log('// [MyTrainingsScreen] - user.completedTrainings', user.completedTrainings);
+
+  if (!user.dog) {
+    return (
+      <Text>loading..</Text>
+    )
+  } else {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.WelcomeHeader}>Welcome, {user.name}! </Text>
+
+        <View style={styles.trainings}>
+          <Text style={styles.trainingsHeaderText}>{user.dog.dogName}'s Completed Trainings:</Text>
+          {user.completedTrainings.map(training => (
+            <Text key={user.completedTrainings.indexOf(training)} style={styles.trainingsText}
+              onPress={() =>
+                navigation.navigate('SingleTraining', {
+                  year: training.year,
+                  trainingCategory: training.category,
+                  title: training.title,
+                  userDetails: user,
+                })}
+            > {training.title} </Text>))}
+          <Text style={styles.totalTrainings}> Total: {user.completedTrainings.length}</Text>
+        </View>
+
+        <View style={styles.trainings}>
+          <Text style={styles.trainingsHeaderText}>{user.dog.dogName}'s Trainings in Progress:</Text>
+          {user.trainingsInProgress.map(training => (
+            <Text key={user.trainingsInProgress.indexOf(training)} style={styles.trainingsText}
+              onPress={() =>
+                navigation.navigate('SingleTraining', {
+                  year: training.year,
+                  trainingCategory: training.category,
+                  title: training.title,
+                  userDetails: user,
+                })}
+            > {training.title} </Text>))}
+          <Text style={styles.totalTrainings}> Total: {user.trainingsInProgress.length}</Text>
+        </View>
       </View>
-    </Screen>
-  );
+
+    );
+  }
+
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: 'grey',
-  },
   container: {
-    marginVertical: 20,
+    flex: 1,
+    backgroundColor: '#587B7F',
+    alignItems: 'center',
   },
-  header: {
-    color: colors.primary,
-    fontSize: 25,
-    fontWeight: '800',
-    paddingVertical: 9,
-    alignSelf: 'center',
+  WelcomeHeader: {
+    fontSize: 30,
+    color: "white",
+    marginBottom: 6,
+    paddingTop: 6,
   },
-  text1: {
-    color: colors.gold,
+  trainings: {
+    marginTop: 5,
+    width: '85%',
+    backgroundColor: '#76b5c5',
+    borderRadius: 15,
+    paddingBottom: 5,
+  },
+  trainingsHeaderText: {
     fontSize: 20,
-    fontWeight: '500',
-    paddingVertical: 3,
-    alignSelf: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingBottom: 5,
+    paddingTop: 10,
   },
+  trainingsText: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: 'blue',
+  },
+  totalTrainings: {
+    paddingTop: 5,
+    textAlign: 'center'
+  }
 });
 
 export default MyTrainings;
