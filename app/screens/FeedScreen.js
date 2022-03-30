@@ -15,11 +15,22 @@ import Screen from '../components/Screen';
 import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase/firebase-config';
 
-import { getDocs, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
-import {getTrainingsListChallenge, camelize, getTrainingCategoriesChallenge, random} from '../functions/methods'
+import {
+  getDocs,
+  collection,
+  doc,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
+import {
+  getTrainingsListChallenge,
+  camelize,
+  getTrainingCategoriesChallenge,
+  random,
+} from '../functions/methods';
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
-
+import { AntDesign } from '@expo/vector-icons';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
@@ -30,51 +41,45 @@ function FeedScreen() {
   const today = new Date();
 
   //console.log(today);
-  const getDate = async () =>{
+  const getDate = async () => {
     const data = await getDoc(dayCollectionRef);
     const weekData = await getDoc(weekCollectionRef);
-   // console.log(data.data())
+    // console.log(data.data())
     //console.log(data.data().setDate.toString());
-    const cur = new Date( data.data().setDate)
+    const cur = new Date(data.data().setDate);
     //console.log(new Date (cur));
-    const boo  = (new Date(today) >= new Date(cur))
+    const boo = new Date(today) >= new Date(cur);
     let date = new Date();
-     date.setDate(date.getDate() + 7);
-      //console.log("this is 7 day:" ,boo);
-      //console.log("this is 7 day:" ,date);
-   if(boo){
-      await updateDoc(dayCollectionRef, {setDate:date.toDateString()});
-       randomChallenge();
-   }
-
-
-  }
+    date.setDate(date.getDate() + 7);
+    //console.log("this is 7 day:" ,boo);
+    //console.log("this is 7 day:" ,date);
+    if (boo) {
+      await updateDoc(dayCollectionRef, { setDate: date.toDateString() });
+      randomChallenge();
+    }
+  };
 
   const randomChallenge = async () => {
-   const yearNum = random(3)
-   let year = ""
-    if(yearNum === 0){
-      year = "firstYears"
-    }else if(yearNum === 1){
-      year = "secondYears"
-    }else {
-      year = "thirdYears"
+    const yearNum = random(3);
+    let year = '';
+    if (yearNum === 0) {
+      year = 'firstYears';
+    } else if (yearNum === 1) {
+      year = 'secondYears';
+    } else {
+      year = 'thirdYears';
     }
     const arrCate = await getTrainingCategoriesChallenge(year);
-    const cateNum =random(arrCate.length);
+    const cateNum = random(arrCate.length);
     const title = arrCate[cateNum].data().title;
     const cateTitle = camelize(title);
-    const arrTraining = await getTrainingsListChallenge(year, cateTitle)
-    const trainingNum =random(arrTraining.length);
-    console.log(title)
+    const arrTraining = await getTrainingsListChallenge(year, cateTitle);
+    const trainingNum = random(arrTraining.length);
+    console.log(title);
     console.log(arrCate[cateNum].data());
-    const challenge = arrTraining[trainingNum].data()
-    await updateDoc(weekCollectionRef,{challenge:challenge})
-
-  }
-
-  
-
+    const challenge = arrTraining[trainingNum].data();
+    await updateDoc(weekCollectionRef, { challenge: challenge });
+  };
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -95,9 +100,7 @@ function FeedScreen() {
   // console.log(feedList);
   return (
     <Screen style={styles.screen}>
-      <View style={styles.RectangleShapeView}>
-
-      </View>
+      <View style={styles.RectangleShapeView}></View>
       <FlatList
         data={feedList}
         keyExtractor={(feedList) => feedList.id.toString()}
@@ -111,7 +114,6 @@ function FeedScreen() {
         )}
       />
 
-   
       <Pressable
         style={styles.buttonStyle}
         onPress={() => navigation.navigate('UploadImageScreen')}
@@ -127,13 +129,12 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colors.primary,
     justifyContent: 'center',
-
   },
   RectangleShapeView: {
-    width: "100%",
+    width: '100%',
     height: 120,
     backgroundColor: 'blue',
-    position:'relative'
+    position: 'relative',
   },
   buttonStyle: {
     flex: 1,
