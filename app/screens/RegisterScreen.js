@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, Image, View, Text, Platform,ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  View,
+  Text,
+  Platform,
+  ScrollView,
+  ImageBackground,
+} from 'react-native';
 import * as Yup from 'yup';
-import { date, object } from "yup"
+import { date, object } from 'yup';
 import Button from '../components/Button';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { db, storage, auth } from '../../firebase/firebase-config';
@@ -20,17 +28,16 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required().label('Name'),
   email: Yup.string().required().email().label('Email'),
   password: Yup.string().required().min(6).label('Password'),
-  passwordConfirmation: Yup.string()
-  .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+  passwordConfirmation: Yup.string().oneOf(
+    [Yup.ref('password'), null],
+    'Passwords must match'
+  ),
   dogName: Yup.string().required().label('Dog Name'),
-  DOB: Yup.date().required("DOB is Required").min(10),
+  DOB: Yup.date().required('DOB is Required').min(10),
   breed: Yup.string().required().label('Dog breed'),
-
-
 });
 
 function RegisterScreen() {
-
   const [house, setHouse] = useState('');
   const [image, setImage] = useState(null);
   const [confirmed, setCon] = useState(false);
@@ -38,19 +45,27 @@ function RegisterScreen() {
   const navigation = useNavigation();
 
   const RegisterUser = async (value) => {
-    console.log(value)
-    const user = await createUserWithEmailAndPassword(auth, value.email, value.password);
+    console.log(value);
+    const user = await createUserWithEmailAndPassword(
+      auth,
+      value.email,
+      value.password
+    );
     const docRef = await setDoc(doc(db, 'users', `${user.user.uid}`), {
       name: value.name,
       email: value.email,
       likes: 0,
       house: house,
       // dog: [dogName, breed, DOB, image, taskCompleted],
-      dog: { dogName: value.dogName, breed: value.breed, dob: value.DOB, image: image },
+      dog: {
+        dogName: value.dogName,
+        breed: value.breed,
+        dob: value.DOB,
+        image: image,
+      },
       completedTrainings: [],
       trainingsInProgress: [],
     });
-
 
     setImage('');
     navigation.navigate('Quiz');
@@ -69,13 +84,12 @@ function RegisterScreen() {
     if (!result.cancelled) {
       setImage(result.uri);
     }
-
   };
-   function close(){
+  function close() {
     setLoading(true);
-    uploadImage()
+    uploadImage();
     async function uploadImage() {
-      console.log("done");
+      console.log('done');
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
@@ -98,129 +112,152 @@ function RegisterScreen() {
       setCon(true);
       return downloadURL;
     }
-}
+  }
 
   return (
-    <Screen style={styles.container}>
-       <ScrollView>
-
-       <View style={styles.buttonsContainer}>
-        <Button title="Select Profile Picture" onPress={pickImage} color="blue" />
-        {image ? (
-          <Image
-            source={{ uri: image }}
-            style={{
-              width: 150,
-              height: 150,
-              borderRadius: 150 / 2,
-              alignSelf: 'center',
-            }}
+    <ImageBackground
+      blurRadius={3}
+      style={styles.container}
+      source={require('../assets/BlueBackground.jpeg')}
+    >
+      {/* <Screen style={styles.container}> */}
+      <ScrollView>
+        <View style={styles.buttonsContainer}>
+          <Button
+            title="Select Profile Picture"
+            onPress={pickImage}
+            color="blue"
           />
-        ) : null}
-         {!confirmed && !loading  ? <Button title="Confirm Profile Picture" onPress={() => close()} color="blue" />
-         : loading && !confirmed  ? <Text style={styles.Con}>loading...</Text>
-         : <Text style={styles.Con}>confirmed</Text> }
-       </View>
+          {image ? (
+            <Image
+              source={{ uri: image }}
+              style={{
+                width: 150,
+                height: 150,
+                borderRadius: 150 / 2,
+                alignSelf: 'center',
+              }}
+            />
+          ) : null}
+          {!confirmed && !loading ? (
+            <Button
+              title="Confirm Profile Picture"
+              onPress={() => close()}
+              color="blue"
+            />
+          ) : loading && !confirmed ? (
+            <Text style={styles.Con}>loading...</Text>
+          ) : (
+            <Text style={styles.Con}>confirmed</Text>
+          )}
+        </View>
 
-       <Form
-        initialValues={{ name: "", email: "", password: "",dogName: "", breed: "", DOB: "", passwordConfirmation:"" }}
-        onSubmit={(value) => RegisterUser(value)}
-        validationSchema={validationSchema}
-      >
-        <FormField
-          autoCorrect={false}
-          icon="account"
-          name="name"
-          placeholder="Name"
-        />
-        <FormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="email"
-          keyboardType="email-address"
-          name="email"
-          placeholder="Email"
-          textContentType="emailAddress"
-        />
-        <FormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="lock"
-          name="password"
-          placeholder="Password"
-          secureTextEntry
-          textContentType="password"
-        />
-        <FormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="lock"
-          name="passwordConfirmation"
-          placeholder="Retype Password"
-          secureTextEntry
-          textContentType="password"
-        />
-         <FormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="dog"
-          name="dogName"
-          placeholder="Dog Name"
-        />
-       <FormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="dog-side"
-          name="breed"
-          placeholder="Dog breed"
-        />
-        <FormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="cake"
-          name="DOB"
-          placeholder="Date of birth ex:00/00/0000"
-        />
-        <SubmitButton title="Register" color="blue" />
-      </Form>
-
-
-
+        <Form
+          initialValues={{
+            name: '',
+            email: '',
+            password: '',
+            dogName: '',
+            breed: '',
+            DOB: '',
+            passwordConfirmation: '',
+          }}
+          onSubmit={(value) => RegisterUser(value)}
+          validationSchema={validationSchema}
+        >
+          <FormField
+            autoCorrect={false}
+            icon="account"
+            name="name"
+            placeholder="Name"
+          />
+          <FormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="email"
+            keyboardType="email-address"
+            name="email"
+            placeholder="Email"
+            textContentType="emailAddress"
+          />
+          <FormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="lock"
+            name="password"
+            placeholder="Password"
+            secureTextEntry
+            textContentType="password"
+          />
+          <FormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="lock"
+            name="passwordConfirmation"
+            placeholder="Retype Password"
+            secureTextEntry
+            textContentType="password"
+          />
+          <FormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="dog"
+            name="dogName"
+            placeholder="Dog Name"
+          />
+          <FormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="dog-side"
+            name="breed"
+            placeholder="Dog breed"
+          />
+          <FormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="cake"
+            name="DOB"
+            placeholder="Date of birth ex:00/00/0000"
+          />
+          <SubmitButton title="Register" color="blue" />
+        </Form>
       </ScrollView>
-    </Screen>
+      {/* </Screen> */}
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    backgroundColor: "#587b7f"
+    backgroundColor: '#587b7f',
+    flex: 1,
   },
   TextInput: {
     height: 50,
     fontSize: 20,
-    borderWidth:1,
-    borderColor:"#CBBEB3",
-    backgroundColor:'white',
-    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#CBBEB3',
+    backgroundColor: 'white',
+    borderRadius: 10,
   },
   buttonsContainer: {
     padding: 20,
     width: '100%',
   },
-  TextError:{
-    color:'red',
-    fontSize:20
+  TextError: {
+    color: 'red',
+    fontSize: 20,
   },
-  Text:{
-    fontSize:20
+  Text: {
+    fontSize: 20,
   },
-  Con:{
-    textAlign:'center',
-    justifyContent:'center',
-    alignItems:'center',
-    fontSize:30
-  }
+  Con: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 30,
+  },
 });
 
 export default RegisterScreen;

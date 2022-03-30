@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   },
   top: {
     marginVertical: 16,
-    paddingTop: 40,
+    paddingTop: 100,
   },
   options: {
     marginVertical: 16,
