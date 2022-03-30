@@ -5,12 +5,27 @@ import { getAuth } from 'firebase/auth';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-function SingleTrainingScreen({ navigation, route }) {
-  const { year, trainingCategory, trainingTitle, userDetails, title } = route.params;
-  const usersCompletedTrainings = userDetails.completedTrainings;
-  const usersTrainingsInProgress = userDetails.trainingsInProgress;
-  const [trainingDetails, setTrainingDetails] = useState({});
+function camelize(str) {
+  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+    if (+match === 0) return '';
+    return index === 0 ? match.toLowerCase() : match.toUpperCase();
+  });
+}
 
+function SingleTrainingScreen({ navigation, route }) {
+  const { year, trainingCategory, userDetails, title } = route.params;
+  const titleCamelCased = camelize(title);
+  const usersCompletedTrainings = userDetails.completedTrainings;
+  const usersTrainingsInProgress = [];
+  userDetails.trainingsInProgress.forEach(training => usersTrainingsInProgress.push(training.title))
+
+
+
+  console.log("// [SingleTrainingScreen] - userDetails: ", userDetails);
+  console.log("// [SingleTrainingScreen] - usersCompletedTrainings: ", usersCompletedTrainings);
+  console.log("// [SingleTrainingScreen] - usersTrainingInProgress", usersTrainingsInProgress)
+
+  const [trainingDetails, setTrainingDetails] = useState({});
   const [trainingCompleted, setTrainingCompleted] = useState(false);
   const [trainingInProgress, setTrainingInProgress] = useState(false);
   const [startTraining, setStartTraining] = useState(false);
@@ -21,8 +36,8 @@ function SingleTrainingScreen({ navigation, route }) {
   const tips = ["Don't give up", "You got this!"]
   const tools = ["Lorem", "ipsum", "dolor"];
 
-  const getSingleTraining = async (year, trainingCategory, trainingTitle) => {
-    const trainingDocRef = doc(db, year, trainingCategory, 'trainings', trainingTitle);
+  const getSingleTraining = async (year, trainingCategory, titleCamelCased) => {
+    const trainingDocRef = doc(db, year, trainingCategory, 'trainings', titleCamelCased);
     const docSnap = await getDoc(trainingDocRef);
     const trainingData = docSnap.data();
     setTrainingDetails(trainingData);
@@ -38,7 +53,7 @@ function SingleTrainingScreen({ navigation, route }) {
     }
   }
 
-  useEffect(() => { getSingleTraining(year, trainingCategory, trainingTitle); setStateVariables() }, []);
+  useEffect(() => { getSingleTraining(year, trainingCategory, titleCamelCased); setStateVariables() }, []);
 
 
   // runs when clicked Start Training Button
@@ -49,7 +64,12 @@ function SingleTrainingScreen({ navigation, route }) {
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const docRef = doc(db, 'users', userId);
-    await updateDoc(docRef, { trainingsInProgress: arrayUnion(trainingDetails.title) });
+    const trainingInProgressObj = {
+      title: title,
+      year: year,
+      category: trainingCategory,
+    }
+    await updateDoc(docRef, { trainingsInProgress: arrayUnion(trainingInProgressObj) });
 
   };
 
@@ -61,8 +81,15 @@ function SingleTrainingScreen({ navigation, route }) {
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const docRef = doc(db, 'users', userId);
-    await updateDoc(docRef, { completedTrainings: arrayUnion(trainingDetails.title) });
-    await updateDoc(docRef, { trainingsInProgress: arrayRemove(trainingDetails.title) });
+    await updateDoc(docRef, { completedTrainings: arrayUnion(title) });
+
+    // we now have to remove the object with object.title === title
+    const trainingInProgressObj = {
+      title: title,
+      year: year,
+      category: trainingCategory,
+    }
+    await updateDoc(docRef, { trainingsInProgress: arrayRemove(trainingInProgressObj) });
 
   }
   return (

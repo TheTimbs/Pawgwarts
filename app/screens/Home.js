@@ -58,6 +58,8 @@ function Home(props) {
     setRandomDogFact(randomFact);
   }
 
+  console.log("// [Home.js] - user: ", user)
+
   if (!user.dog) {
     return (
       <Text>loading..</Text>
@@ -76,11 +78,19 @@ function Home(props) {
 
           <View style={styles.trainingsContainer}>
             <Text style={styles.text2}>Your Trainings in Progress:</Text>
-            {user.trainingsInProgress.map(training => (<Text key={user.trainingsInProgress.indexOf(training)}> {training} </Text>))}
+            {user.trainingsInProgress.map(training => (
+              <Text key={user.trainingsInProgress.indexOf(training)}
+                onPress={() =>
+                  navigation.navigate('SingleTraining', {
+                    year: training.year,
+                    trainingCategory: training.category,
+                    title: training.title,
+                    userDetails: user,
+                  })}
+              > {training.title} </Text>))}
           </View>
 
         </View>
-
         <View style={styles.center}>
           <Text style={styles.textHeader}>Houses Current Points</Text>
         </View>

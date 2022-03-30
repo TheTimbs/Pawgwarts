@@ -54,6 +54,7 @@ function TreatStore() {
                     width: 200,
                     height: 200,
                     alignSelf: 'center',
+                    borderRadius: 10,
                   }}
                 />
               </View>
