@@ -76,10 +76,10 @@ function Home(props) {
             <Text style={styles.dogFactText}> {randomDogFact}</Text>
           </View>
 
-          <View style={styles.trainingsContainer}>
-            <Text style={styles.text2}>Your Trainings in Progress:</Text>
+          <View style={styles.trainings}>
+            <Text style={styles.trainingsHeaderText}>{user.dog.dogName}'s Trainings in Progress:</Text>
             {user.trainingsInProgress.map(training => (
-              <Text key={user.trainingsInProgress.indexOf(training)}
+              <Text key={user.trainingsInProgress.indexOf(training)} style={styles.trainingsText}
                 onPress={() =>
                   navigation.navigate('SingleTraining', {
                     year: training.year,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   dogFactContainer: {
     backgroundColor: '#871419',
-    borderRadius: 20,
+    borderRadius: 15,
     padding: 5,
     paddingBottom: 6,
     marginBottom: 6,
@@ -152,12 +152,24 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 15,
   },
-  trainingsContainer: {
+  trainings: {
     marginTop: 5,
     width: '85%',
     backgroundColor: '#76b5c5',
-    borderRadius: 20,
+    borderRadius: 15,
     paddingBottom: 5,
+  },
+  trainingsHeaderText: {
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingBottom: 5,
+    paddingTop: 10,
+  },
+  trainingsText: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: 'blue',
   },
   bottom: {
     height: '45%',
