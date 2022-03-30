@@ -13,7 +13,7 @@ function Home(props) {
   const gRef = doc(db, 'houses ', "GryffinDog");
   const hRef = doc(db, 'houses ', "HufflePup");
   const rRef = doc(db, 'houses ', "RavenPaw");
-  const sRef = doc(db, 'houses ', "Sloberin");
+  const sRef = doc(db, 'houses ', "Slobberin");
   const [points, setPoints] = useState([]);
   const [user, setUser] = useState({});
   const [randomDogFact, setRandomDogFact] = useState("")
@@ -21,13 +21,13 @@ function Home(props) {
 
 
   useEffect(() => {
-    console.log("!!! useeffect from Home.js ran !!!")
+    //console.log("!!! useeffect from Home.js ran !!!")
     const unsubscribe = navigation.addListener('focus', () => {
       getPoints();
       getUser();
       getRandomFact()
     })
-    console.log("// [Home.js/useEffect()] - user: ", user)
+   // console.log("// [Home.js/useEffect()] - user: ", user)
     return unsubscribe;
   }, [navigation])
 
@@ -53,8 +53,8 @@ function Home(props) {
     const docSnap = await getDoc(docRef);
     const allFacts = docSnap.data().facts;
     const randomFact = allFacts[getRandomNum(0, allFacts.length - 1)];
-    console.log("// [Home.js/getRandomFact()] - randomFact: ", randomFact);
-    console.log("// [Home.js/getRandomFact()] - randomFact type: ", typeof randomFact);
+    //console.log("// [Home.js/getRandomFact()] - randomFact: ", randomFact);
+    //console.log("// [Home.js/getRandomFact()] - randomFact type: ", typeof randomFact);
     setRandomDogFact(randomFact);
   }
 
