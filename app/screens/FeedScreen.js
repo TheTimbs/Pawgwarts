@@ -31,7 +31,7 @@ function FeedScreen() {
      date.setDate(date.getDate() + 7);
       //console.log("this is 7 day:" ,boo);
       //console.log("this is 7 day:" ,date);
-   if(!boo){
+   if(boo){
       await updateDoc(dayCollectionRef, {setDate:date.toDateString()});
        randomChallenge();
    }

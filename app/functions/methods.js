@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { getDocs, collection, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import { db } from '../../firebase/firebase-config';
 
 
@@ -27,6 +25,7 @@ export const getTrainingCategoriesChallenge = async (trainingYear) => {
   const data = await getDocs(yearCollectionRef);
   return data.docs;
 }
+
 export function random(max){
  return Math.floor(Math.random() * max)
 }
