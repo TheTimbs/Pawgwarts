@@ -92,7 +92,6 @@ function FeedScreen() {
             email={item.email}
           />
         )}
-
       />
 
     </Screen>
@@ -108,11 +107,10 @@ const styles = StyleSheet.create({
 
   },
   RectangleShapeView: {
-
-    marginTop: 20,
     width: "100%",
     height: 120,
     backgroundColor: 'blue',
+    position:'relative'
 
     },
 
