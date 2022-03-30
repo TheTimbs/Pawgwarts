@@ -1,95 +1,119 @@
-import { ImageBackground, StyleSheet, View, Image, Text, } from 'react-native';
+import { ImageBackground, StyleSheet, View, Image, Text } from 'react-native';
 import React from 'react';
 import { db, auth } from '../../firebase/firebase-config';
-import { getDoc, collection, doc, } from 'firebase/firestore';
+import { getDoc, collection, doc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
-
+import { useFonts } from 'expo-font';
 
 function Home(props) {
   const userId = auth.currentUser.uid;
   const currentUser = doc(db, 'users', userId);
-  const gRef = doc(db, 'houses ', "GryffinDog");
-  const hRef = doc(db, 'houses ', "HufflePup");
-  const rRef = doc(db, 'houses ', "RavenPaw");
-  const sRef = doc(db, 'houses ', "Slobberin");
+  const gRef = doc(db, 'houses ', 'GryffinDog');
+  const hRef = doc(db, 'houses ', 'HufflePup');
+  const rRef = doc(db, 'houses ', 'RavenPaw');
+  const sRef = doc(db, 'houses ', 'Slobberin');
   const [points, setPoints] = useState([]);
   const [user, setUser] = useState({});
-  const [randomDogFact, setRandomDogFact] = useState("")
+  const [randomDogFact, setRandomDogFact] = useState('');
   const navigation = useNavigation();
 
-
   useEffect(() => {
-    console.log("!!! useeffect from Home.js ran !!!")
+    console.log('!!! useeffect from Home.js ran !!!');
     const unsubscribe = navigation.addListener('focus', () => {
       getPoints();
       getUser();
-      getRandomFact()
-    })
-    console.log("// [Home.js/useEffect()] - user: ", user)
+      getRandomFact();
+    });
+    console.log('// [Home.js/useEffect()] - user: ', user);
     return unsubscribe;
-  }, [navigation])
+  }, [navigation]);
 
   const getUser = async () => {
     const userData = await getDoc(currentUser);
     setUser(userData.data());
-  }
+  };
 
   const getPoints = async () => {
-    const dataG = await getDoc(gRef)
-    const dataH = await getDoc(hRef)
-    const dataR = await getDoc(rRef)
-    const dataS = await getDoc(sRef)
-    setPoints([dataG.data().points, dataH.data().points, dataR.data().points, dataS.data().points])
-  }
+    const dataG = await getDoc(gRef);
+    const dataH = await getDoc(hRef);
+    const dataR = await getDoc(rRef);
+    const dataS = await getDoc(sRef);
+    setPoints([
+      dataG.data().points,
+      dataH.data().points,
+      dataR.data().points,
+      dataS.data().points,
+    ]);
+  };
 
   const getRandomNum = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min)
-  }
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
 
   const getRandomFact = async () => {
-    const docRef = doc(db, "dogFacts", "allFacts");
+    const docRef = doc(db, 'dogFacts', 'allFacts');
     const docSnap = await getDoc(docRef);
     const allFacts = docSnap.data().facts;
     const randomFact = allFacts[getRandomNum(0, allFacts.length - 1)];
-    console.log("// [Home.js/getRandomFact()] - randomFact: ", randomFact);
-    console.log("// [Home.js/getRandomFact()] - randomFact type: ", typeof randomFact);
+    console.log('// [Home.js/getRandomFact()] - randomFact: ', randomFact);
+    console.log(
+      '// [Home.js/getRandomFact()] - randomFact type: ',
+      typeof randomFact
+    );
     setRandomDogFact(randomFact);
+  };
+
+  // console.log('// [Home.js] - user: ', user);
+
+  let [fontsLoaded] = useFonts({
+    'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
   }
 
-  console.log("// [Home.js] - user: ", user)
-
   if (!user.dog) {
-    return (
-      <Text>loading..</Text>
-    )
+    return <Text>loading..</Text>;
   } else {
     return (
       <View style={styles.container}>
         <View style={styles.top}>
-
-          <Text style={styles.WelcomeHeader}>Welcome, {user.name} and {user.dog.dogName}!</Text>
+          <Text style={styles.WelcomeHeader}>
+            Welcome, {user.name} and {user.dog.dogName}!
+          </Text>
 
           <View style={styles.dogFactContainer}>
-            <Text style={styles.dogFactHeaderText}> DumbleDog's Random Dog Fact </Text>
+            <Text style={styles.dogFactHeaderText}>
+              {' '}
+              DumbleDog's Random Dog Fact{' '}
+            </Text>
             <Text style={styles.dogFactText}> {randomDogFact}</Text>
           </View>
 
           <View style={styles.trainings}>
-            <Text style={styles.trainingsHeaderText}>{user.dog.dogName}'s Trainings in Progress:</Text>
-            {user.trainingsInProgress.map(training => (
-              <Text key={user.trainingsInProgress.indexOf(training)} style={styles.trainingsText}
+            <Text style={styles.trainingsHeaderText}>
+              {user.dog.dogName}'s Trainings in Progress:
+            </Text>
+            {user.trainingsInProgress.map((training) => (
+              <Text
+                key={user.trainingsInProgress.indexOf(training)}
+                style={styles.trainingsText}
                 onPress={() =>
                   navigation.navigate('SingleTraining', {
                     year: training.year,
                     trainingCategory: training.category,
                     title: training.title,
                     userDetails: user,
-                  })}
-              > {training.title} </Text>))}
+                  })
+                }
+              >
+                {' '}
+                {training.title}{' '}
+              </Text>
+            ))}
           </View>
-
         </View>
         <View style={styles.center}>
           <Text style={styles.textHeader}>Houses Current Points</Text>
@@ -97,34 +121,43 @@ function Home(props) {
 
         <View style={styles.bottom}>
           <View style={styles.box}>
-            <Image style={styles.houseImages} source={require('../assets/hufflepup.png')} />
+            <Image
+              style={styles.houseImages}
+              source={require('../assets/hufflepuffportrait.jpg')}
+            />
             <Text style={styles.text}>Points: {points[0]}</Text>
           </View>
           <View style={styles.box}>
-            <Image style={styles.houseImages} source={require('../assets/ravenpaw.jpeg')} />
+            <Image
+              style={styles.houseImages}
+              source={require('../assets/ravenclawportrait.jpg')}
+            />
             <Text style={styles.text}>Points: {points[1]}</Text>
           </View>
           <View style={styles.box}>
-            <Image style={styles.houseImages} source={require('../assets/slobberin.jpeg')} />
+            <Image
+              style={styles.houseImages}
+              source={require('../assets/slytherinportrait.jpg')}
+            />
             <Text style={styles.text}>Points: {points[2]}</Text>
           </View>
           <View style={styles.box}>
-            <Image style={styles.houseImages} source={require('../assets/gryffindog.jpeg')} />
+            <Image
+              style={styles.houseImages}
+              source={require('../assets/gryffindorportrait.jpg')}
+            />
             <Text style={styles.text}>Points: {points[3]}</Text>
           </View>
         </View>
-
       </View>
-
     );
   }
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#587B7F'
+    backgroundColor: '#587B7F',
   },
   top: {
     marginTop: 40,
@@ -132,10 +165,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   WelcomeHeader: {
-    fontSize: 30,
-    color: "white",
+    fontSize: 45,
+    color: 'white',
     marginBottom: 6,
     paddingTop: 6,
+    fontFamily: 'Harry-Potter',
   },
   dogFactContainer: {
     backgroundColor: '#871419',
@@ -180,9 +214,9 @@ const styles = StyleSheet.create({
   },
   center: {
     height: '5%',
-    justifyContent: "center",
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#0D1321",
+    backgroundColor: '#0D1321',
   },
   box: {
     width: '50%',
@@ -190,31 +224,28 @@ const styles = StyleSheet.create({
   },
   houseImages: {
     flex: 1,
-    width: "100%",
-    height: "100%",
-    left: "5%",
+    width: '100%',
+    height: '100%',
+    left: '5%',
     borderRadius: 10,
   },
   text: {
     fontSize: 20,
-    color: "white",
-    textAlign: 'center'
+    color: 'white',
+    textAlign: 'center',
   },
   background: {
-    height: '100%'
+    height: '100%',
   },
   textHeader: {
     fontSize: 30,
-    color: "white",
+    color: 'white',
   },
   text2: {
     fontSize: 20,
-    color: "black",
-    textAlign: 'center'
+    color: 'black',
+    textAlign: 'center',
   },
-
-
 });
 
 export default Home;
-
