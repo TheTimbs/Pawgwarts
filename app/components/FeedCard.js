@@ -20,6 +20,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function FeedCard({ title, likes, image, email }) {
   const [like, setLike] = useState(likes);
+  const [userLike, setUserLike] = useState(false);
 
   async function addLike(email) {
     const auth = getAuth();
@@ -67,27 +68,30 @@ function FeedCard({ title, likes, image, email }) {
         updateDoc(userPost, { likes: increment(1) });
         setLike(document.data().likes + 1);
       }
+      userLike ? setUserLike(false) : setUserLike(true);
     });
   }
 
   return (
     <View style={styles.card}>
-      <View style={styles.rowContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.currLikes}> Likes: {likes}</Text>
-      </View>
+      <Text style={styles.title}>{title}</Text>
       <Image style={styles.image} source={image} />
       {/* <View style={styles.detailsContainer}>
         <Button title={`${like}`} onPress={() => addLike(email)}></Button>
       </View> */}
-      <Pressable style={styles.detailsContainer} onPress={() => addLike(email)}>
-        {/* <MaterialCommunityIcons
-          name={like ? 'heart' : 'heart-outline'}
-          size={32}
-          color={like ? 'red' : 'black'}
-        /> */}
-        <MaterialCommunityIcons name="bone" size={38} color="black" />
-      </Pressable>
+      <View style={styles.rowContainer}>
+        <Text style={styles.currLikes}> Likes: {like}</Text>
+        <Pressable
+          style={styles.detailsContainer}
+          onPress={() => addLike(email)}
+        >
+          <MaterialCommunityIcons
+            name="bone"
+            size={38}
+            color={userLike ? 'red' : 'black'}
+          />
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -102,11 +106,10 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   detailsContainer: {
     padding: 5,
-    alignItems: 'center',
+    marginBottom: 5,
   },
   image: {
     width: '100%',
@@ -123,8 +126,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   currLikes: {
-    paddingTop: 7,
+    paddingTop: 11,
     paddingRight: 10,
+    paddingLeft: 10,
     marginBottom: 7,
     color: colors.houseBlue,
     fontWeight: 'bold',

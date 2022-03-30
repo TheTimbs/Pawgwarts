@@ -18,17 +18,22 @@ function FeedScreen() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    const getFeed = async () => {
-      const data = await getDocs(feedCollectionRef);
-      const mappedData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setFeedList(mappedData);
-    };
-    getFeed();
-  }, []);
-  console.log(feedList);
+    const unsubscribe = navigation.addListener('focus', () => {
+      const getFeed = async () => {
+        const data = await getDocs(feedCollectionRef);
+        const mappedData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setFeedList(mappedData);
+      };
+      getFeed();
+    });
+    console.log('feedscreen');
+    return unsubscribe;
+  }, [navigation]);
+
+  // console.log(feedList);
   return (
     <Screen style={styles.screen}>
       <FlatList
@@ -47,6 +52,10 @@ function FeedScreen() {
             style={styles.upload}
             onPress={() => navigation.navigate('ListingDetails')}
           /> */}
+      <Button
+        title="Upload"
+        onPress={() => navigation.navigate('UploadImageScreen')}
+      />
     </Screen>
   );
 }
