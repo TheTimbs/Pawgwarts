@@ -15,8 +15,9 @@ function camelize(str) {
 function SingleTrainingScreen({ navigation, route }) {
   const { year, trainingCategory, userDetails, title } = route.params;
   const titleCamelCased = camelize(title);
-  const usersCompletedTrainings = userDetails.completedTrainings;
+  const usersCompletedTrainings = [];
   const usersTrainingsInProgress = [];
+  userDetails.completedTrainings.forEach(training => completedTrainings.push(training.title))
   userDetails.trainingsInProgress.forEach(training => usersTrainingsInProgress.push(training.title))
 
 
@@ -81,15 +82,15 @@ function SingleTrainingScreen({ navigation, route }) {
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const docRef = doc(db, 'users', userId);
-    await updateDoc(docRef, { completedTrainings: arrayUnion(title) });
 
-    // we now have to remove the object with object.title === title
-    const trainingInProgressObj = {
+    const trainingObj = {
       title: title,
       year: year,
       category: trainingCategory,
     }
-    await updateDoc(docRef, { trainingsInProgress: arrayRemove(trainingInProgressObj) });
+    await updateDoc(docRef, { completedTrainings: arrayUnion(trainingObj) });
+    await updateDoc(docRef, { trainingsInProgress: arrayRemove(trainingObj) });
+
 
   }
   return (

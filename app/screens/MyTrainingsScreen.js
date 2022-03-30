@@ -51,8 +51,15 @@ function MyTrainings() {
           <Text style={styles.trainingsHeaderText}>{user.dog.dogName}'s Completed Trainings:</Text>
           {user.completedTrainings.map(training => (
             <Text key={user.completedTrainings.indexOf(training)} style={styles.trainingsText}
-            > {training} </Text>))}
-          <Text style={styles.totalTrainings}> Total: {user.trainingsInProgress.length}</Text>
+              onPress={() =>
+                navigation.navigate('SingleTraining', {
+                  year: training.year,
+                  trainingCategory: training.category,
+                  title: training.title,
+                  userDetails: user,
+                })}
+            > {training.title} </Text>))}
+          <Text style={styles.totalTrainings}> Total: {user.completedTrainings.length}</Text>
         </View>
 
         <View style={styles.trainings}>
@@ -68,7 +75,6 @@ function MyTrainings() {
                 })}
             > {training.title} </Text>))}
           <Text style={styles.totalTrainings}> Total: {user.trainingsInProgress.length}</Text>
-
         </View>
       </View>
 

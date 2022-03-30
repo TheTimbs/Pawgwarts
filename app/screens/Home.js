@@ -97,19 +97,19 @@ function Home(props) {
 
         <View style={styles.bottom}>
           <View style={styles.box}>
-            <ImageBackground style={styles.inner} source={require('../assets/hufflepup.png')} />
+            <Image style={styles.houseImages} source={require('../assets/hufflepup.png')} />
             <Text style={styles.text}>Points: {points[0]}</Text>
           </View>
           <View style={styles.box}>
-            <ImageBackground style={styles.inner} source={require('../assets/ravenpaw.jpeg')} />
+            <Image style={styles.houseImages} source={require('../assets/ravenpaw.jpeg')} />
             <Text style={styles.text}>Points: {points[1]}</Text>
           </View>
           <View style={styles.box}>
-            <ImageBackground style={styles.inner} source={require('../assets/slobberin.jpeg')} />
+            <Image style={styles.houseImages} source={require('../assets/slobberin.jpeg')} />
             <Text style={styles.text}>Points: {points[2]}</Text>
           </View>
           <View style={styles.box}>
-            <ImageBackground style={styles.inner} source={require('../assets/gryffindog.jpeg')} />
+            <Image style={styles.houseImages} source={require('../assets/gryffindog.jpeg')} />
             <Text style={styles.text}>Points: {points[3]}</Text>
           </View>
         </View>
@@ -187,12 +187,12 @@ const styles = StyleSheet.create({
     width: '50%',
     height: '50%',
   },
-  inner: {
+  houseImages: {
     flex: 1,
     width: "100%",
     height: "100%",
     left: "5%",
-    // borderRadius: 10,
+    borderRadius: 10,
   },
   text: {
     fontSize: 20,
