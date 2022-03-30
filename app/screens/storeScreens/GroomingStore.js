@@ -12,6 +12,7 @@ import { db } from '../../../firebase/firebase-config';
 import * as Linking from 'expo-linking';
 import colors from '../../config/colors';
 import Screen from '../../components/Screen';
+import { useFonts } from 'expo-font';
 
 function GroomingStore() {
   const [products, setProducts] = useState([]);
@@ -36,6 +37,13 @@ function GroomingStore() {
     Linking.openURL(products[i].link);
   };
 
+  let [fontsLoaded] = useFonts({
+    'Harry-Potter': require('../../assets/fonts/HarryPotter.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <Screen style={styles.screen}>
       <ScrollView>
@@ -43,7 +51,7 @@ function GroomingStore() {
           <Text style={styles.label}>Grooming Recommendations:</Text>
           {products ? (
             products.map((item, i) => (
-              <View key={i}>
+              <View key={i} style={styles.container}>
                 <Text style={styles.header} onPress={() => handleLink(i)}>
                   {item.name}
                 </Text>
@@ -53,6 +61,8 @@ function GroomingStore() {
                     width: 200,
                     height: 200,
                     alignSelf: 'center',
+                    borderColor: 'darkgreen',
+                    borderWidth: 3,
                   }}
                 />
               </View>
@@ -69,25 +79,33 @@ function GroomingStore() {
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.houseGreen,
   },
   header: {
-    color: colors.blue,
-    fontSize: 17,
+    color: colors.gold,
+    fontSize: 25,
     fontWeight: '800',
     paddingVertical: 10,
     paddingHorizontal: 15,
     alignSelf: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    fontFamily: 'Harry-Potter',
   },
   label: {
-    color: colors.purple,
-    fontSize: 25,
+    color: colors.white,
+    fontSize: 40,
     fontWeight: '800',
     paddingVertical: 3,
     alignSelf: 'center',
     textAlign: 'center',
+    fontFamily: 'Harry-Potter',
+  },
+  container: {
+    borderColor: 'darkgreen',
+    borderWidth: 3,
+    padding: 10,
+    margin: 10,
   },
 });
 

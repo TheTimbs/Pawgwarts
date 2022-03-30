@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../../firebase/firebase-config';
-import { getDocs, collection, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
+import {
+  getDocs,
+  collection,
+  doc,
+  getDoc,
+  updateDoc,
+  arrayRemove,
+  arrayUnion,
+} from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import TrainingCardCategories from '../../components/TrainingCardCategories';
@@ -28,12 +36,15 @@ const TrainingsScreen = ({ navigation, route }) => {
     const docRef = doc(db, 'users', userId);
     const userDoc = await getDoc(docRef);
     const userDetails = userDoc.data();
-    setUserDetails(userDetails)
-  }
+    setUserDetails(userDetails);
+  };
 
-  useEffect(() => { getUserDetails(); getTrainingsList(year, trainingCategory); }, [])
+  useEffect(() => {
+    getUserDetails();
+    getTrainingsList(year, trainingCategory);
+  }, []);
 
-  console.log("userDetails from the trainings screen", userDetails)
+  console.log('userDetails from the trainings screen', userDetails);
 
   return (
     <View style={styles.container}>
