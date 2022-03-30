@@ -10,22 +10,34 @@ import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
 import { useTimer } from 'react-timer-hook';
+import { updateCurrentUser } from '@firebase/auth';
 
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
   const feedCollectionRef = collection(db, 'feed');
   const challengeCollectionRef = doc(db, 'challenge', 'date');
+  const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
   const navigation = useNavigation();
   const today = new Date();
 
   console.log(today);
   const getDate = async () =>{
     const data = await getDoc(challengeCollectionRef);
-    console.log(data.data().setDate)
-    console.log(new Date(data.data().setDate))
-    const boo  = (new Date(today) > new Date(data.data().setDate))
-    console.log(boo);
+    const weekData = await getDoc(weekCollectionRef);
+   // console.log(data.data().setDate)
+    //console.log(new Date(data.data().setDate))
+    const boo  = (new Date(today) >= new Date(data.data().setDate))
+    var date = new Date();
+      date.setDate(date.getDate() + 7);
+
+    console.log("this is 7 day:" ,date);
+   if(boo){
+
+   }
+
+
+   updateCurrentUser(arrayUnion(obj))
   }
 
   useEffect(() => {
