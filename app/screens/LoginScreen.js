@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Image, Alert, View } from 'react-native';
+import { StyleSheet, Image, Alert, View, ImageBackground } from 'react-native';
 import * as Yup from 'yup';
 import { Form, FormField, SubmitButton } from '../components/forms';
 import Button from '../components/Button';
@@ -8,12 +8,12 @@ import Screen from '../components/Screen';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { auth } from '../../firebase/firebase-config';
 import { TextInput } from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 import FeedNavigator from '../navigation/FeedNavigator';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
-  password: Yup.string().required().min(4).label('Password'),
+  password: Yup.string().required().min(6).label('Password'),
 });
 
 function LoginScreen(props) {
@@ -35,15 +35,19 @@ function LoginScreen(props) {
   };
 
   return (
-    <Screen style={styles.container}>
-
+    <ImageBackground
+      blurRadius={3}
+      style={styles.background}
+      source={require('../assets/BlueBackground.jpeg')}
+    >
+      {/* <Screen style={styles.container}> */}
       <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
       <Form
-        initialValues={{email: "", password: "", }}
+        initialValues={{ email: '', password: '' }}
         onSubmit={(value) => SignUser(value)}
         validationSchema={validationSchema}
       >
-      {/* <TextInput
+        {/* <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
         autoCorrect={false}
@@ -56,7 +60,7 @@ function LoginScreen(props) {
         inlineImagePadding={20}
         onChangeText={(text) => setEmail(text)}
       /> */}
-       <FormField
+        <FormField
           autoCapitalize="none"
           autoCorrect={false}
           icon="email"
@@ -74,7 +78,7 @@ function LoginScreen(props) {
           secureTextEntry
           textContentType="password"
         />
-      {/* <TextInput
+        {/* <TextInput
         style={styles.TextInput}
         autoCapitalize="none"
         autoCorrect={false}
@@ -85,18 +89,26 @@ function LoginScreen(props) {
         textContentType="password"
         onChangeText={(text) => setPassword(text)}
       /> */}
-       <View style={styles.buttonsContainer}>
-       <SubmitButton title="Register" color="blue" />
-      </View>
-     </Form>
-    </Screen>
+        <View style={styles.buttonsContainer}>
+          <SubmitButton title="Sign in" color="blue" />
+        </View>
+      </Form>
+      {/* </Screen> */}
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    backgroundColor: "#587b7f"
+  // container: {
+  //   padding: 10,
+  //   backgroundColor: '#587b7f',
+  // },
+  background: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    height: '100%',
+    paddingHorizontal: 20,
   },
   logo: {
     width: 75,
@@ -108,11 +120,11 @@ const styles = StyleSheet.create({
   TextInput: {
     height: 50,
     fontSize: 20,
-    backgroundColor:"white",
-    borderRadius:10,
-    margin:10,
-    borderWidth:1,
-    borderColor:"#CBBEB3"
+    backgroundColor: 'white',
+    borderRadius: 10,
+    margin: 10,
+    borderWidth: 1,
+    borderColor: '#CBBEB3',
   },
   buttonsContainer: {
     padding: 20,
