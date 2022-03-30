@@ -18,7 +18,7 @@ const menuItems = [
       name: 'format-list-bulleted',
       backgroundColor: colors.blue,
     },
-    targetScreen: routes.MESSAGES,
+    targetScreen: routes.TRAININGS,
   },
   {
     title: 'My pictures',

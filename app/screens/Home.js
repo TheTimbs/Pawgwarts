@@ -129,12 +129,12 @@ const styles = StyleSheet.create({
   top: {
     height: '50%',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   WelcomeHeader: {
     fontSize: 30,
     color: "white",
     marginBottom: 6,
+    paddingTop: 6,
   },
   dogFactContainer: {
     backgroundColor: '#871419',
