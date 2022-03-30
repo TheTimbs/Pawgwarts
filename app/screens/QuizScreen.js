@@ -1,12 +1,20 @@
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ImageBackground,
+} from 'react-native';
 
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
 import { getAuth } from 'firebase/auth';
 import QuizResult from './QuizResult';
+import colors from '../config/colors';
+import { useFonts } from 'expo-font';
 
 // house constants
 const gryffindog = 'GryffinDog';
@@ -151,58 +159,73 @@ const PersonalityQuiz = () => {
     console.log('your house is ', selectedHouse);
   };
 
+  let [fontsLoaded] = useFonts({
+    'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      {selectedHouse !== '' ? (
-        <QuizResult house={selectedHouse} />
-      ) : (
-        // <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-        //   <Text style={{ fontSize: 32, fontWeight: '700' }}>LOADING...</Text>
-        // </View>
-        questions && (
-          <View style={styles.parent}>
-            <View style={styles.top}>
-              <Text style={styles.question}>
-                Answer the Following Questions to be placed in a house:{' '}
-              </Text>
+    <ImageBackground
+      blurRadius={3}
+      style={styles.background}
+      source={require('../assets/BlueBackground.jpeg')}
+    >
+      <View style={styles.container}>
+        {selectedHouse !== '' ? (
+          <QuizResult house={selectedHouse} />
+        ) : (
+          // <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          //   <Text style={{ fontSize: 32, fontWeight: '700' }}>LOADING...</Text>
+          // </View>
+          questions && (
+            <View style={styles.parent}>
+              <View style={styles.top}>
+                <Text style={styles.question}>
+                  Answer the Following Questions to be placed in a house:{' '}
+                </Text>
+              </View>
+              <View style={styles.top}>
+                <Text style={styles.question}>
+                  Q. {questions[qNum].question}
+                </Text>
+              </View>
+              <View style={styles.options}>
+                <TouchableOpacity
+                  style={styles.optionButton}
+                  onPress={() => handlSelectedOption(options[0])}
+                >
+                  <Text style={styles.option}>{options[0].answer}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.optionButton}
+                  onPress={() => handlSelectedOption(options[1])}
+                >
+                  <Text style={styles.option}>{options[1].answer}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.optionButton}
+                  onPress={() => handlSelectedOption(options[2])}
+                >
+                  <Text style={styles.option}>{options[2].answer}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.optionButton}
+                  onPress={() => handlSelectedOption(options[3])}
+                >
+                  <Text style={styles.option}>{options[3].answer}</Text>
+                </TouchableOpacity>
+                {/* {selectedHouse !== "" ? <QuizResult house={selectedHouse} /> : <Text> {qNum + 1}/6 </Text>} */}
+              </View>
+              <View style={styles.bottom}>
+                <Text style={styles.bottomText}> {qNum + 1}/6 </Text>
+              </View>
             </View>
-            <View style={styles.top}>
-              <Text style={styles.question}>Q. {questions[qNum].question}</Text>
-            </View>
-            <View style={styles.options}>
-              <TouchableOpacity
-                style={styles.optionButton}
-                onPress={() => handlSelectedOption(options[0])}
-              >
-                <Text style={styles.option}>{options[0].answer}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.optionButton}
-                onPress={() => handlSelectedOption(options[1])}
-              >
-                <Text style={styles.option}>{options[1].answer}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.optionButton}
-                onPress={() => handlSelectedOption(options[2])}
-              >
-                <Text style={styles.option}>{options[2].answer}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.optionButton}
-                onPress={() => handlSelectedOption(options[3])}
-              >
-                <Text style={styles.option}>{options[3].answer}</Text>
-              </TouchableOpacity>
-              {/* {selectedHouse !== "" ? <QuizResult house={selectedHouse} /> : <Text> {qNum + 1}/6 </Text>} */}
-            </View>
-            <View style={styles.bottom}>
-              <Text> {qNum + 1}/6 </Text>
-            </View>
-          </View>
-        )
-      )}
-    </View>
+          )
+        )}
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -214,8 +237,16 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 20,
     height: '100%',
   },
+  background: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    height: '100%',
+    paddingHorizontal: 20,
+  },
   top: {
     marginVertical: 16,
+    paddingTop: 40,
   },
   options: {
     marginVertical: 16,
@@ -227,23 +258,29 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  bottomText: {
+    color: 'white',
+  },
   buttonText: {
     fontSize: 18,
     fontWeight: '600',
     color: 'white',
   },
   question: {
-    fontSize: 28,
+    fontSize: 42,
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Harry-Potter',
   },
   option: {
     fontSize: 18,
-    fontWeight: '500',
+    fontWeight: '700',
     color: 'white',
   },
   optionButton: {
     paddingVertical: 12,
     marginVertical: 6,
-    backgroundColor: '#34A0A4',
+    backgroundColor: colors.purple,
     paddingHorizontal: 12,
     borderRadius: 12,
   },

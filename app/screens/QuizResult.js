@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingBottom: 5,
     fontFamily: 'Harry-Potter',
-    paddingTop: 30,
+    paddingTop: 95,
   },
   sectionTitle2: {
     color: colors.gold,
