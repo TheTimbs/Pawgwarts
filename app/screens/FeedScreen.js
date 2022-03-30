@@ -16,7 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase/firebase-config';
 
 import { getDocs, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
-import {getTrainingsListChallenge, camelize, getTrainingCategoriesChallenge, random} from '../functions.js/methods'
+import {getTrainingsListChallenge, camelize, getTrainingCategoriesChallenge, random} from '../functions/methods'
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
 
