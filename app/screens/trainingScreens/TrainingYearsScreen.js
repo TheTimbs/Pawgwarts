@@ -6,21 +6,36 @@ import { doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import TrainingCard from '../../components/TrainingCard';
 import colors from '../../config/colors';
+import { useNavigation } from '@react-navigation/native';
 
-const TrainingYearsScreen = ({ navigation }) => {
+const TrainingYearsScreen = () => {
+  const navigation = useNavigation();
   const [userDetails, setUserDetails] = useState({});
+  const [year2Count, setYear2Count] = useState(0);
+
+  const getYear2Count = (completedTrainings) => {
+    let count = 0
+    completedTrainings.forEach(training => { if (training.year === "secondYears") count++ })
+    setYear2Count(count)
+  }
 
   useEffect(() => {
-    const getUserDetails = async () => {
-      const auth = getAuth();
-      const userId = auth.currentUser.uid;
-      const docRef = doc(db, 'users', userId);
-      const userDoc = await getDoc(docRef);
-      const userDetails = userDoc.data();
-      setUserDetails(userDetails);
-    };
-    getUserDetails();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      const getUserDetails = async () => {
+        const auth = getAuth();
+        const userId = auth.currentUser.uid;
+        const docRef = doc(db, 'users', userId);
+        const userDoc = await getDoc(docRef);
+        const userDetails = userDoc.data();
+        setUserDetails(userDetails);
+        getYear2Count(userDetails.completedTrainings);
+      };
+      getUserDetails();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  console.log("// [TrainingYearsScreen] - year2Count: ", year2Count)
 
   const schoolYearImages = {
     firstYears: require('../../assets/GermanShepPuppy.webp'),
@@ -79,9 +94,8 @@ const TrainingYearsScreen = ({ navigation }) => {
           dbYear={{ year: 'secondYears' }}
           styling={trainingTextStylings.secondYearsText}
           preReqsMet={userDetails.completedTrainings.length >= 3 ? true : false}
-          alertMessage={`Please Complete ${
-            3 - userDetails.completedTrainings.length
-          } more trainings from First Year`}
+          alertMessage={`Please Complete ${3 - userDetails.completedTrainings.length
+            } more trainings from First Year`}
         />
         <TrainingCard
           navigation={navigation}
@@ -90,10 +104,9 @@ const TrainingYearsScreen = ({ navigation }) => {
           title={'Third Years'}
           dbYear={{ year: 'thirdYears' }}
           styling={trainingTextStylings.thirdYearsText}
-          preReqsMet={userDetails.completedTrainings.length > 7 ? true : false}
-          alertMessage={
-            'Please Complete more trainings from previous years to proceed'
-          }
+          preReqsMet={year2Count > 2 ? true : false}
+          alertMessage={`Please Complete ${2 - year2Count
+            } more training(s) from First Year`}
         />
       </View>
     );
