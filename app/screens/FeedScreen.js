@@ -98,11 +98,11 @@ function FeedScreen() {
     return unsubscribe;
   }, [navigation]);
 
-  // console.log(feedList);
   return (
     <Screen style={styles.screen}>
       <ScrollView>
-
+         <View style={styles.RectangleShapeView}>
+           </View>
           {feedList.map((item) =>
           <FeedCard
             key={item.id.toString()}
