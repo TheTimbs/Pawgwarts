@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Button, Text, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  Image,
+  ImageBackground,
+} from 'react-native';
 import { ListItem, ListItemSeparator } from '../components/lists';
 import colors from '../config/colors';
 import Icon from '../components/Icon';
@@ -17,6 +24,8 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getAuth } from '@firebase/auth';
 import uuid from 'uuid';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import Button from '../components/Button';
 
 const EditUserProfile = () => {
   const [user, setUser] = useState([]);
@@ -81,8 +90,19 @@ const EditUserProfile = () => {
     return downloadURL;
   }
 
+  let [fontsLoaded] = useFonts({
+    'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <Screen style={styles.screen}>
+    <ImageBackground
+      blurRadius={3}
+      style={styles.background}
+      source={require('../assets/BlueBackground.jpeg')}
+    >
       <View style={styles.container}>
         {user.dog ? (
           <View>
@@ -109,64 +129,69 @@ const EditUserProfile = () => {
                   height: 200,
                   borderRadius: 200 / 2,
                   alignSelf: 'center',
-                  marginVertical: 20,
+                  marginTop: 15,
                 }}
               />
             )}
-            <Button title="Select New Profile Picture" onPress={pickImage} />
-            {/* {image ? (
-              <Image
-                source={{ uri: image }}
-                style={{
-                  width: 150,
-                  height: 150,
-                  borderRadius: 150 / 2,
-                  alignSelf: 'center',
-                }}
+            <View style={styles.buttonsContainer}>
+              <Button
+                title="Select New Profile Picture"
+                onPress={pickImage}
+                color="blue"
               />
-            ) : null} */}
-            <Button title="Confirm New Profile Picture" onPress={uploadImage} />
-            <Button title="Update" onPress={() => updatePhoto()} />
-            {/* <Text style={styles.header}>Dog Information:</Text>
-            <Text style={styles.text1}>Dog Name: {user.dog.dogName}</Text>
-            <Text style={styles.text1}>Dog Breed: {user.dog.breed}</Text>
-            <Text style={styles.text1}>Dog DOB: {user.dog.dob}</Text>
 
-            <Text style={styles.text1}>House: {user.house}</Text>
-            <Text style={styles.text1}>Current Likes: {user.likes}</Text>
-            <Text style={styles.text1}>
-              Task Completed: {user.completedTrainings.length}
-            </Text> */}
+              <Button
+                title="Confirm New Profile Picture"
+                onPress={uploadImage}
+                color="blue"
+              />
+              <Button
+                title="Update"
+                color="purple"
+                onPress={() => updatePhoto()}
+              />
+            </View>
           </View>
         ) : (
           <Text style={styles.header}>loading...</Text>
         )}
       </View>
-    </Screen>
+    </ImageBackground>
   );
 };
 
 export default EditUserProfile;
 
 const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: 'grey',
+  background: {
+    height: '100%',
   },
   container: {
     marginVertical: 20,
   },
   header: {
-    color: colors.primary,
-    fontSize: 25,
+    color: '#871419',
+    fontSize: 50,
     fontWeight: '800',
-    paddingVertical: 9,
+    padding: 2,
     alignSelf: 'center',
+    fontFamily: 'Harry-Potter',
+    backgroundColor: 'black',
+    width: '70%',
+    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 15,
   },
   text1: {
     color: colors.gold,
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: '500',
     paddingVertical: 3,
     alignSelf: 'center',
+    fontFamily: 'Harry-Potter',
+  },
+  buttonsContainer: {
+    padding: 20,
+    width: '100%',
   },
 });

@@ -44,8 +44,6 @@ const TrainingsScreen = ({ navigation, route }) => {
     getTrainingsList(year, trainingCategory);
   }, []);
 
-  console.log('userDetails from the trainings screen', userDetails);
-
   return (
     <View style={styles.container}>
       {trainingsList.length === 0 ? (

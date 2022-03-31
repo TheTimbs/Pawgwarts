@@ -21,13 +21,13 @@ function Home(props) {
   const navigation = useNavigation();
 
   useEffect(() => {
-   // console.log('!!! useeffect from Home.js ran !!!');
+
     const unsubscribe = navigation.addListener('focus', () => {
       getPoints();
       getUser();
       getRandomFact();
     });
-    //console.log('// [Home.js/useEffect()] - user: ', user);
+
     return unsubscribe;
   }, [navigation]);
 
@@ -61,7 +61,6 @@ function Home(props) {
     setRandomDogFact(randomFact);
   };
 
-  // console.log('// [Home.js] - user: ', user);
 
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
