@@ -7,7 +7,7 @@ import UploadImageScreen from '../screens/UploadImageScreen';
 const Stack = createStackNavigator();
 
 const FeedNavigator = () => (
-  <Stack.Navigator screenOptions={{ headerLeft: null, presentation: 'modal' }}>
+  <Stack.Navigator>
     <Stack.Screen name="MyFeed" component={FeedScreen} options={{ headerShown: false }} />
     <Stack.Screen name="ChallengeScreen" component={ChallengeScreen} />
     <Stack.Screen name="UploadImageScreen" component={UploadImageScreen} />
