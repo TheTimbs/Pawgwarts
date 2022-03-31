@@ -10,6 +10,7 @@ import {
   arrayUnion,
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import * as Linking from 'expo-linking';
 import {
   StyleSheet,
   Text,
@@ -21,6 +22,8 @@ import {
   Button,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import colors from '../../config/colors';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
@@ -72,6 +75,7 @@ function SingleTrainingScreen({ navigation, route }) {
     const docSnap = await getDoc(trainingDocRef);
     const trainingData = docSnap.data();
     setTrainingDetails(trainingData);
+    console.log('My Training details', trainingDetails);
   };
 
   const setStateVariables = () => {
@@ -124,6 +128,10 @@ function SingleTrainingScreen({ navigation, route }) {
     await updateDoc(docRef, { completedTrainings: arrayUnion(trainingObj) });
     await updateDoc(docRef, { trainingsInProgress: arrayRemove(trainingObj) });
   };
+
+  const handleLink = (link) => {
+    Linking.openURL(link);
+  };
   return Object.keys(trainingDetails).length === 0 ? (
     <Text> ... Loading </Text>
   ) : (
@@ -137,10 +145,9 @@ function SingleTrainingScreen({ navigation, route }) {
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
-            source={require('../../assets/DogLogo.png')}
+            source={{ uri: trainingDetails.images[0] }}
           />
         </View>
-
         <View style={styles.trainingDescriptionContainer}>
           {trainingDetails.description ? (
             <Text style={styles.bodyText}>{trainingDetails.description}</Text>
@@ -150,43 +157,54 @@ function SingleTrainingScreen({ navigation, route }) {
         </View>
 
         <Text style={styles.stepsTitle}>Steps</Text>
-        {trainingDetails.steps[0] !== ''
-          ? trainingDetails.steps.map((step) => (
-              <Text key={steps.indexOf(step)} style={bodyText}>
-                Step {steps.indexOf(step) + 1}: {step}
-              </Text>
-            ))
-          : steps.map((step) => (
-              <Text key={steps.indexOf(step)} style={styles.bodyText}>
-                Step {steps.indexOf(step) + 1}: {step}
-              </Text>
-            ))}
-
+        {trainingDetails.steps[0] !== '' ? (
+          trainingDetails.steps.map((step, stepIndex) => (
+            <Text key={stepIndex} style={styles.bodyText}>
+              Step {stepIndex + 1}: {step}
+            </Text>
+          ))
+        ) : (
+          <Text>Loading...</Text>
+        )}
         <Text style={styles.stepsTitle}>Tips</Text>
-        {trainingDetails.tips[0] !== ''
-          ? trainingDetails.tips.map((tip) => (
-              <Text key={tips.indexOf(tip)} style={bodyText}>
-                * {tip}
-              </Text>
-            ))
-          : tips.map((tip) => (
-              <Text key={tips.indexOf(tip)} style={styles.bodyText}>
-                * {tip}
-              </Text>
-            ))}
-
+        {trainingDetails.tips[0] !== '' ? (
+          trainingDetails.tips.map((tip) => (
+            <Text key={tips.indexOf(tip)} style={styles.bodyText}>
+              * {tip}
+            </Text>
+          ))
+        ) : (
+          <Text>Loading...</Text>
+        )}
         <Text style={styles.stepsTitle}> Recommended Training Tools </Text>
-        {trainingDetails.tools[0] !== ''
-          ? trainingDetails.tools.map((tool) => (
-              <Text key={tools.indexOf(tool)} style={bodyText}>
-                * {tool}
-              </Text>
-            ))
-          : tools.map((tool) => (
-              <Text key={tools.indexOf(tool)} style={styles.bodyText}>
-                * {tool}
-              </Text>
-            ))}
+        {trainingDetails.tools[0] !== '' ? (
+          trainingDetails.tools.map((tool, i) => (
+            <ScrollView horizontal={true}>
+              <View>
+                <View key={i} style={styles.toolsContainer}>
+                  <TouchableWithoutFeedback
+                    onPress={() => handleLink(tool.link)}
+                  >
+                    <Image
+                      source={{ uri: tool.image }}
+                      style={{
+                        width: 200,
+                        height: 200,
+                        alignSelf: 'center',
+                        borderColor: colors.houseYellow,
+                        borderWidth: 3,
+                      }}
+                    />
+
+                    <Text style={styles.header}>{tool.name}</Text>
+                  </TouchableWithoutFeedback>
+                </View>
+              </View>
+            </ScrollView>
+          ))
+        ) : (
+          <Text>Just some yummy treats! :) </Text>
+        )}
       </ScrollView>
 
       <View style={styles.bottom}>
@@ -224,7 +242,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   logo: {
-    width: 90,
+    width: '100%',
     height: 150,
   },
   logoContainer: {
@@ -242,6 +260,11 @@ const styles = StyleSheet.create({
   bottom: {
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  toolsContainer: {
+    marginLeft: 5,
+    height: 250,
+    width: 200,
   },
 });
 

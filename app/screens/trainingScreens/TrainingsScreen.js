@@ -45,8 +45,6 @@ const TrainingsScreen = ({ navigation, route }) => {
     getTrainingsList(year, trainingCategory);
   }, []);
 
-  console.log('userDetails from the trainings screen', userDetails);
-
   return (
     <ScrollView>
       <View style={styles.container}>
