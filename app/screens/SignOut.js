@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Button } from 'react-native';
 // import { auth } from '../../firebase/firebase-config';
 import { getAuth, signOut } from 'firebase/auth';
-import { ListItem, ListItemSeparator } from '../components/lists';
+import { ListItemSeparator } from '../components/lists';
+import ListItemAccount from '../components/lists/ListItemAccount';
 import Icon from '../components/Icon';
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 
 export const SignOut = () => {
   const [isSignedIn, setIsSignedIn] = useState(true);
@@ -21,11 +22,10 @@ export const SignOut = () => {
       });
   };
   return (
-
-    <ListItem
-    title="Log Out"
-    IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
-    onPress={()=> signOutUser()}
-  />
+    <ListItemAccount
+      title="Log Out"
+      IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
+      onPress={() => signOutUser()}
+    />
   );
 };

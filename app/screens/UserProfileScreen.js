@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Button, Text, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  Image,
+  ImageBackground,
+  Pressable,
+  Button,
+} from 'react-native';
 import { ListItem, ListItemSeparator } from '../components/lists';
 import colors from '../config/colors';
 import Icon from '../components/Icon';
@@ -7,6 +16,8 @@ import Screen from '../components/Screen';
 import { db, auth } from '../../firebase/firebase-config';
 import { getDoc, collection, doc, getDocs } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 function UserProfile() {
   const [user, setUser] = useState([]);
@@ -60,79 +71,109 @@ function UserProfile() {
   }, []);
   // console.log(user.completedTrainings.length);
 
+  let [fontsLoaded] = useFonts({
+    'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <Screen style={styles.screen}>
+    <ImageBackground
+      blurRadius={3}
+      style={styles.background}
+      source={require('../assets/BlueBackground.jpeg')}
+    >
       <View style={styles.container}>
         {user.dog ? (
           <View>
-            <Text style={styles.header}>User Information:</Text>
-            <Text style={styles.text1}>Name: {user.name}</Text>
-            <Text style={styles.text1}>Email: {user.email}</Text>
-
-            <Image
-              source={{ uri: user.dog.image }}
-              style={{
-                width: 200,
-                height: 200,
-                borderRadius: 200 / 2,
-                alignSelf: 'center',
-                marginVertical: 20,
-              }}
-            />
-            <Button
-              title="Edit Profile Picture"
-              onPress={() => navigation.navigate('EditUserProfile')}
-            />
-            <Text style={styles.header}>Dog Information:</Text>
-            <Text style={styles.text1}>Dog Name: {user.dog.dogName}</Text>
-            <Text style={styles.text1}>Dog Breed: {user.dog.breed}</Text>
-            <Text style={styles.text1}>Dog DOB: {user.dog.dob}</Text>
-
-            <Text style={styles.text1}>House: {user.house}</Text>
-            <Text style={styles.text1}>Current Likes: {user.likes}</Text>
-            <Text style={styles.text1}>
-              Task Completed: {user.completedTrainings.length}
-            </Text>
-            <View>
-              {/* <Text style={styles.header}>Photos:</Text>
-          {userPhoto.map((post) => (
-            <View key={post.image}>
-              <Image
-                source={{ uri: post.image }}
-                style={{ width: 200, height: 150, alignSelf: 'center' }}
-              />
+            <Text style={styles.header}>User Info:</Text>
+            <View style={styles.userContainer}>
+              <Text style={styles.text1}>Name: {user.name}</Text>
+              <Text style={styles.text1}>Email: {user.email}</Text>
             </View>
-          ))} */}
+            <Text style={styles.header}>Dog Info:</Text>
+            <View style={styles.dogContainer}>
+              <Image
+                source={{ uri: user.dog.image }}
+                style={{
+                  width: 150,
+                  height: 150,
+                  borderRadius: 150 / 2,
+                  alignSelf: 'center',
+                }}
+              />
+              <Pressable
+                style={styles.buttonContainer}
+                onPress={() => navigation.navigate('EditUserProfile')}
+              >
+                <FontAwesome5 name="user-edit" size={40} color="#871419" />
+              </Pressable>
+              <View style={styles.dogInfoContainer}>
+                <Text style={styles.text1}>Dog Name: {user.dog.dogName}</Text>
+                <Text style={styles.text1}>Dog Breed: {user.dog.breed}</Text>
+                <Text style={styles.text1}>Dog DOB: {user.dog.dob}</Text>
+
+                <Text style={styles.text1}>House: {user.house}</Text>
+                <Text style={styles.text1}>Current Likes: {user.likes}</Text>
+                <Text style={styles.text1}>
+                  Task Completed: {user.completedTrainings.length}
+                </Text>
+              </View>
             </View>
           </View>
         ) : (
           <Text style={styles.header}>loading...</Text>
         )}
       </View>
-    </Screen>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: 'grey',
+  background: {
+    height: '100%',
   },
   container: {
     marginVertical: 20,
   },
+  userContainer: {
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  dogContainer: {
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  dogInfoContainer: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    flex: 1,
+    position: 'absolute',
+    bottom: 260,
+    right: 130,
+  },
   header: {
-    color: colors.primary,
-    fontSize: 25,
+    color: '#871419',
+    fontSize: 50,
     fontWeight: '800',
-    paddingVertical: 9,
+    padding: 2,
     alignSelf: 'center',
+    fontFamily: 'Harry-Potter',
+    backgroundColor: 'black',
+    width: '70%',
+    textAlign: 'center',
+    marginBottom: 10,
   },
   text1: {
     color: colors.gold,
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: '500',
     paddingVertical: 3,
     alignSelf: 'center',
+    fontFamily: 'Harry-Potter',
   },
 });
 
