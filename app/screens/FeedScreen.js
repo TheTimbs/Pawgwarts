@@ -62,6 +62,7 @@ function FeedScreen() {
     await updateDoc(weekCollectionRef, { challenge: challenge });
   };
 
+
   useEffect(() => {
 
     const unsubscribe = navigation.addListener('focus', () => {
@@ -104,15 +105,7 @@ function FeedScreen() {
             email={item.email}
           />
         )}
-
-
-      <Pressable
-        style={styles.buttonStyle}
-        onPress={() => navigation.navigate('UploadImageScreen')}
-      >
-        <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
-      </Pressable>
-      </ScrollView>
+         </ScrollView>
     </Screen>
   );
     }
