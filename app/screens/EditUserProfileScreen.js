@@ -106,10 +106,11 @@ const EditUserProfile = () => {
       <View style={styles.container}>
         {user.dog ? (
           <View>
-            <Text style={styles.header}>User Information:</Text>
-            <Text style={styles.text1}>Name: {user.name}</Text>
-            <Text style={styles.text1}>Email: {user.email}</Text>
-
+            <View style={styles.userContainer}>
+              <Text style={styles.header}>User Information:</Text>
+              <Text style={styles.text1}>Name: {user.name}</Text>
+              <Text style={styles.text1}>Email: {user.email}</Text>
+            </View>
             {image ? (
               <Image
                 source={{ uri: image }}
@@ -171,16 +172,15 @@ const styles = StyleSheet.create({
   },
   header: {
     color: '#871419',
-    fontSize: 50,
+    fontSize: 45,
     fontWeight: '800',
     padding: 2,
     alignSelf: 'center',
     fontFamily: 'Harry-Potter',
-    backgroundColor: 'black',
     width: '70%',
     textAlign: 'center',
     marginTop: 10,
-    marginBottom: 15,
+    marginBottom: 2,
   },
   text1: {
     color: colors.gold,
@@ -193,5 +193,14 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     padding: 20,
     width: '100%',
+  },
+  userContainer: {
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 20,
+    backgroundColor: 'black',
+    width: '85%',
+    alignSelf: 'center',
+    borderRadius: 15,
   },
 });

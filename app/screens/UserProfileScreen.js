@@ -74,13 +74,13 @@ function UserProfile() {
       <View style={styles.container}>
         {user.dog ? (
           <View>
-            <Text style={styles.header}>User Info:</Text>
             <View style={styles.userContainer}>
+              <Text style={styles.header}>User Info:</Text>
               <Text style={styles.text1}>Name: {user.name}</Text>
               <Text style={styles.text1}>Email: {user.email}</Text>
             </View>
-            <Text style={styles.header}>Dog Info:</Text>
             <View style={styles.dogContainer}>
+              <Text style={styles.header}>Dog Info:</Text>
               <Image
                 source={{ uri: user.dog.image }}
                 style={{
@@ -129,22 +129,32 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   userContainer: {
+    padding: 10,
     marginTop: 10,
     marginBottom: 20,
+    backgroundColor: 'black',
+    width: '85%',
+    alignSelf: 'center',
+    borderRadius: 15,
   },
   dogContainer: {
     marginTop: 10,
     marginBottom: 20,
+    backgroundColor: 'black',
+    width: '85%',
+    alignSelf: 'center',
+    padding: 10,
+    borderRadius: 15,
   },
   dogInfoContainer: {
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 5,
   },
   buttonContainer: {
     flex: 1,
     position: 'absolute',
-    bottom: 260,
-    right: 130,
+    bottom: 245,
+    right: 100,
   },
   header: {
     color: '#871419',
@@ -153,7 +163,6 @@ const styles = StyleSheet.create({
     padding: 2,
     alignSelf: 'center',
     fontFamily: 'Harry-Potter',
-    backgroundColor: 'black',
     width: '70%',
     textAlign: 'center',
     marginBottom: 10,
