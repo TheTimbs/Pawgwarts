@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  Button,
-  Pressable,
+import { FlatList,StyleSheet, View,Text,Image,Button, Pressable,
 } from 'react-native';
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import FeedCard from '../components/FeedCard';
@@ -14,26 +7,14 @@ import colors from '../config/colors';
 import Screen from '../components/Screen';
 import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase/firebase-config';
-
-import {
-  getDocs,
-  collection,
-  doc,
-  getDoc,
-  updateDoc,
-} from 'firebase/firestore';
-import {
-  getTrainingsListChallenge,
-  camelize,
-  getTrainingCategoriesChallenge,
-  random,
-} from '../functions/methods';
+import {  getDocs,collection, doc, getDoc,updateDoc,} from 'firebase/firestore';
+import { getTrainingsListChallenge,camelize, getTrainingCategoriesChallenge,random,} from '../functions/methods';
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 
-function FeedScreen() {
+function FeedScreen({navigation}) {
   const [feedList, setFeedList] = useState([]);
   const feedCollectionRef = collection(db, 'feed');
   const dayCollectionRef = doc(db, 'challenge', 'date');
@@ -41,19 +22,14 @@ function FeedScreen() {
   const navigation = useNavigation();
   const today = new Date();
 
-  //console.log(today);
+
   const getDate = async () => {
     const data = await getDoc(dayCollectionRef);
-    const weekData = await getDoc(weekCollectionRef);
-    // console.log(data.data())
-    //console.log(data.data().setDate.toString());
     const cur = new Date(data.data().setDate);
-    //console.log(new Date (cur));
     const boo = new Date(today) >= new Date(cur);
     let date = new Date();
     date.setDate(date.getDate() + 7);
-    //console.log("this is 7 day:" ,boo);
-    //console.log("this is 7 day:" ,date);
+
     if (boo) {
       await updateDoc(dayCollectionRef, { setDate: date.toDateString() });
       randomChallenge();
