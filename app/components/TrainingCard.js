@@ -6,6 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   Text,
+  Alert
 } from 'react-native';
 import { useFonts } from 'expo-font';
 
@@ -20,6 +21,8 @@ function TrainingCard({
   styling,
   backgroundColor,
   dbYear,
+  preReqsMet = true,
+  alertMessage,
 }) {
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
@@ -33,13 +36,17 @@ function TrainingCard({
     <>
       <View style={styles.overlay}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate(navTarget, dbYear)}
+          onPress={() => {
+            preReqsMet ? navigation.navigate(navTarget, dbYear) : Alert.alert(alertMessage)
+          }}
         >
           <ImageBackground source={imgSource} style={styles.image} />
         </TouchableWithoutFeedback>
       </View>
       <TouchableWithoutFeedback
-        onPress={() => navigation.navigate(navTarget, dbYear)}
+        onPress={() => {
+          preReqsMet ? navigation.navigate(navTarget, dbYear) : Alert.alert(alertMessage)
+        }}
       >
         <AppText style={styling}>{title}</AppText>
       </TouchableWithoutFeedback>
