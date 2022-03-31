@@ -14,10 +14,9 @@ import colors from '../config/colors';
 
 function ChallengeCard({
   navigation,
-  navTarget,
   imgSource,
   title,
-  dbYear,
+  data,
 }) {
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
@@ -30,11 +29,12 @@ function ChallengeCard({
 
   return (
     <>
-      <View style={styles.overlay}>
+      <View >
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate(navTarget, dbYear)}
+          onPress={() => navigation.navigate(navTarget, data)}
         >
           <ImageBackground source={{ uri: imgSource }} style={styles.image}>
+            <AppText style={styles.text}>Challenge of week</AppText>
             <AppText style={styles.firstYeartext}>{title}</AppText>
           </ImageBackground>
         </TouchableWithoutFeedback>
@@ -50,16 +50,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     borderRadius: 100,
-    opacity: 0.5,
-  },
-  overlay: {
-    backgroundColor: colors.dark,
   },
   firstYeartext: {
-    color: colors.houseBlue,
+    color: colors.gold,
     fontWeight: 'bold',
     fontSize: 60,
     fontFamily: 'Harry-Potter',
+  },
+  text: {
+    color: colors.gold,
+    fontWeight: 'bold',
+    fontSize: 60,
+    fontFamily: 'Harry-Potter',
+    textDecorationLine:"underline"
   },
 });
 

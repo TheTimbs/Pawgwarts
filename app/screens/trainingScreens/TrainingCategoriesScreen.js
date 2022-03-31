@@ -50,22 +50,6 @@ function TrainingCategoriesScreen({ navigation, route }) {
             />
           ))}
         </View>
-        // <View style={styles.options}>
-        //   {trainingCategories.map((category) => (
-        //     <TouchableOpacity
-        //       key={category.title}
-        //       style={styles.optionButton}
-        //       onPress={() =>
-        //         navigation.navigate('Trainings', {
-        //           year: year,
-        //           trainingCategory: camelize(category.title),
-        //         })
-        //       }
-        //     >
-        //       <Text style={styles.option}> {category.title} </Text>
-        //     </TouchableOpacity>
-        //   ))}
-        // </View>
       )}
     </View>
   );

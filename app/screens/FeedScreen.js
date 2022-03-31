@@ -31,13 +31,15 @@ function FeedScreen() {
     const boo = new Date(today) >= new Date(cur);
     let date = new Date();
     date.setDate(date.getDate() + 7);
+    const challengeData = await getDoc(weekCollectionRef);
+   // console.log(challengeData.data())
+    setChallenge(challengeData.data().challenge);
     if (boo) {
+      console.log('this shouldnt be running')
       await updateDoc(dayCollectionRef, { setDate: date.toDateString() });
       randomChallenge();
-    }else{
-    const challengeData = await getDoc(weekCollectionRef);
-    setChallenge(challengeData.data());
     }
+
   };
 
   const randomChallenge = async () => {
@@ -64,6 +66,7 @@ function FeedScreen() {
   };
 
   useEffect(() => {
+
     const unsubscribe = navigation.addListener('focus', () => {
       const getFeed = async () => {
         const data = await getDocs(feedCollectionRef);
@@ -74,15 +77,26 @@ function FeedScreen() {
         setFeedList(mappedData);
       };
       getFeed();
-      getDate()
+      getDate();
     });
     return unsubscribe;
   }, [navigation]);
+
+  if( Object.keys(challenge).length === 0 ){
+    return(<Text> Loading... </Text>)
+
+  }else {
+   console.log("con",challenge)
   return (
     <Screen style={styles.screen}>
       <ScrollView>
-        <ChallengeCard>
-
+        <ChallengeCard
+          key={challenge.title}
+          navigation={navigation}
+          imgSource={challenge.images[0]}
+          title={challenge.title}
+          data={challenge}
+        >
           </ChallengeCard>
           {feedList.map((item) =>
           <FeedCard
@@ -104,6 +118,7 @@ function FeedScreen() {
       </ScrollView>
     </Screen>
   );
+    }
 }
 
 const styles = StyleSheet.create({
