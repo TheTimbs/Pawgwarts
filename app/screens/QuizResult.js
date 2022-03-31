@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../config/colors';
 import Button from '../components/Button';
@@ -19,6 +19,7 @@ export default function QuizResult(props) {
       style={styles.background}
       source={require('../assets/BlueBackground.jpeg')}
     >
+      <ScrollView>
       <View>
         <View>
           <Text style={styles.sectionTitle1}> Your house is </Text>
@@ -110,6 +111,7 @@ export default function QuizResult(props) {
           </View>
         </View>
       </View>
+      </ScrollView>
     </ImageBackground>
   );
 }

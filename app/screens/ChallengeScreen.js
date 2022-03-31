@@ -1,35 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../../../firebase/firebase-config';
+import { db } from "../../firebase/firebase-config";
 import { getDocs, collection, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { AntDesign } from '@expo/vector-icons';
+import colors from '../config/colors';
 
-function camelize(str) {
-  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
-    if (+match === 0) return '';
-    return index === 0 ? match.toLowerCase() : match.toUpperCase();
-  });
-}
+function ChallengeScreen({ navigation, route }) {
+  const data = route.params;
+  const [trainingDetails, setTrainingDetails] = useState(data);
 
-function SingleTrainingScreen({ navigation, route }) {
-  const { year, trainingCategory, userDetails, title } = route.params;
-  const titleCamelCased = camelize(title);
-  const usersCompletedTrainings = [];
-  const usersTrainingsInProgress = [];
-  userDetails.completedTrainings.forEach(training => usersCompletedTrainings.push(training.title))
-  userDetails.trainingsInProgress.forEach(training => usersTrainingsInProgress.push(training.title))
-
-
-
-  console.log("// [SingleTrainingScreen] - userDetails: ", userDetails);
-  console.log("// [SingleTrainingScreen] - usersCompletedTrainings: ", usersCompletedTrainings);
-  console.log("// [SingleTrainingScreen] - usersTrainingInProgress", usersTrainingsInProgress)
-
-  const [trainingDetails, setTrainingDetails] = useState({});
-  const [trainingCompleted, setTrainingCompleted] = useState(false);
-  const [trainingInProgress, setTrainingInProgress] = useState(false);
-  const [startTraining, setStartTraining] = useState(false);
 
   // Dummy Training Data:
   const loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
@@ -37,62 +18,13 @@ function SingleTrainingScreen({ navigation, route }) {
   const tips = ["Don't give up", "You got this!"]
   const tools = ["Lorem", "ipsum", "dolor"];
 
-  const getSingleTraining = async (year, trainingCategory, titleCamelCased) => {
-    const trainingDocRef = doc(db, year, trainingCategory, 'trainings', titleCamelCased);
-    const docSnap = await getDoc(trainingDocRef);
-    const trainingData = docSnap.data();
-    setTrainingDetails(trainingData);
-  }
-
-  const setStateVariables = () => {
-    if (usersCompletedTrainings.includes(title)) {
-      setTrainingCompleted(true);
-    } else if ((usersTrainingsInProgress.includes(title))) {
-      setTrainingInProgress(true)
-    } else {
-      setStartTraining(true)
-    }
-  }
-
-  useEffect(() => { getSingleTraining(year, trainingCategory, titleCamelCased); setStateVariables() }, []);
 
 
-  // runs when clicked Start Training Button
-  const handleStartTraining = async () => {
-    setStartTraining(false)
-    setTrainingInProgress(true);
-
-    const auth = getAuth();
-    const userId = auth.currentUser.uid;
-    const docRef = doc(db, 'users', userId);
-    const trainingInProgressObj = {
-      title: title,
-      year: year,
-      category: trainingCategory,
-    }
-    await updateDoc(docRef, { trainingsInProgress: arrayUnion(trainingInProgressObj) });
-
-  };
-
-  // runs when clicked Mark Completed Button
-  const handleMarkCompleted = async () => {
-    setStartTraining(false);
-    setTrainingCompleted(true);
-
-    const auth = getAuth();
-    const userId = auth.currentUser.uid;
-    const docRef = doc(db, 'users', userId);
-
-    const trainingObj = {
-      title: title,
-      year: year,
-      category: trainingCategory,
-    }
-    await updateDoc(docRef, { completedTrainings: arrayUnion(trainingObj) });
-    await updateDoc(docRef, { trainingsInProgress: arrayRemove(trainingObj) });
+  useEffect(() => {  }, []);
 
 
-  }
+
+
   return (
     Object.keys(trainingDetails).length === 0 ? <Text> ... Loading </Text> :
       <SafeAreaView style={styles.container}>
@@ -104,7 +36,7 @@ function SingleTrainingScreen({ navigation, route }) {
 
         <ScrollView>
           <View style={styles.logoContainer}>
-            <Image style={styles.logo} source={require('../../assets/DogLogo.png')} />
+            <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
           </View>
 
           <View style={styles.trainingDescriptionContainer}>
@@ -121,9 +53,15 @@ function SingleTrainingScreen({ navigation, route }) {
           {trainingDetails.tools[0] !== "" ? trainingDetails.tools.map(tool => (<Text key={tools.indexOf(tool)} style={bodyText}>* {tool}</Text>)) : tools.map(tool => (<Text key={tools.indexOf(tool)} style={styles.bodyText}>* {tool}</Text>))}
         </ScrollView>
 
-        <View style={styles.bottom}>
+        {/* <View style={styles.bottom}>
           {startTraining ? <Button title='StartTraining' onPress={() => handleStartTraining()} /> : trainingCompleted ? <Text> You already completed this training </Text> : <Button title='In Progress: Mark Completed' onPress={handleMarkCompleted} />}
-        </View>
+        </View> */}
+         <Pressable
+        style={styles.buttonStyle}
+        onPress={() => navigation.navigate('UploadImageScreen')}
+      >
+        <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
+      </Pressable>
       </SafeAreaView>
   )
 }
@@ -131,6 +69,8 @@ function SingleTrainingScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
+    alignContent:'center',
+    justifyContent:'center'
   },
   top: {
     flexDirection: "row",
@@ -169,4 +109,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default SingleTrainingScreen;
+export default ChallengeScreen;

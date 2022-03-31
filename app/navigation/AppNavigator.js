@@ -1,4 +1,4 @@
-import React,{LogBox} from 'react';
+import React, { LogBox } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -10,6 +10,7 @@ import Home from '../screens/Home';
 // import ListingEditScreen from '../screens/ListingEditScreen';
 // import NewListingButton from './NewListingButton';
 // import routes from './routes';
+import HomeNavigator from './HomeNavigator'
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +20,7 @@ const AppNavigator = () => (
 
     <Tab.Screen
       name="Home"
-      component={Home}
+      component={HomeNavigator}
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="home" color={color} size={size} />

@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  ImageBackground,
+} from 'react-native';
 
-import { ListItem, ListItemSeparator } from '../components/lists';
+import { ListItemSeparator } from '../components/lists';
+import ListItemAccount from '../components/lists/ListItemAccount';
 import colors from '../config/colors';
 import Icon from '../components/Icon';
 import routes from '../navigation/routes';
@@ -11,6 +18,7 @@ import { db } from '../../firebase/firebase-config';
 import { getDoc, collection, doc } from 'firebase/firestore';
 import { getAuth } from '@firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+
 const menuItems = [
   {
     title: 'My Trainings',
@@ -18,10 +26,10 @@ const menuItems = [
       name: 'format-list-bulleted',
       backgroundColor: colors.blue,
     },
-    targetScreen: routes.MESSAGES,
+    targetScreen: routes.TRAININGS,
   },
   {
-    title: 'My pictures',
+    title: 'My Pictures',
     icon: {
       name: 'image-area',
       backgroundColor: colors.secondary,
@@ -67,17 +75,21 @@ function AccountScreen(props) {
   }, [navigation]);
 
   return (
-    <Screen style={styles.screen}>
+    <ImageBackground
+      blurRadius={3}
+      style={styles.background}
+      source={require('../assets/BlueBackground.jpeg')}
+    >
       <View style={styles.container}>
         {pic && info ? (
-          <ListItem
+          <ListItemAccount
             title={info.name}
             subTitle={info.email}
             image={{ uri: info.dog.image }}
             onPress={() => navigation.navigate('info')}
           />
         ) : info && !pic ? (
-          <ListItem
+          <ListItemAccount
             title={info.name}
             subTitle={info.email}
             image={require('../assets/DogLogo.png')}
@@ -93,7 +105,7 @@ function AccountScreen(props) {
           keyExtractor={(menuItem) => menuItem.title}
           ItemSeparatorComponent={ListItemSeparator}
           renderItem={({ item }) => (
-            <ListItem
+            <ListItemAccount
               title={item.title}
               IconComponent={
                 <Icon
@@ -108,13 +120,13 @@ function AccountScreen(props) {
       </View>
 
       <SignOut>SignOut</SignOut>
-    </Screen>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: colors.blue,
+  background: {
+    height: '100%',
   },
   container: {
     marginVertical: 20,

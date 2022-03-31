@@ -5,6 +5,8 @@ import UserPic from '../screens/UserPic';
 import UserProfile from '../screens/UserProfileScreen';
 import EditUserProfile from '../screens/EditUserProfileScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
+import MyTrainings from '../screens/MyTrainingsScreen';
+import SingleTrainingScreen from '../screens/trainingScreens/SingleTrainingScreen';
 const Stack = createStackNavigator();
 
 const AccountNavigator = () => (
@@ -17,6 +19,8 @@ const AccountNavigator = () => (
     <Stack.Screen name="info" component={UserProfile} />
     <Stack.Screen name="EditUserProfile" component={EditUserProfile} />
     <Stack.Screen name="MyPictures" component={UserPic} />
+    <Stack.Screen name="MyTrainings" component={MyTrainings} />
+    <Stack.Screen name="SingleTraining" component={SingleTrainingScreen} />
     <Stack.Screen
       name="signOut"
       component={WelcomeScreen}

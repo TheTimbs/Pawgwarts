@@ -5,6 +5,8 @@ import { getDoc, collection, doc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFonts } from 'expo-font';
+import colors from '../config/colors';
 
 function Home(props) {
   const userId = auth.currentUser.uid;
@@ -13,20 +15,19 @@ function Home(props) {
   const hRef = doc(db, 'houses ', 'HufflePup');
   const rRef = doc(db, 'houses ', 'RavenPaw');
   const sRef = doc(db, 'houses ', 'Slobberin');
-
   const [points, setPoints] = useState([]);
   const [user, setUser] = useState({});
   const [randomDogFact, setRandomDogFact] = useState('');
   const navigation = useNavigation();
 
   useEffect(() => {
-    //console.log("!!! useeffect from Home.js ran !!!")
+
     const unsubscribe = navigation.addListener('focus', () => {
       getPoints();
       getUser();
-      getRandomFact()
-    })
-   // console.log("// [Home.js/useEffect()] - user: ", user)
+      getRandomFact();
+    });
+
     return unsubscribe;
   }, [navigation]);
 
@@ -57,16 +58,26 @@ function Home(props) {
     const docSnap = await getDoc(docRef);
     const allFacts = docSnap.data().facts;
     const randomFact = allFacts[getRandomNum(0, allFacts.length - 1)];
-    //console.log("// [Home.js/getRandomFact()] - randomFact: ", randomFact);
-    //console.log("// [Home.js/getRandomFact()] - randomFact type: ", typeof randomFact);
     setRandomDogFact(randomFact);
   };
+
+
+  let [fontsLoaded] = useFonts({
+    'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
 
   if (!user.dog) {
     return <Text>loading..</Text>;
   } else {
     return (
-      <View style={styles.container}>
+      <ImageBackground
+        blurRadius={3}
+        style={styles.container}
+        source={require('../assets/BlueBackground.jpeg')}
+      >
         <View style={styles.top}>
           <Text style={styles.WelcomeHeader}>
             Welcome, {user.name} and {user.dog.dogName}!
@@ -80,52 +91,64 @@ function Home(props) {
             <Text style={styles.dogFactText}> {randomDogFact}</Text>
           </View>
 
-          <View style={styles.trainingsContainer}>
-            <Text style={styles.text2}>Your Trainings in Progress:</Text>
+          <View style={styles.trainings}>
+            <Text style={styles.trainingsHeaderText}>
+              {user.dog.dogName}'s Trainings in Progress:
+            </Text>
             {user.trainingsInProgress.map((training) => (
-              <Text key={user.trainingsInProgress.indexOf(training)}>
+              <Text
+                key={user.trainingsInProgress.indexOf(training)}
+                style={styles.trainingsText}
+                onPress={() =>
+                  navigation.navigate('SingleTraining', {
+                    year: training.year,
+                    trainingCategory: training.category,
+                    title: training.title,
+                    userDetails: user,
+                  })
+                }
+              >
                 {' '}
-                {training}{' '}
+                {training.title}{' '}
               </Text>
             ))}
           </View>
         </View>
-
         <View style={styles.center}>
           <Text style={styles.textHeader}>Houses Current Points</Text>
         </View>
 
         <View style={styles.bottom}>
           <View style={styles.box}>
-            <ImageBackground
-              style={styles.inner}
-              source={require('../assets/hufflepup.png')}
+            <Image
+              style={styles.houseImages}
+              source={require('../assets/hufflepuffportrait.jpg')}
             />
-            <Text style={styles.text}>Points: {points[0]}</Text>
+            <Text style={styles.text}>HufflePup: {points[0]}</Text>
           </View>
           <View style={styles.box}>
-            <ImageBackground
-              style={styles.inner}
-              source={require('../assets/ravenpaw.jpeg')}
+            <Image
+              style={styles.houseImages}
+              source={require('../assets/ravenclawportrait.jpg')}
             />
-            <Text style={styles.text}>Points: {points[1]}</Text>
+            <Text style={styles.text}>RavenPaw: {points[1]}</Text>
           </View>
           <View style={styles.box}>
-            <ImageBackground
-              style={styles.inner}
-              source={require('../assets/slobberin.jpeg')}
+            <Image
+              style={styles.houseImages}
+              source={require('../assets/slytherinportrait.jpg')}
             />
-            <Text style={styles.text}>Points: {points[2]}</Text>
+            <Text style={styles.text}>Slobberin: {points[2]}</Text>
           </View>
           <View style={styles.box}>
-            <ImageBackground
-              style={styles.inner}
-              source={require('../assets/gryffindog.jpeg')}
+            <Image
+              style={styles.houseImages}
+              source={require('../assets/gryffindorportrait.jpg')}
             />
-            <Text style={styles.text}>Points: {points[3]}</Text>
+            <Text style={styles.text}>GryffinDog: {points[3]}</Text>
           </View>
         </View>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -136,40 +159,61 @@ const styles = StyleSheet.create({
     backgroundColor: '#587B7F',
   },
   top: {
-    height: '50%',
+    marginTop: 65,
+    height: '45%',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   WelcomeHeader: {
-    fontSize: 30,
-    color: 'white',
+    fontSize: 45,
+    color: colors.gold,
     marginBottom: 6,
+    paddingTop: 6,
+    fontFamily: 'Harry-Potter',
+    textAlign: 'center',
   },
   dogFactContainer: {
     backgroundColor: '#871419',
-    borderRadius: 20,
-    padding: 5,
+    borderRadius: 15,
+    padding: 8,
     paddingBottom: 6,
     marginBottom: 6,
+    width: '85%',
   },
   dogFactHeaderText: {
-    color: '#fec536',
+    color: colors.gold,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 34,
+    fontFamily: 'Harry-Potter',
   },
   dogFactText: {
     color: 'white',
     fontSize: 15,
+    textAlign: 'center',
   },
-  trainingsContainer: {
+  trainings: {
     marginTop: 5,
     width: '85%',
-    backgroundColor: '#76b5c5',
-    borderRadius: 20,
+    backgroundColor: colors.gold,
+    borderRadius: 15,
     paddingBottom: 5,
   },
+  trainingsHeaderText: {
+    fontSize: 34,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingBottom: 5,
+    paddingTop: 10,
+    fontFamily: 'Harry-Potter',
+    color: '#871419',
+  },
+  trainingsText: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: 'black',
+    textDecorationLine: 'underline',
+  },
   bottom: {
-    height: '45%',
+    height: '42%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: '#0D1321',
@@ -184,24 +228,26 @@ const styles = StyleSheet.create({
     width: '50%',
     height: '50%',
   },
-  inner: {
+  houseImages: {
     flex: 1,
     width: '100%',
     height: '100%',
     left: '5%',
-    // borderRadius: 10,
+    borderRadius: 10,
   },
   text: {
-    fontSize: 20,
-    color: 'white',
+    fontSize: 23,
+    color: colors.gold,
     textAlign: 'center',
+    fontFamily: 'Harry-Potter',
   },
   background: {
     height: '100%',
   },
   textHeader: {
-    fontSize: 30,
-    color: 'white',
+    fontSize: 36,
+    color: colors.gold,
+    fontFamily: 'Harry-Potter',
   },
   text2: {
     fontSize: 20,
