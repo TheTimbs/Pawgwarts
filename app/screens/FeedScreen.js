@@ -73,7 +73,7 @@ function FeedScreen() {
 
   }
 
-  
+
 
 
   useEffect(() => {
@@ -111,13 +111,6 @@ function FeedScreen() {
         )}
       />
 
-   
-      <Pressable
-        style={styles.buttonStyle}
-        onPress={() => navigation.navigate('UploadImageScreen')}
-      >
-        <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
-      </Pressable>
     </Screen>
   );
 }
