@@ -12,6 +12,7 @@ import {
 import { getAuth } from 'firebase/auth';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import TrainingCardCategories from '../../components/TrainingCardCategories';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const TrainingsScreen = ({ navigation, route }) => {
   const { year, trainingCategory } = route.params;
@@ -45,29 +46,31 @@ const TrainingsScreen = ({ navigation, route }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {trainingsList.length === 0 ? (
-        <Text> Loading... </Text>
-      ) : (
-        <View style={styles.options}>
-          {trainingsList.map((training) =>  (
-            <TrainingCardCategories
-              key={training.title}
-              navigation={navigation}
-              navTarget={'SingleTraining'}
-              imgSource={training.images[0]}
-              title={training.title}
-              dbYear={{
-                year: year,
-                trainingCategory: trainingCategory,
-                userDetails: userDetails,
-                title: training.title,
-              }}
-            />
-          ))}
-        </View>
-      )}
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {trainingsList.length === 0 ? (
+          <Text> Loading... </Text>
+        ) : (
+          <View style={styles.options}>
+            {trainingsList.map((training) => (
+              <TrainingCardCategories
+                key={training.title}
+                navigation={navigation}
+                navTarget={'SingleTraining'}
+                imgSource={training.images[0]}
+                title={training.title}
+                dbYear={{
+                  year: year,
+                  trainingCategory: trainingCategory,
+                  userDetails: userDetails,
+                  title: training.title,
+                }}
+              />
+            ))}
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 

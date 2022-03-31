@@ -5,6 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import TrainingCard from '../../components/TrainingCard';
 import TrainingCardCategories from '../../components/TrainingCardCategories';
+import { ScrollView } from 'react-native-gesture-handler';
 
 function TrainingCategoriesScreen({ navigation, route }) {
   const year = route.params.year;
@@ -30,28 +31,29 @@ function TrainingCategoriesScreen({ navigation, route }) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {trainingCategories.length === 0 ? (
-        <Text> Loading... </Text>
-      ) : (
-        <View style={styles.options}>
-          {trainingCategories.map((category) => (
-            <TrainingCardCategories
-              key={category.title}
-              navigation={navigation}
-              navTarget={'Trainings'}
-              imgSource={category.image}
-              title={category.title}
-              dbYear={{
-                year: year,
-                trainingCategory: camelize(category.title),
-              }}
-            //styling={trainingTextStylings.firstYearsText}
-            />
-          ))}
-        </View>
-      )}
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {trainingCategories.length === 0 ? (
+          <Text> Loading... </Text>
+        ) : (
+          <View style={styles.options}>
+            {trainingCategories.map((category) => (
+              <TrainingCardCategories
+                key={category.title}
+                navigation={navigation}
+                navTarget={'Trainings'}
+                imgSource={category.image}
+                title={category.title}
+                dbYear={{
+                  year: year,
+                  trainingCategory: camelize(category.title),
+                }}
+              />
+            ))}
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 }
 

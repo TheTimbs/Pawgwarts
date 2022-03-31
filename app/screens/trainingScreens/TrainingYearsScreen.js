@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { db } from '../../../firebase/firebase-config';
 import { doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
@@ -61,7 +62,8 @@ const TrainingYearsScreen = ({ navigation }) => {
   };
 
   if (userDetails.completedTrainings) {
-    return (
+  return (
+    <ScrollView>
       <View style={styles.container}>
         <TrainingCard
           navigation={navigation}
@@ -96,6 +98,7 @@ const TrainingYearsScreen = ({ navigation }) => {
           }
         />
       </View>
+    </ScrollView>
     );
   } else {
     return <Text>Loading...</Text>;
