@@ -24,19 +24,6 @@ function UserProfile() {
   const [userPhoto, setUserPhoto] = useState([]);
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   const getUserInfo = async () => {
-  //     const userRef = doc(db, 'users', auth.currentUser.uid);
-  //     const userSnap = await getDoc(userRef);
-  //     if (userSnap.exists()) {
-  //       setUser(userSnap.data());
-  //     } else {
-  //       console.log('No such document');
-  //     }
-  //   };
-  //   getUserInfo();
-  // }, []);
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       const getUserInfo = async () => {
@@ -107,7 +94,11 @@ function UserProfile() {
                 style={styles.buttonContainer}
                 onPress={() => navigation.navigate('EditUserProfile')}
               >
-                <FontAwesome5 name="user-edit" size={40} color="#871419" />
+                <FontAwesome5
+                  name="user-edit"
+                  size={40}
+                  color={colors.houseYellow}
+                />
               </Pressable>
               <View style={styles.dogInfoContainer}>
                 <Text style={styles.text1}>Dog Name: {user.dog.dogName}</Text>
