@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { db } from "../../firebase/firebase-config";
 import { getDocs, collection, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import { AntDesign } from '@expo/vector-icons';
+import colors from '../config/colors';
 
 function ChallengeScreen({ navigation, route }) {
   const data = route.params;
@@ -55,6 +56,12 @@ function ChallengeScreen({ navigation, route }) {
         {/* <View style={styles.bottom}>
           {startTraining ? <Button title='StartTraining' onPress={() => handleStartTraining()} /> : trainingCompleted ? <Text> You already completed this training </Text> : <Button title='In Progress: Mark Completed' onPress={handleMarkCompleted} />}
         </View> */}
+         <Pressable
+        style={styles.buttonStyle}
+        onPress={() => navigation.navigate('UploadImageScreen')}
+      >
+        <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
+      </Pressable>
       </SafeAreaView>
   )
 }
@@ -62,6 +69,8 @@ function ChallengeScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
+    alignContent:'center',
+    justifyContent:'center'
   },
   top: {
     flexDirection: "row",
