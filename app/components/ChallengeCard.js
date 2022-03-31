@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   image: {
     alignItems: 'center',
-    height: 200,
+    height: 150,
     justifyContent: 'center',
     width: '100%',
     borderRadius: 100,

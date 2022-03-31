@@ -85,6 +85,7 @@ function FeedScreen() {
   }else {
   return (
     <Screen style={styles.screen}>
+
       <ScrollView>
         <ChallengeCard
           key={challenge.title}
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   RectangleShapeView: {
-    width: '100%',
+    width: '80%',
     height: 120,
     backgroundColor: 'blue',
     position: 'relative',
