@@ -36,14 +36,6 @@ const menuItems = [
     },
     targetScreen: 'MyPictures',
   },
-  {
-    title: 'My Dogs',
-    icon: {
-      name: 'dog',
-      backgroundColor: colors.primary,
-    },
-    targetScreen: routes.MESSAGES,
-  },
 ];
 
 function AccountScreen(props) {
