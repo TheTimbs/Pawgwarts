@@ -32,7 +32,6 @@ function FeedScreen() {
     let date = new Date();
     date.setDate(date.getDate() + 7);
     const challengeData = await getDoc(weekCollectionRef);
-   // console.log(challengeData.data())
     setChallenge(challengeData.data().challenge);
     if (boo) {
       console.log('this shouldnt be running')
@@ -58,8 +57,6 @@ function FeedScreen() {
     const cateTitle = camelize(title);
     const arrTraining = await getTrainingsListChallenge(year, cateTitle);
     const trainingNum = random(arrTraining.length);
-    console.log(title);
-    console.log(arrCate[cateNum].data());
     const challenge = arrTraining[trainingNum].data();
     setChallenge(challenge);
     await updateDoc(weekCollectionRef, { challenge: challenge });
@@ -86,7 +83,6 @@ function FeedScreen() {
     return(<Text> Loading... </Text>)
 
   }else {
-   console.log("con",challenge)
   return (
     <Screen style={styles.screen}>
       <ScrollView>

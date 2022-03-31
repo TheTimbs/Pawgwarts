@@ -29,7 +29,7 @@ function ChallengeCard({
 
   return (
     <>
-      <View >
+      <View style={styles.container} >
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate(navTarget, data)}
         >
@@ -44,6 +44,9 @@ function ChallengeCard({
 }
 
 const styles = StyleSheet.create({
+  container:{
+    paddingBottom:10,
+  },
   image: {
     alignItems: 'center',
     height: 200,
@@ -58,7 +61,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Harry-Potter',
   },
   text: {
-    color: colors.gold,
+    color: colors.black,
     fontWeight: 'bold',
     fontSize: 60,
     fontFamily: 'Harry-Potter',
