@@ -31,7 +31,7 @@ function ChallengeCard({
     <>
       <View style={styles.container} >
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate(navTarget, data)}
+          onPress={() => navigation.navigate("ChallengeScreen", data)}
         >
           <ImageBackground source={{ uri: imgSource }} style={styles.image}>
             <AppText style={styles.text}>Challenge of week</AppText>

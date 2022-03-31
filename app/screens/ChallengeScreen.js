@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../../../firebase/firebase-config';
+import { db } from "../../firebase/firebase-config";
 import { getDocs, collection, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button } from 'react-native';
@@ -35,7 +35,7 @@ function ChallengeScreen({ navigation, route }) {
 
         <ScrollView>
           <View style={styles.logoContainer}>
-            <Image style={styles.logo} source={require('../../assets/DogLogo.png')} />
+            <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
           </View>
 
           <View style={styles.trainingDescriptionContainer}>
@@ -52,9 +52,9 @@ function ChallengeScreen({ navigation, route }) {
           {trainingDetails.tools[0] !== "" ? trainingDetails.tools.map(tool => (<Text key={tools.indexOf(tool)} style={bodyText}>* {tool}</Text>)) : tools.map(tool => (<Text key={tools.indexOf(tool)} style={styles.bodyText}>* {tool}</Text>))}
         </ScrollView>
 
-        <View style={styles.bottom}>
+        {/* <View style={styles.bottom}>
           {startTraining ? <Button title='StartTraining' onPress={() => handleStartTraining()} /> : trainingCompleted ? <Text> You already completed this training </Text> : <Button title='In Progress: Mark Completed' onPress={handleMarkCompleted} />}
-        </View>
+        </View> */}
       </SafeAreaView>
   )
 }
