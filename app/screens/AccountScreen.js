@@ -76,9 +76,9 @@ function AccountScreen(props) {
 
   return (
     <ImageBackground
-      blurRadius={3}
+      blurRadius={1}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../assets/castle.jpeg')}
     >
       <View style={styles.container}>
         {pic && info ? (

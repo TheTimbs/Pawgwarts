@@ -99,15 +99,15 @@ const EditUserProfile = () => {
 
   return (
     <ImageBackground
-      blurRadius={3}
+      blurRadius={1}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../assets/castle.jpeg')}
     >
       <View style={styles.container}>
         {user.dog ? (
           <View>
             <View style={styles.userContainer}>
-              <Text style={styles.header}>User Information:</Text>
+              <Text style={styles.header}>User Info:</Text>
               <Text style={styles.text1}>Name: {user.name}</Text>
               <Text style={styles.text1}>Email: {user.email}</Text>
             </View>
@@ -191,15 +191,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Harry-Potter',
   },
   buttonsContainer: {
-    padding: 20,
+    paddingTop: 15,
+    paddingLeft: 35,
+    paddingRight: 35,
     width: '100%',
   },
   userContainer: {
     padding: 10,
     marginTop: 10,
     marginBottom: 20,
-    backgroundColor: 'black',
-    width: '85%',
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+    width: '75%',
     alignSelf: 'center',
     borderRadius: 15,
   },

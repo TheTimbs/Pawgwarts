@@ -67,9 +67,9 @@ function UserProfile() {
 
   return (
     <ImageBackground
-      blurRadius={3}
+      blurRadius={1}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../assets/castle.jpeg')}
     >
       <View style={styles.container}>
         {user.dog ? (
@@ -94,11 +94,7 @@ function UserProfile() {
                 style={styles.buttonContainer}
                 onPress={() => navigation.navigate('EditUserProfile')}
               >
-                <FontAwesome5
-                  name="user-edit"
-                  size={40}
-                  color={colors.houseYellow}
-                />
+                <FontAwesome5 name="user-edit" size={40} color="#871419" />
               </Pressable>
               <View style={styles.dogInfoContainer}>
                 <Text style={styles.text1}>Dog Name: {user.dog.dogName}</Text>
@@ -132,16 +128,16 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     marginBottom: 20,
-    backgroundColor: 'black',
-    width: '85%',
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+    width: '70%',
     alignSelf: 'center',
     borderRadius: 15,
   },
   dogContainer: {
     marginTop: 10,
     marginBottom: 20,
-    backgroundColor: 'black',
-    width: '85%',
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+    width: '70%',
     alignSelf: 'center',
     padding: 10,
     borderRadius: 15,
@@ -154,7 +150,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'absolute',
     bottom: 245,
-    right: 100,
+    right: 70,
   },
   header: {
     color: '#871419',
