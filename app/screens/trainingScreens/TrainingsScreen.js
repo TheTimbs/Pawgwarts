@@ -50,7 +50,7 @@ const TrainingsScreen = ({ navigation, route }) => {
         <Text> Loading... </Text>
       ) : (
         <View style={styles.options}>
-          {trainingsList.map((training) => (
+          {trainingsList.map((training) =>  (
             <TrainingCardCategories
               key={training.title}
               navigation={navigation}

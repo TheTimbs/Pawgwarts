@@ -21,11 +21,13 @@ function Home(props) {
   const navigation = useNavigation();
 
   useEffect(() => {
+
     const unsubscribe = navigation.addListener('focus', () => {
       getPoints();
       getUser();
       getRandomFact();
     });
+
     return unsubscribe;
   }, [navigation]);
 
