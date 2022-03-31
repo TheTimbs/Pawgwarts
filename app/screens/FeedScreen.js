@@ -31,6 +31,7 @@ import {
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
 import { AntDesign } from '@expo/vector-icons';
+import { ScrollView } from 'react-native-gesture-handler';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
@@ -100,18 +101,18 @@ function FeedScreen() {
   // console.log(feedList);
   return (
     <Screen style={styles.screen}>
-      <FlatList
-        data={feedList}
-        keyExtractor={(feedList) => feedList.id.toString()}
-        renderItem={({ item }) => (
+      <ScrollView>
+
+          {feedList.map((item) =>
           <FeedCard
+            key={item.id.toString()}
             title={item.name}
             likes={item.likes}
             image={{ uri: item.image }}
             email={item.email}
           />
         )}
-      />
+
 
       <Pressable
         style={styles.buttonStyle}
@@ -119,6 +120,7 @@ function FeedScreen() {
       >
         <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
       </Pressable>
+      </ScrollView>
     </Screen>
   );
 }
