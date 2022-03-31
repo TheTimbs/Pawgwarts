@@ -7,6 +7,7 @@ import {
   Image,
   Button,
   TextComponent,
+  ImageBackground,
 } from 'react-native';
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import FeedCard from '../components/FeedCard';
@@ -39,35 +40,43 @@ function UserPic() {
   }, []);
 
   return (
-    <Screen style={styles.screen}>
-      {userPhoto.length === 0 ? (
-        <Text style={styles.text}>
-          {' '}
-          You have yet to upload and picture to the feed{' '}
-        </Text>
-      ) : (
-        <FlatList
-          data={userPhoto}
-          keyExtractor={(i) => i++}
-          renderItem={({ item }) => (
-            <FeedCard
-              title={item.name}
-              likes={item.likes}
-              image={{ uri: item.image }}
-              email={item.email}
-            />
-          )}
-        />
-      )}
-    </Screen>
+    <ImageBackground
+      blurRadius={3}
+      style={styles.background}
+      source={require('../assets/BlueBackground.jpeg')}
+    >
+      <Screen style={styles.screen}>
+        {userPhoto.length === 0 ? (
+          <Text style={styles.text}>
+            {' '}
+            You have yet to upload and picture to the feed{' '}
+          </Text>
+        ) : (
+          <FlatList
+            data={userPhoto}
+            keyExtractor={(i) => i++}
+            renderItem={({ item }) => (
+              <FeedCard
+                title={item.name}
+                likes={item.likes}
+                image={{ uri: item.image }}
+                email={item.email}
+              />
+            )}
+          />
+        )}
+      </Screen>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
-    backgroundColor: colors.houseBlue,
     justifyContent: 'center',
+  },
+  background: {
+    height: '100%',
   },
   text: {
     fontSize: 20,
