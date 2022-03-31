@@ -105,6 +105,7 @@ function FeedScreen() {
             email={item.email}
           />
         )}
+         </ScrollView>
     </Screen>
   );
     }
