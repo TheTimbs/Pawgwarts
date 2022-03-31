@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     color: 'black',
+    fontWeight: '500',
     textDecorationLine: 'underline',
   },
   totalTrainings: {
