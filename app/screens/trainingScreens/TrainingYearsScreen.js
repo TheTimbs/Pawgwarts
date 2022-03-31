@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import TrainingCard from '../../components/TrainingCard';
 import colors from '../../config/colors';
 
@@ -43,32 +44,34 @@ const TrainingYearsScreen = ({ navigation }) => {
     },
   };
   return (
-    <View style={styles.container}>
-      <TrainingCard
-        navigation={navigation}
-        navTarget={'TrainingCategories'}
-        imgSource={schoolYearImages.firstYears}
-        title={'First Years'}
-        dbYear={{ year: 'firstYears' }}
-        styling={trainingTextStylings.firstYearsText}
-      />
-      <TrainingCard
-        navigation={navigation}
-        navTarget={'TrainingCategories'}
-        imgSource={schoolYearImages.secondYears}
-        title={'Second Years'}
-        dbYear={{ year: 'secondYears' }}
-        styling={trainingTextStylings.secondYearsText}
-      />
-      <TrainingCard
-        navigation={navigation}
-        navTarget={'TrainingCategories'}
-        imgSource={schoolYearImages.thirdYears}
-        title={'Third Years'}
-        dbYear={{ year: 'thirdYears' }}
-        styling={trainingTextStylings.thirdYearsText}
-      />
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <TrainingCard
+          navigation={navigation}
+          navTarget={'TrainingCategories'}
+          imgSource={schoolYearImages.firstYears}
+          title={'First Years'}
+          dbYear={{ year: 'firstYears' }}
+          styling={trainingTextStylings.firstYearsText}
+        />
+        <TrainingCard
+          navigation={navigation}
+          navTarget={'TrainingCategories'}
+          imgSource={schoolYearImages.secondYears}
+          title={'Second Years'}
+          dbYear={{ year: 'secondYears' }}
+          styling={trainingTextStylings.secondYearsText}
+        />
+        <TrainingCard
+          navigation={navigation}
+          navTarget={'TrainingCategories'}
+          imgSource={schoolYearImages.thirdYears}
+          title={'Third Years'}
+          dbYear={{ year: 'thirdYears' }}
+          styling={trainingTextStylings.thirdYearsText}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
