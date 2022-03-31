@@ -78,7 +78,7 @@ const TrainingYearsScreen = ({ navigation }) => {
         dbYear={{ year: 'secondYears' }}
         styling={trainingTextStylings.secondYearsText}
         preReqsMet={userDetails.completedTrainings.length >= 3 ? true : false}
-        alertMessage={"Please Complete more trainings from First Year to proceed"}
+        alertMessage={`Please Complete ${3 - userDetails.completedTrainings.length} more trainings from First Year`}
       />
       <TrainingCard
         navigation={navigation}
