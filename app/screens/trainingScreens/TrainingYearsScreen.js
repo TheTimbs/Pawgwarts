@@ -77,41 +77,41 @@ const TrainingYearsScreen = () => {
   };
 
   if (userDetails.completedTrainings) {
-  return (
-    <ScrollView>
-      <View style={styles.container}>
-        <TrainingCard
-          navigation={navigation}
-          navTarget={'TrainingCategories'}
-          imgSource={schoolYearImages.firstYears}
-          title={'First Years'}
-          dbYear={{ year: 'firstYears' }}
-          styling={trainingTextStylings.firstYearsText}
-        />
-        <TrainingCard
-          navigation={navigation}
-          navTarget={'TrainingCategories'}
-          imgSource={schoolYearImages.secondYears}
-          title={'Second Years'}
-          dbYear={{ year: 'secondYears' }}
-          styling={trainingTextStylings.secondYearsText}
-          preReqsMet={userDetails.completedTrainings.length >= 3 ? true : false}
-          alertMessage={`Please Complete ${3 - userDetails.completedTrainings.length
-            } more trainings from First Year`}
-        />
-        <TrainingCard
-          navigation={navigation}
-          navTarget={'TrainingCategories'}
-          imgSource={schoolYearImages.thirdYears}
-          title={'Third Years'}
-          dbYear={{ year: 'thirdYears' }}
-          styling={trainingTextStylings.thirdYearsText}
-          preReqsMet={year2Count > 2 ? true : false}
-          alertMessage={`Please Complete ${2 - year2Count
-            } more training(s) from First Year`}
-        />
-      </View>
-    </ScrollView>
+    return (
+      <ScrollView>
+        <View style={styles.container}>
+          <TrainingCard
+            navigation={navigation}
+            navTarget={'TrainingCategories'}
+            imgSource={schoolYearImages.firstYears}
+            title={'First Years'}
+            dbYear={{ year: 'firstYears' }}
+            styling={trainingTextStylings.firstYearsText}
+          />
+          <TrainingCard
+            navigation={navigation}
+            navTarget={'TrainingCategories'}
+            imgSource={schoolYearImages.secondYears}
+            title={'Second Years'}
+            dbYear={{ year: 'secondYears' }}
+            styling={trainingTextStylings.secondYearsText}
+            preReqsMet={userDetails.completedTrainings.length >= 3 ? true : false}
+            alertMessage={`Please Complete ${3 - userDetails.completedTrainings.length
+              } more trainings from First Year`}
+          />
+          <TrainingCard
+            navigation={navigation}
+            navTarget={'TrainingCategories'}
+            imgSource={schoolYearImages.thirdYears}
+            title={'Third Years'}
+            dbYear={{ year: 'thirdYears' }}
+            styling={trainingTextStylings.thirdYearsText}
+            preReqsMet={year2Count >= 2 ? true : false}
+            alertMessage={`Please Complete ${2 - year2Count
+              } more training(s) from First Year`}
+          />
+        </View>
+      </ScrollView>
     );
   } else {
     return <Text>Loading...</Text>;
