@@ -13,12 +13,14 @@ import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
+import ChallengeCard from '../components/ChallengeCard';
 
-function FeedScreen({navigation}) {
+function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
   const feedCollectionRef = collection(db, 'feed');
   const dayCollectionRef = doc(db, 'challenge', 'date');
   const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
+  const [challenge, setChallenge] = useState({});
   const navigation = useNavigation();
   const today = new Date();
 
@@ -29,10 +31,12 @@ function FeedScreen({navigation}) {
     const boo = new Date(today) >= new Date(cur);
     let date = new Date();
     date.setDate(date.getDate() + 7);
-
     if (boo) {
       await updateDoc(dayCollectionRef, { setDate: date.toDateString() });
       randomChallenge();
+    }else{
+    const challengeData = await getDoc(weekCollectionRef);
+    setChallenge(challengeData.data());
     }
   };
 
@@ -55,6 +59,7 @@ function FeedScreen({navigation}) {
     console.log(title);
     console.log(arrCate[cateNum].data());
     const challenge = arrTraining[trainingNum].data();
+    setChallenge(challenge);
     await updateDoc(weekCollectionRef, { challenge: challenge });
   };
 
@@ -69,16 +74,16 @@ function FeedScreen({navigation}) {
         setFeedList(mappedData);
       };
       getFeed();
+      getDate()
     });
-    console.log('feedscreen');
     return unsubscribe;
   }, [navigation]);
-
   return (
     <Screen style={styles.screen}>
       <ScrollView>
-         <View style={styles.RectangleShapeView}>
-           </View>
+        <ChallengeCard>
+
+          </ChallengeCard>
           {feedList.map((item) =>
           <FeedCard
             key={item.id.toString()}
