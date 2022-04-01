@@ -17,13 +17,13 @@ import { useNavigation } from '@react-navigation/native';
 import Button from '../components/Button';
 import Screen from '../components/Screen';
 
-export default function UploadImageScreen() {
+export default function UploadImageScreen({route}) {
   const [image, setImage] = useState(null);
   const [confirmed, setCon] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
-  const feedCollectionRef = collection(db, 'feed');
+  const feedCollectionRef = collection(db, `${route.params.props}`);
   const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
   const userCollectionRef = doc(db, 'users', auth.currentUser.uid);
 

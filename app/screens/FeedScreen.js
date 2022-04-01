@@ -19,6 +19,7 @@ function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
 
   const feedCollectionRef = collection(db, 'feed');
+  const comFeedCollectionRef = collection(db, 'communityFeed');
   const dayCollectionRef = doc(db, 'challenge', 'date');
   const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
   const [challenge, setChallenge] = useState({});
@@ -65,7 +66,7 @@ function FeedScreen() {
   const changeFeed = async (position) => {
 
     if(position === 324){
-    const data = await getDocs(feedCollectionRef);
+    const data = await getDocs(comFeedCollectionRef);
     const mappedData = data.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
@@ -123,7 +124,7 @@ function FeedScreen() {
               key={"dum"}
               navigation={navigation}
               imgSource={challenge.images[0]}
-              title={challenge.title}
+              title={"Community Feed"}
               data={challenge}
             />
          </ScrollView>

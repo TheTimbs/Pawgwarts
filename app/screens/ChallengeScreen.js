@@ -11,7 +11,7 @@ function ChallengeScreen({ navigation, route }) {
   const data = route.params;
   const [trainingDetails, setTrainingDetails] = useState(data);
   const [userPosted, setUserPosted] = useState(false);
-
+  const props = 'feed'
 
   // Dummy Training Data:
   const loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
@@ -67,7 +67,7 @@ function ChallengeScreen({ navigation, route }) {
 
        {!userPosted ?(  <View style={styles.bottom}>
              <Pressable style={styles.buttonStyle}
-               onPress={() => navigation.navigate('UploadImageScreen')}>
+               onPress={() => navigation.navigate('UploadImageScreen', {props})}>
              <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
              </Pressable>
          </View>
