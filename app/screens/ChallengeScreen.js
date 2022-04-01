@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { db } from "../../firebase/firebase-config";
-import { getDocs, collection, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { db, auth } from "../../firebase/firebase-config";
+import { doc, getDoc,} from 'firebase/firestore';
+
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
@@ -10,7 +10,8 @@ import colors from '../config/colors';
 function ChallengeScreen({ navigation, route }) {
   const data = route.params;
   const [trainingDetails, setTrainingDetails] = useState(data);
-
+  const [userPosted, setUserPosted] = useState(false);
+  const props = 'feed'
 
   // Dummy Training Data:
   const loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
@@ -20,7 +21,18 @@ function ChallengeScreen({ navigation, route }) {
 
 
 
-  useEffect(() => {  }, []);
+  useEffect(() => {
+
+    async function checkUserPosted(){
+      const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
+      const challengeData = await getDoc(weekCollectionRef);
+      const userEmails = challengeData.data().userPost
+      if(userEmails.includes(auth.currentUser.email)){
+              setUserPosted(true)
+      }
+    }
+    checkUserPosted();
+    }, []);
 
 
 
@@ -53,15 +65,17 @@ function ChallengeScreen({ navigation, route }) {
           {trainingDetails.tools[0] !== "" ? trainingDetails.tools.map(tool => (<Text key={tools.indexOf(tool)} style={bodyText}>* {tool}</Text>)) : tools.map(tool => (<Text key={tools.indexOf(tool)} style={styles.bodyText}>* {tool}</Text>))}
         </ScrollView>
 
-        {/* <View style={styles.bottom}>
-          {startTraining ? <Button title='StartTraining' onPress={() => handleStartTraining()} /> : trainingCompleted ? <Text> You already completed this training </Text> : <Button title='In Progress: Mark Completed' onPress={handleMarkCompleted} />}
-        </View> */}
-         <Pressable
-        style={styles.buttonStyle}
-        onPress={() => navigation.navigate('UploadImageScreen')}
-      >
-        <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
-      </Pressable>
+       {!userPosted ?(  <View style={styles.bottom}>
+             <Pressable style={styles.buttonStyle}
+               onPress={() => navigation.navigate('UploadImageScreen', {props})}>
+             <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
+             </Pressable>
+         </View>
+       ):<View style={styles.bottom}>
+         <Text style={styles.text}>You already posted for this week</Text>
+       </View>
+         }
+
       </SafeAreaView>
   )
 }
@@ -106,6 +120,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: 'center'
   },
+  text:{
+    fontSize:20
+  }
 });
 
 

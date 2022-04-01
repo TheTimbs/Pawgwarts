@@ -54,12 +54,13 @@ function MyTrainings() {
   } else {
     return (
       <ImageBackground
-        blurRadius={3}
+        blurRadius={1}
         style={styles.background}
-        source={require('../assets/BlueBackground.jpeg')}
+        source={require('../assets/castle.jpeg')}
       >
-        <Text style={styles.WelcomeHeader}>Welcome, {user.name}! </Text>
-
+        <View style={styles.welcomeBorder}>
+          <Text style={styles.WelcomeHeader}>Welcome, {user.name}! </Text>
+        </View>
         <View style={styles.trainings}>
           <Text style={styles.trainingsHeaderText}>
             {user.dog.dogName}'s Completed Trainings:
@@ -125,24 +126,25 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   WelcomeHeader: {
-    fontSize: 40,
-    color: colors.gold,
-    marginBottom: 6,
-    paddingTop: 30,
-    paddingBottom: 10,
+    fontSize: 50,
+    color: colors.secondary,
+    marginBottom: 10,
+    marginTop: 30,
+    padding: 10,
     fontFamily: 'Harry-Potter',
+    // backgroundColor: 'rgba(0, 0, 0, .7)',
   },
   trainings: {
     marginTop: 5,
     marginBottom: 10,
     width: '85%',
-    backgroundColor: '#871419',
+    backgroundColor: 'rgba(0, 0, 0, .7)',
     borderRadius: 15,
     paddingBottom: 5,
-    padding: 5,
+    padding: 10,
   },
   trainingsHeaderText: {
-    fontSize: 30,
+    fontSize: 35,
     textAlign: 'center',
     fontWeight: 'bold',
     paddingBottom: 5,
@@ -151,14 +153,15 @@ const styles = StyleSheet.create({
     fontFamily: 'Harry-Potter',
   },
   trainingsText: {
-    fontSize: 15,
+    fontSize: 18,
     textAlign: 'center',
-    color: 'black',
+    color: 'white',
     fontWeight: '500',
     textDecorationLine: 'underline',
   },
   totalTrainings: {
-    paddingTop: 5,
+    paddingTop: 15,
+    paddingBottom: 5,
     color: 'white',
     textAlign: 'center',
   },

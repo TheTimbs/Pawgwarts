@@ -14,10 +14,13 @@ import NewListingButton from '../navigation/NewListingButton';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import ChallengeCard from '../components/ChallengeCard';
+import CommunityCard from '../components/CommunityCard';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
+
   const feedCollectionRef = collection(db, 'feed');
+  const comFeedCollectionRef = collection(db, 'communityFeed');
   const dayCollectionRef = doc(db, 'challenge', 'date');
   const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
   const [challenge, setChallenge] = useState({});
@@ -34,7 +37,7 @@ function FeedScreen() {
     const challengeData = await getDoc(weekCollectionRef);
     setChallenge(challengeData.data().challenge);
     if (boo) {
-      console.log('this shouldnt be running')
+
       await updateDoc(dayCollectionRef, { setDate: date.toDateString() });
       randomChallenge();
     }
@@ -59,22 +62,44 @@ function FeedScreen() {
     const trainingNum = random(arrTraining.length);
     const challenge = arrTraining[trainingNum].data();
     setChallenge(challenge);
-    await updateDoc(weekCollectionRef, { challenge: challenge });
+    await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[]});
   };
+  const changeFeed = async (position) => {
+    console.log(position)
+    if(position >= 281){
+    const data = await getDocs(comFeedCollectionRef);
+    const mappedData = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    setFeedList(mappedData);
 
-
+  }else{
+    getFeed();
+  }
+  };
+  const getFeed = async () => {
+    const data = await getDocs(feedCollectionRef);
+    const mappedData = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+     const dataDate = await getDoc(dayCollectionRef);
+     const cur = new Date(dataDate.data().setDate);
+     let date = new Date();
+     date.setDate(date.getDate() - 7);
+     const filter =  mappedData.filter((post) => {
+      if(new Date(post.date) < new Date(cur) && new Date(post.date) > new Date(date)){
+        return post
+      }
+    });
+    setFeedList(filter);
+  }
   useEffect(() => {
 
     const unsubscribe = navigation.addListener('focus', () => {
-      const getFeed = async () => {
-        const data = await getDocs(feedCollectionRef);
-        const mappedData = data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setFeedList(mappedData);
-      };
-      getFeed();
+
+      changeFeed()
       getDate();
     });
     return unsubscribe;
@@ -88,14 +113,22 @@ function FeedScreen() {
     <Screen style={styles.screen}>
 
       <ScrollView>
-        <ChallengeCard
-          key={challenge.title}
-          navigation={navigation}
-          imgSource={challenge.images[0]}
-          title={challenge.title}
-          data={challenge}
-        >
-          </ChallengeCard>
+        <ScrollView horizontal={true} style={styles.backgroundColorView} onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)} scrollEventThrottle={8} pagingEnabled decelerationRate={"fast"} disableIntervalMomentum={true}>
+            <ChallengeCard
+              key={challenge.title}
+              navigation={navigation}
+              imgSource={challenge.images[0]}
+              title={challenge.title}
+              data={challenge}
+            />
+             <CommunityCard
+              key={"dum"}
+              navigation={navigation}
+              imgSource={challenge.images[0]}
+              title={"Community Feed"}
+              data={challenge}
+            />
+         </ScrollView>
           {feedList.map((item) =>
           <FeedCard
             key={item.id.toString()}
@@ -132,6 +165,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: 'transparent',
   },
+
 });
 
 export default FeedScreen;

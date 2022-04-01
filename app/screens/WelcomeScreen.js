@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageBackground, StyleSheet, View, Image, Text } from 'react-native';
 import { useFonts } from 'expo-font';
 
 import Button from '../components/Button';
 import routes from '../navigation/routes';
+import { signInWithEmailAndPassword } from '@firebase/auth';
+import { auth } from '../../firebase/firebase-config';
 
 function WelcomeScreen({ navigation }) {
+  const [isSignedIn, setIsSignedIn] = useState('');
+
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
   });
+
+  const demo = {
+    email: 'demo@pawgwarts.com',
+    password: '123456',
+  };
+
+  const SignUser = () => {
+    signInWithEmailAndPassword(auth, demo.email, demo.password)
+      .then(() => {
+        setIsSignedIn(true);
+        navigation.navigate('App');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   if (!fontsLoaded) {
     return null;
@@ -33,6 +53,11 @@ function WelcomeScreen({ navigation }) {
           title="Register"
           color="purple"
           onPress={() => navigation.navigate(routes.REGISTER)}
+        />
+        <Button
+          title="Login as Guest"
+          color="blue"
+          onPress={() => SignUser()}
         />
       </View>
     </ImageBackground>

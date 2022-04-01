@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db, auth, storage } from '../../firebase/firebase-config';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import uuid from 'uuid';
@@ -17,17 +17,19 @@ import { useNavigation } from '@react-navigation/native';
 import Button from '../components/Button';
 import Screen from '../components/Screen';
 
-export default function UploadImageScreen() {
+export default function UploadImageScreen({route}) {
   const [image, setImage] = useState(null);
   const [confirmed, setCon] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
-  const feedCollectionRef = collection(db, 'feed');
+  const feedCollectionRef = collection(db, `${route.params.props}`);
+  const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
   const userCollectionRef = doc(db, 'users', auth.currentUser.uid);
 
   const createPost = async () => {
     const user = await getDoc(userCollectionRef);
+    const date = new Date();
     if (user.exists()) {
       console.log(user.data());
     } else {
@@ -41,7 +43,10 @@ export default function UploadImageScreen() {
       UsersLikes: [],
       house: user.data().house,
       comments: [],
+      date: date.toDateString()
+
     });
+     await updateDoc(weekCollectionRef, {userPost:arrayUnion(auth.currentUser.email)});
     navigation.navigate('MyFeed');
   };
 
