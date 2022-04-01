@@ -14,6 +14,7 @@ import NewListingButton from '../navigation/NewListingButton';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import ChallengeCard from '../components/ChallengeCard';
+import CommunityCard from '../components/CommunityCard';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
@@ -64,8 +65,8 @@ function FeedScreen() {
     await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[]});
   };
   const changeFeed = async (position) => {
-
-    if(position === 324){
+    console.log(position)
+    if(position >= 281){
     const data = await getDocs(comFeedCollectionRef);
     const mappedData = data.docs.map((doc) => ({
       ...doc.data(),
@@ -120,7 +121,7 @@ function FeedScreen() {
               title={challenge.title}
               data={challenge}
             />
-             <ChallengeCard
+             <CommunityCard
               key={"dum"}
               navigation={navigation}
               imgSource={challenge.images[0]}
