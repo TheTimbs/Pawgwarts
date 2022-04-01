@@ -28,6 +28,7 @@ export default function UploadImageScreen() {
 
   const createPost = async () => {
     const user = await getDoc(userCollectionRef);
+    const date = new Date();
     if (user.exists()) {
       console.log(user.data());
     } else {
@@ -40,6 +41,7 @@ export default function UploadImageScreen() {
       email: auth.currentUser.email,
       UsersLikes: [],
       house: user.data().house,
+      date: date.toDateString();
     });
     navigation.navigate('MyFeed');
   };
