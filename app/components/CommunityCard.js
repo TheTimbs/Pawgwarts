@@ -30,6 +30,7 @@ function CommunityCard({
   return (
     <>
       <View style={styles.container} >
+      <AppText style={styles.text}>Challenge of weeks</AppText>
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("UploadImageScreen", {props})}
         >
@@ -45,15 +46,16 @@ function CommunityCard({
 const styles = StyleSheet.create({
   container:{
     marginHorizontal:10,
-    backgroundColor:'black',
-    marginBottom:10,
+    alignContent:'center',
+    alignSelf:'center',
+    backgroundColor:'black'
 
   },
   image: {
     alignItems: 'center',
     height: 150,
     justifyContent: 'center',
-    width: '100%',
+    width: '80%',
     borderRadius: 100,
   },
   firstYeartext: {

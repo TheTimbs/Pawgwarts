@@ -165,9 +165,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: 'transparent',
   },
-  backgroundColorView:{
-    backgroundColor:'white',
-  }
+
 });
 
 export default FeedScreen;
