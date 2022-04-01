@@ -12,7 +12,7 @@ import { useFonts } from 'expo-font';
 import AppText from './Text';
 import colors from '../config/colors';
 
-function ChallengeCard({
+function CommunityCard({
   navigation,
   imgSource,
   title,
@@ -26,13 +26,13 @@ function ChallengeCard({
     return null;
   }
 
-
+  const props = 'communityFeed'
   return (
     <>
       <View style={styles.container} >
-      <AppText style={styles.text}>Challenge of week</AppText>
+      <AppText style={styles.text}>Challenge of weeks</AppText>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("ChallengeScreen", data)}
+          onPress={() => navigation.navigate("UploadImageScreen", {props})}
         >
           <ImageBackground source={{ uri: imgSource }} style={styles.image}>
             <AppText style={styles.firstYeartext}>{title}</AppText>
@@ -46,16 +46,16 @@ function ChallengeCard({
 const styles = StyleSheet.create({
   container:{
     marginHorizontal:10,
-    backgroundColor:'black',
-    marginBottom:10,
-
+    alignContent:'center',
+    alignSelf:'center',
+    backgroundColor:'black'
 
   },
   image: {
     alignItems: 'center',
     height: 150,
     justifyContent: 'center',
-    width: '100%',
+    width: '80%',
     borderRadius: 100,
   },
   firstYeartext: {
@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChallengeCard;
+export default CommunityCard;

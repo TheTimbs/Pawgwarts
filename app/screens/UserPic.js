@@ -54,7 +54,7 @@ function UserPic() {
         ) : (
           <FlatList
             data={userPhoto}
-            keyExtractor={(i) => i++}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <FeedCard
                 title={item.name}

@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { Form, FormField, SubmitButton } from '../components/forms';
 import Button from '../components/Button';
 import Screen from '../components/Screen';
-
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { auth } from '../../firebase/firebase-config';
 import { TextInput } from 'react-native-gesture-handler';
@@ -40,26 +39,14 @@ function LoginScreen(props) {
       style={styles.background}
       source={require('../assets/BlueBackground.jpeg')}
     >
-      {/* <Screen style={styles.container}> */}
+
       <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
       <Form
         initialValues={{ email: '', password: '' }}
         onSubmit={(value) => SignUser(value)}
         validationSchema={validationSchema}
       >
-        {/* <TextInput
-        style={styles.TextInput}
-        autoCapitalize="none"
-        autoCorrect={false}
-        icon="email"
-        keyboardType="email-address"
-        name="email"
-        placeholder="Email"
-        textContentType="emailAddress"
-        inlineImageLeft="email"
-        inlineImagePadding={20}
-        onChangeText={(text) => setEmail(text)}
-      /> */}
+
         <FormField
           autoCapitalize="none"
           autoCorrect={false}
@@ -78,22 +65,11 @@ function LoginScreen(props) {
           secureTextEntry
           textContentType="password"
         />
-        {/* <TextInput
-        style={styles.TextInput}
-        autoCapitalize="none"
-        autoCorrect={false}
-        icon="lock"
-        name="password"
-        placeholder="Password"
-        secureTextEntry={true}
-        textContentType="password"
-        onChangeText={(text) => setPassword(text)}
-      /> */}
+
         <View style={styles.buttonsContainer}>
           <SubmitButton title="Sign in" color="blue" />
         </View>
       </Form>
-      {/* </Screen> */}
     </ImageBackground>
   );
 }
