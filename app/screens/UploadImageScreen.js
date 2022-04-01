@@ -42,7 +42,9 @@ export default function UploadImageScreen({route}) {
       email: auth.currentUser.email,
       UsersLikes: [],
       house: user.data().house,
+      comments: [],
       date: date.toDateString()
+
     });
      await updateDoc(weekCollectionRef, {userPost:arrayUnion(auth.currentUser.email)});
     navigation.navigate('MyFeed');
