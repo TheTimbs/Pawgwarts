@@ -17,7 +17,7 @@ import ChallengeCard from '../components/ChallengeCard';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
-  const [count, setCount] = useState(0);
+
   const feedCollectionRef = collection(db, 'feed');
   const dayCollectionRef = doc(db, 'challenge', 'date');
   const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
@@ -62,18 +62,18 @@ function FeedScreen() {
     setChallenge(challenge);
     await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[]});
   };
-  const changeFeed = async () => {
-    if(count === 1){
+  const changeFeed = async (position) => {
+
+    if(position === 324){
     const data = await getDocs(feedCollectionRef);
     const mappedData = data.docs.map((doc) => ({
       ...doc.data(),
       id: doc.id,
     }));
     setFeedList(mappedData);
-    setCount(0);
+
   }else{
     getFeed();
-    setCount(1)
   }
   };
   const getFeed = async () => {
@@ -97,7 +97,7 @@ function FeedScreen() {
 
     const unsubscribe = navigation.addListener('focus', () => {
 
-      getFeed();
+      changeFeed()
       getDate();
     });
     return unsubscribe;
@@ -111,7 +111,7 @@ function FeedScreen() {
     <Screen style={styles.screen}>
 
       <ScrollView>
-        <ScrollView horizontal={true} style={styles.backgroundColorView} onScrollBeginDrag= {()=> changeFeed()} scrollEventThrottle={8} pagingEnabled>
+        <ScrollView horizontal={true} style={styles.backgroundColorView} onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)} scrollEventThrottle={8} pagingEnabled decelerationRate={"fast"} disableIntervalMomentum={true}>
             <ChallengeCard
               key={challenge.title}
               navigation={navigation}
