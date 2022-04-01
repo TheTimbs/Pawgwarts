@@ -72,7 +72,16 @@ function FeedScreen() {
           ...doc.data(),
           id: doc.id,
         }));
-        setFeedList(mappedData);
+         const dataDate = await getDoc(dayCollectionRef);
+         const cur = new Date(dataDate.data().setDate);
+         let date = new Date();
+         date.setDate(date.getDate() - 7);
+         const filter =  mappedData.filter((post) => {
+          if(new Date(post.date) < new Date(cur) && new Date(post.date) > new Date(date)){
+            return post
+          }
+        });
+        setFeedList(filter);
       };
       getFeed();
       getDate();
