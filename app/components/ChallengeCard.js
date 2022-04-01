@@ -30,11 +30,11 @@ function ChallengeCard({
   return (
     <>
       <View style={styles.container} >
+      <AppText style={styles.text}>Challenge of week</AppText>
         <TouchableWithoutFeedback
           onPress={() => navigation.navigate("ChallengeScreen", data)}
         >
           <ImageBackground source={{ uri: imgSource }} style={styles.image}>
-            <AppText style={styles.text}>Challenge of week</AppText>
             <AppText style={styles.firstYeartext}>{title}</AppText>
           </ImageBackground>
         </TouchableWithoutFeedback>
@@ -45,7 +45,10 @@ function ChallengeCard({
 
 const styles = StyleSheet.create({
   container:{
-    paddingBottom:10,
+    marginHorizontal:10,
+    backgroundColor:'black',
+    marginBottom:10,
+
   },
   image: {
     alignItems: 'center',
@@ -61,7 +64,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Harry-Potter',
   },
   text: {
-    color: colors.black,
+    color: colors.gold,
     fontWeight: 'bold',
     fontSize: 60,
     fontFamily: 'Harry-Potter',

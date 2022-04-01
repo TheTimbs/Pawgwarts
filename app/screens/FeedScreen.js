@@ -17,6 +17,7 @@ import ChallengeCard from '../components/ChallengeCard';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
+  const [count, setCount] = useState(0);
   const feedCollectionRef = collection(db, 'feed');
   const dayCollectionRef = doc(db, 'challenge', 'date');
   const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
@@ -61,28 +62,41 @@ function FeedScreen() {
     setChallenge(challenge);
     await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[]});
   };
-
-
+  const changeFeed = async () => {
+    if(count === 1){
+    const data = await getDocs(feedCollectionRef);
+    const mappedData = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    setFeedList(mappedData);
+    setCount(0);
+  }else{
+    getFeed();
+    setCount(1)
+  }
+  };
+  const getFeed = async () => {
+    const data = await getDocs(feedCollectionRef);
+    const mappedData = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+     const dataDate = await getDoc(dayCollectionRef);
+     const cur = new Date(dataDate.data().setDate);
+     let date = new Date();
+     date.setDate(date.getDate() - 7);
+     const filter =  mappedData.filter((post) => {
+      if(new Date(post.date) < new Date(cur) && new Date(post.date) > new Date(date)){
+        return post
+      }
+    });
+    setFeedList(filter);
+  }
   useEffect(() => {
 
     const unsubscribe = navigation.addListener('focus', () => {
-      const getFeed = async () => {
-        const data = await getDocs(feedCollectionRef);
-        const mappedData = data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-         const dataDate = await getDoc(dayCollectionRef);
-         const cur = new Date(dataDate.data().setDate);
-         let date = new Date();
-         date.setDate(date.getDate() - 7);
-         const filter =  mappedData.filter((post) => {
-          if(new Date(post.date) < new Date(cur) && new Date(post.date) > new Date(date)){
-            return post
-          }
-        });
-        setFeedList(filter);
-      };
+
       getFeed();
       getDate();
     });
@@ -97,9 +111,16 @@ function FeedScreen() {
     <Screen style={styles.screen}>
 
       <ScrollView>
-        <ScrollView horizontal={true}>
+        <ScrollView horizontal={true} style={styles.backgroundColorView} onScrollBeginDrag= {()=> changeFeed()} scrollEventThrottle={8} pagingEnabled>
             <ChallengeCard
               key={challenge.title}
+              navigation={navigation}
+              imgSource={challenge.images[0]}
+              title={challenge.title}
+              data={challenge}
+            />
+             <ChallengeCard
+              key={"dum"}
               navigation={navigation}
               imgSource={challenge.images[0]}
               title={challenge.title}
@@ -142,6 +163,9 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: 'transparent',
   },
+  backgroundColorView:{
+    backgroundColor:'white',
+  }
 });
 
 export default FeedScreen;
