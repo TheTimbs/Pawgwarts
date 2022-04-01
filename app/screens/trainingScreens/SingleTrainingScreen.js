@@ -20,10 +20,13 @@ import {
   Image,
   ScrollView,
   Button,
+  useColorScheme,
 } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../config/colors';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
@@ -128,6 +131,26 @@ function SingleTrainingScreen({ navigation, route }) {
   const handleLink = (link) => {
     Linking.openURL(link);
   };
+
+  if (trainingDetails.difficulty) {
+    var myloop = [];
+
+    for (let i = 0; i < trainingDetails.difficulty; i++) {
+      myloop.push(
+        <MaterialCommunityIcons name="star" color={colors.white} size={30} />
+      );
+    }
+    for (let i = 0; i < 5 - trainingDetails.difficulty; i++) {
+      myloop.push(
+        <MaterialCommunityIcons
+          name="star-outline"
+          color={colors.white}
+          size={30}
+        />
+      );
+    }
+  }
+
   return Object.keys(trainingDetails).length === 0 ? (
     <Text> ... Loading </Text>
   ) : (
@@ -137,7 +160,7 @@ function SingleTrainingScreen({ navigation, route }) {
           {trainingDetails.images[1] ? (
             <Image
               style={styles.logo}
-              source={{ uri: trainingDetails.images[1] }}
+              source={{ uri: trainingDetails.images[0] }}
             />
           ) : (
             <Image
@@ -149,12 +172,27 @@ function SingleTrainingScreen({ navigation, route }) {
         <View style={styles.trainingDescriptionContainer}>
           {trainingDetails.description ? (
             <>
-              <Text style={styles.topText}>
-                Difficulty: {trainingDetails.difficulty}/5
-              </Text>
+              <Text style={styles.topText}>Difficulty: {myloop}</Text>
               <Text style={styles.descriptionText}>
                 {trainingDetails.description}
               </Text>
+              <View style={styles.bottom}>
+                {startTraining ? (
+                  <Button
+                    title="Start Training"
+                    onPress={() => handleStartTraining()}
+                    color={colors.purple}
+                  />
+                ) : trainingCompleted ? (
+                  <Text fontSize={30}> Training completed! </Text>
+                ) : (
+                  <Button
+                    title="In Progress: Mark Completed"
+                    onPress={handleMarkCompleted}
+                    color={colors.purple}
+                  />
+                )}
+              </View>
             </>
           ) : (
             <Text style={styles.bodyText}>{loremIpsum}</Text>
@@ -164,30 +202,38 @@ function SingleTrainingScreen({ navigation, route }) {
         <Text style={styles.stepsTitle}>Steps</Text>
         {trainingDetails.steps[0] !== '' ? (
           trainingDetails.steps.map((step, stepIndex) => (
-            <View style={styles.stepsView}>
-              <View style={styles.stepNumIcon}>
-                <Text key={stepIndex} style={styles.stepNumIconText}>
-                  {stepIndex + 1}
+            <>
+              <View style={styles.stepsView}>
+                <View style={styles.stepNumIcon}>
+                  <Text key={stepIndex} style={styles.stepNumIconText}>
+                    {stepIndex + 1}
+                  </Text>
+                </View>
+                <Text key={stepIndex} style={styles.stepsText}>
+                  {step}
                 </Text>
               </View>
-              <Text key={stepIndex} style={styles.bodyText}>
-                {step}
+              <Image
+                style={styles.logo}
+                source={{ uri: trainingDetails.images[stepIndex + 2] }}
+              />
+            </>
+          ))
+        ) : (
+          <Text>Loading...</Text>
+        )}
+        <View style={styles.tipsView}>
+          <Text style={styles.tipTitle}>Tips</Text>
+          {trainingDetails.tips[0] !== '' ? (
+            trainingDetails.tips.map((tip) => (
+              <Text key={tips.indexOf(tip)} style={styles.tipsText}>
+                * {tip}
               </Text>
-            </View>
-          ))
-        ) : (
-          <Text>Loading...</Text>
-        )}
-        <Text style={styles.stepsTitle}>Tips</Text>
-        {trainingDetails.tips[0] !== '' ? (
-          trainingDetails.tips.map((tip) => (
-            <Text key={tips.indexOf(tip)} style={styles.bodyText}>
-              * {tip}
-            </Text>
-          ))
-        ) : (
-          <Text>Loading...</Text>
-        )}
+            ))
+          ) : (
+            <Text>Loading...</Text>
+          )}
+        </View>
         <Text style={styles.stepsTitle}> Recommended Training Tools </Text>
         {trainingDetails.tools[0] !== '' ? (
           trainingDetails.tools.map((tool, i) => (
@@ -218,19 +264,6 @@ function SingleTrainingScreen({ navigation, route }) {
           <Text>Just some yummy treats! :) </Text>
         )}
       </ScrollView>
-
-      <View style={styles.bottom}>
-        {startTraining ? (
-          <Button title="StartTraining" onPress={() => handleStartTraining()} />
-        ) : trainingCompleted ? (
-          <Text> You already completed this training </Text>
-        ) : (
-          <Button
-            title="In Progress: Mark Completed"
-            onPress={handleMarkCompleted}
-          />
-        )}
-      </View>
     </>
   );
 }
@@ -240,11 +273,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     flexWrap: 'wrap',
     flex: 1,
-    paddingRight: 15,
+    padding: 15,
   },
   bottom: {
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.houseYellow,
+    width: '50%',
+    alignSelf: 'center',
+    borderRadius: 10,
   },
   descriptionText: {
     fontSize: 18,
@@ -262,7 +299,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingTop: 5,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 24,
+    marginBottom: 15,
   },
   stepNumIcon: {
     marginLeft: 20,
@@ -277,12 +315,39 @@ const styles = StyleSheet.create({
   stepNumIconText: {
     fontSize: 18,
     alignSelf: 'center',
+    color: colors.white,
+  },
+  stepsText: {
+    fontSize: 18,
+    flexWrap: 'wrap',
+    flex: 1,
+    paddingRight: 15,
   },
   stepsView: {
     flexDirection: 'row',
     paddingBottom: 20,
+    marginTop: 20,
   },
-
+  tipsView: {
+    backgroundColor: colors.houseBlue,
+  },
+  tipsText: {
+    color: colors.white,
+    fontSize: 18,
+    flexWrap: 'wrap',
+    flex: 1,
+    padding: 10,
+    marginRight: 10,
+    marginLeft: 10,
+  },
+  tipTitle: {
+    textAlign: 'center',
+    paddingTop: 5,
+    fontWeight: 'bold',
+    fontSize: 24,
+    marginBottom: 5,
+    color: colors.white,
+  },
   top: {
     flexDirection: 'row',
     justifyContent: 'center',
