@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { db } from "../../firebase/firebase-config";
-import { getDocs, collection, doc, getDoc, updateDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { db, auth } from "../../firebase/firebase-config";
+import { doc, getDoc,} from 'firebase/firestore';
+
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
@@ -10,6 +10,7 @@ import colors from '../config/colors';
 function ChallengeScreen({ navigation, route }) {
   const data = route.params;
   const [trainingDetails, setTrainingDetails] = useState(data);
+  const [userPosted, setUserPosted] = useState(false);
 
 
   // Dummy Training Data:
@@ -20,7 +21,18 @@ function ChallengeScreen({ navigation, route }) {
 
 
 
-  useEffect(() => {  }, []);
+  useEffect(() => {
+
+    async function checkUserPosted(){
+      const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
+      const challengeData = await getDoc(weekCollectionRef);
+      const userEmails = challengeData.data().userPost
+      if(userEmails.includes(auth.currentUser.email)){
+              setUserPosted(true)
+      }
+    }
+    checkUserPosted();
+    }, []);
 
 
 
@@ -53,20 +65,15 @@ function ChallengeScreen({ navigation, route }) {
           {trainingDetails.tools[0] !== "" ? trainingDetails.tools.map(tool => (<Text key={tools.indexOf(tool)} style={bodyText}>* {tool}</Text>)) : tools.map(tool => (<Text key={tools.indexOf(tool)} style={styles.bodyText}>* {tool}</Text>))}
         </ScrollView>
 
-         <View style={styles.bottom}>
-                 <Pressable
-        style={styles.buttonStyle}
-        onPress={() => navigation.navigate('UploadImageScreen')}
-      >
-        <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
-      </Pressable>
-        </View>
-         {/* <Pressable
-        style={styles.buttonStyle}
-        onPress={() => navigation.navigate('UploadImageScreen')}
-      >
-        <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
-      </Pressable> */}
+       {!userPosted ?(  <View style={styles.bottom}>
+             <Pressable style={styles.buttonStyle}
+               onPress={() => navigation.navigate('UploadImageScreen')}>
+             <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
+             </Pressable>
+         </View>
+       ):<View></View>
+         }
+
       </SafeAreaView>
   )
 }
