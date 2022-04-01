@@ -34,7 +34,7 @@ function FeedScreen() {
     const challengeData = await getDoc(weekCollectionRef);
     setChallenge(challengeData.data().challenge);
     if (boo) {
-      console.log('this shouldnt be running')
+
       await updateDoc(dayCollectionRef, { setDate: date.toDateString() });
       randomChallenge();
     }
@@ -59,7 +59,7 @@ function FeedScreen() {
     const trainingNum = random(arrTraining.length);
     const challenge = arrTraining[trainingNum].data();
     setChallenge(challenge);
-    await updateDoc(weekCollectionRef, { challenge: challenge });
+    await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[]});
   };
 
 

@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db, auth, storage } from '../../firebase/firebase-config';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import uuid from 'uuid';
@@ -24,6 +24,7 @@ export default function UploadImageScreen() {
   const navigation = useNavigation();
 
   const feedCollectionRef = collection(db, 'feed');
+  const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
   const userCollectionRef = doc(db, 'users', auth.currentUser.uid);
 
   const createPost = async () => {
@@ -43,6 +44,7 @@ export default function UploadImageScreen() {
       house: user.data().house,
       date: date.toDateString()
     });
+     await updateDoc(weekCollectionRef, {userPost:arrayUnion(auth.currentUser.email)});
     navigation.navigate('MyFeed');
   };
 
