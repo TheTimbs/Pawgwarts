@@ -40,6 +40,7 @@ export default function UploadImageScreen() {
       email: auth.currentUser.email,
       UsersLikes: [],
       house: user.data().house,
+      comments: [],
     });
     navigation.navigate('MyFeed');
   };

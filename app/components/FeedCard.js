@@ -17,8 +17,10 @@ import Text from './Text';
 import colors from '../config/colors';
 import { getAuth } from 'firebase/auth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 function FeedCard({ title, likes, image, email }) {
+  const navigation = useNavigation();
   const [like, setLike] = useState(likes);
   const [userLike, setUserLike] = useState(false);
 
@@ -81,15 +83,22 @@ function FeedCard({ title, likes, image, email }) {
       </View> */}
       <View style={styles.rowContainer}>
         <Text style={styles.currLikes}> Likes: {like}</Text>
-        <Pressable
-          style={styles.detailsContainer}
-          onPress={() => addLike(email)}
-        >
-          <MaterialCommunityIcons
-            name="bone"
-            size={38}
-            color={userLike ? 'red' : 'black'}
-          />
+        <Pressable style={styles.detailsContainer}>
+          <View style={styles.icons}>
+            <MaterialCommunityIcons
+              onPress={() => addLike(email)}
+              name="bone"
+              size={38}
+              color={userLike ? 'red' : 'black'}
+            />
+            <MaterialCommunityIcons
+              onPress={() => navigation.navigate('CommentsScreen', {
+                email: email, image: image,
+              })}
+              name="chat"
+              size={38}
+            />
+          </View>
         </Pressable>
       </View>
     </View>
@@ -110,6 +119,13 @@ const styles = StyleSheet.create({
   detailsContainer: {
     padding: 5,
     marginBottom: 5,
+    flexDirection: "row",
+
+  },
+  icons: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
   image: {
     width: '100%',
