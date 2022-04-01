@@ -115,7 +115,6 @@ function RegisterScreen() {
   }
 
   return (
-
     <ImageBackground
       blurRadius={3}
       style={styles.container}
@@ -259,6 +258,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontSize: 20,
     paddingTop: 5,
+    color: 'white',
   },
 });
 
