@@ -53,15 +53,20 @@ function ChallengeScreen({ navigation, route }) {
           {trainingDetails.tools[0] !== "" ? trainingDetails.tools.map(tool => (<Text key={tools.indexOf(tool)} style={bodyText}>* {tool}</Text>)) : tools.map(tool => (<Text key={tools.indexOf(tool)} style={styles.bodyText}>* {tool}</Text>))}
         </ScrollView>
 
-        {/* <View style={styles.bottom}>
-          {startTraining ? <Button title='StartTraining' onPress={() => handleStartTraining()} /> : trainingCompleted ? <Text> You already completed this training </Text> : <Button title='In Progress: Mark Completed' onPress={handleMarkCompleted} />}
-        </View> */}
-         <Pressable
+         <View style={styles.bottom}>
+                 <Pressable
         style={styles.buttonStyle}
         onPress={() => navigation.navigate('UploadImageScreen')}
       >
         <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
       </Pressable>
+        </View>
+         {/* <Pressable
+        style={styles.buttonStyle}
+        onPress={() => navigation.navigate('UploadImageScreen')}
+      >
+        <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
+      </Pressable> */}
       </SafeAreaView>
   )
 }
