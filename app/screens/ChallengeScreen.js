@@ -71,7 +71,9 @@ function ChallengeScreen({ navigation, route }) {
              <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
              </Pressable>
          </View>
-       ):<View></View>
+       ):<View style={styles.bottom}>
+         <Text style={styles.text}>You already posted for this week</Text>
+       </View>
          }
 
       </SafeAreaView>
@@ -118,6 +120,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: 'center'
   },
+  text:{
+    fontSize:20
+  }
 });
 
 
