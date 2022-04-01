@@ -99,17 +99,18 @@ const EditUserProfile = () => {
 
   return (
     <ImageBackground
-      blurRadius={3}
+      blurRadius={1}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../assets/castle.jpeg')}
     >
       <View style={styles.container}>
         {user.dog ? (
           <View>
-            <Text style={styles.header}>User Information:</Text>
-            <Text style={styles.text1}>Name: {user.name}</Text>
-            <Text style={styles.text1}>Email: {user.email}</Text>
-
+            <View style={styles.userContainer}>
+              <Text style={styles.header}>User Info:</Text>
+              <Text style={styles.text1}>Name: {user.name}</Text>
+              <Text style={styles.text1}>Email: {user.email}</Text>
+            </View>
             {image ? (
               <Image
                 source={{ uri: image }}
@@ -171,16 +172,15 @@ const styles = StyleSheet.create({
   },
   header: {
     color: '#871419',
-    fontSize: 50,
+    fontSize: 45,
     fontWeight: '800',
     padding: 2,
     alignSelf: 'center',
     fontFamily: 'Harry-Potter',
-    backgroundColor: 'black',
     width: '70%',
     textAlign: 'center',
     marginTop: 10,
-    marginBottom: 15,
+    marginBottom: 2,
   },
   text1: {
     color: colors.gold,
@@ -191,7 +191,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Harry-Potter',
   },
   buttonsContainer: {
-    padding: 20,
+    paddingTop: 15,
+    paddingLeft: 35,
+    paddingRight: 35,
     width: '100%',
+  },
+  userContainer: {
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 20,
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+    width: '75%',
+    alignSelf: 'center',
+    borderRadius: 15,
   },
 });

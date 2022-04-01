@@ -38,7 +38,7 @@ function ListItemAccount({
             )}
           </View>
           <MaterialCommunityIcons
-            color={colors.medium}
+            color={colors.white}
             name="chevron-right"
             size={25}
           />
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     padding: 15,
-    backgroundColor: colors.white,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   detailsContainer: {
     flex: 1,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 35,
   },
   subTitle: {
-    color: colors.medium,
+    color: colors.gold,
     fontSize: 25,
     fontFamily: 'Harry-Potter',
   },
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 30,
     fontFamily: 'Harry-Potter',
-    color: colors.dark,
+    color: colors.white,
   },
 });
 

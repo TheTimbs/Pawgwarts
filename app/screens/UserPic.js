@@ -41,9 +41,9 @@ function UserPic() {
 
   return (
     <ImageBackground
-      blurRadius={3}
+      blurRadius={1}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../assets/castle.jpeg')}
     >
       <Screen style={styles.screen}>
         {userPhoto.length === 0 ? (
