@@ -44,10 +44,6 @@ function SingleTrainingScreen({ navigation, route }) {
     usersTrainingsInProgress.push(training.title)
   );
 
-  // console.log("// [SingleTrainingScreen] - userDetails: ", userDetails);
-  // console.log("// [SingleTrainingScreen] - usersCompletedTrainings: ", usersCompletedTrainings);
-  // console.log("// [SingleTrainingScreen] - usersTrainingInProgress", usersTrainingsInProgress)
-
   const [trainingDetails, setTrainingDetails] = useState({});
   const [trainingCompleted, setTrainingCompleted] = useState(false);
   const [trainingInProgress, setTrainingInProgress] = useState(false);
@@ -135,22 +131,31 @@ function SingleTrainingScreen({ navigation, route }) {
   return Object.keys(trainingDetails).length === 0 ? (
     <Text> ... Loading </Text>
   ) : (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.top}>
-        <Text style={styles.trainingTitle}> {trainingDetails.title} </Text>
-        <Text> Difficulty: {trainingDetails.difficulty}/5 </Text>
-      </View>
-
+    <>
       <ScrollView>
         <View style={styles.logoContainer}>
-          <Image
-            style={styles.logo}
-            source={{ uri: trainingDetails.images[0] }}
-          />
+          {trainingDetails.images[1] ? (
+            <Image
+              style={styles.logo}
+              source={{ uri: trainingDetails.images[1] }}
+            />
+          ) : (
+            <Image
+              style={styles.logo}
+              source={{ uri: trainingDetails.images[0] }}
+            />
+          )}
         </View>
         <View style={styles.trainingDescriptionContainer}>
           {trainingDetails.description ? (
-            <Text style={styles.bodyText}>{trainingDetails.description}</Text>
+            <>
+              <Text style={styles.topText}>
+                Difficulty: {trainingDetails.difficulty}/5
+              </Text>
+              <Text style={styles.descriptionText}>
+                {trainingDetails.description}
+              </Text>
+            </>
           ) : (
             <Text style={styles.bodyText}>{loremIpsum}</Text>
           )}
@@ -159,9 +164,16 @@ function SingleTrainingScreen({ navigation, route }) {
         <Text style={styles.stepsTitle}>Steps</Text>
         {trainingDetails.steps[0] !== '' ? (
           trainingDetails.steps.map((step, stepIndex) => (
-            <Text key={stepIndex} style={styles.bodyText}>
-              Step {stepIndex + 1}: {step}
-            </Text>
+            <View style={styles.stepsView}>
+              <View style={styles.stepNumIcon}>
+                <Text key={stepIndex} style={styles.stepNumIconText}>
+                  {stepIndex + 1}
+                </Text>
+              </View>
+              <Text key={stepIndex} style={styles.bodyText}>
+                {step}
+              </Text>
+            </View>
           ))
         ) : (
           <Text>Loading...</Text>
@@ -219,21 +231,32 @@ function SingleTrainingScreen({ navigation, route }) {
           />
         )}
       </View>
-    </SafeAreaView>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: '100%',
+  bodyText: {
+    fontSize: 18,
+    flexWrap: 'wrap',
+    flex: 1,
+    paddingRight: 15,
   },
-  top: {
+  bottom: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  trainingTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  descriptionText: {
+    fontSize: 18,
+    padding: 15,
+    color: colors.white,
+  },
+  logo: {
+    width: '100%',
+    height: 250,
+  },
+  logoContainer: {
+    flex: 1,
   },
   stepsTitle: {
     textAlign: 'center',
@@ -241,30 +264,46 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
-  logo: {
-    width: '100%',
-    height: 150,
+  stepNumIcon: {
+    marginLeft: 20,
+    backgroundColor: colors.houseBlue,
+    borderRadius: 50,
+    width: 30,
+    height: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginRight: 15,
   },
-  logoContainer: {
-    alignItems: 'center',
-  },
-  trainingDescriptionContainer: {
-    marginTop: 10,
-    padding: 5,
-    borderRadius: 5,
-    backgroundColor: 'wheat',
-  },
-  bodyText: {
+  stepNumIconText: {
     fontSize: 18,
+    alignSelf: 'center',
   },
-  bottom: {
-    flexDirection: 'column',
-    alignItems: 'center',
+  stepsView: {
+    flexDirection: 'row',
+    paddingBottom: 20,
+  },
+
+  top: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  topText: {
+    fontSize: 25,
+    alignSelf: 'center',
+    color: colors.white,
   },
   toolsContainer: {
     marginLeft: 5,
     height: 250,
     width: 200,
+  },
+  trainingTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  trainingDescriptionContainer: {
+    padding: 5,
+    backgroundColor: colors.houseBlue,
   },
 });
 
