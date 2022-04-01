@@ -41,7 +41,7 @@ export default function UploadImageScreen() {
       email: auth.currentUser.email,
       UsersLikes: [],
       house: user.data().house,
-      date: date.toDateString();
+      date: date.toDateString()
     });
     navigation.navigate('MyFeed');
   };

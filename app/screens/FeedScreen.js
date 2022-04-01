@@ -88,14 +88,15 @@ function FeedScreen() {
     <Screen style={styles.screen}>
 
       <ScrollView>
-        <ChallengeCard
-          key={challenge.title}
-          navigation={navigation}
-          imgSource={challenge.images[0]}
-          title={challenge.title}
-          data={challenge}
-        >
-          </ChallengeCard>
+        <ScrollView horizontal={true}>
+            <ChallengeCard
+              key={challenge.title}
+              navigation={navigation}
+              imgSource={challenge.images[0]}
+              title={challenge.title}
+              data={challenge}
+            />
+         </ScrollView>
           {feedList.map((item) =>
           <FeedCard
             key={item.id.toString()}
