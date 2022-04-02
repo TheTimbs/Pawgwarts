@@ -63,6 +63,15 @@ function FeedScreen() {
     const challenge = arrTraining[trainingNum].data();
     setChallenge(challenge);
     await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[]});
+    //reset the house
+    const gRef = doc(db, 'houses ', 'GryffinDog');
+    const hRef = doc(db, 'houses ', 'HufflePup');
+    const rRef = doc(db, 'houses ', 'RavenPaw');
+    const sRef = doc(db, 'houses ', 'Slobberin');
+    await updateDoc(gRef,{points:0})
+    await updateDoc(hRef,{points:0})
+    await updateDoc(rRef,{points:0})
+    await updateDoc(sRef,{points:0})
   };
   const changeFeed = async (position) => {
     console.log(position)
