@@ -19,6 +19,8 @@ import CommunityCard from '../components/CommunityCard';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
+  const [WeekFeed, setWeekFeed]= useState([]);
+  const [communityFeed, setComFeed]= useState([]);
   const feedCollectionRef = collection(db, 'feed');
   const comFeedCollectionRef = collection(db, 'communityFeed');
   const dayCollectionRef = doc(db, 'challenge', 'date');
@@ -63,7 +65,6 @@ function FeedScreen() {
     const challenge = arrTraining[trainingNum].data();
     setChallenge(challenge);
     await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[]});
-    //reset the house
     const gRef = doc(db, 'houses ', 'GryffinDog');
     const hRef = doc(db, 'houses ', 'HufflePup');
     const rRef = doc(db, 'houses ', 'RavenPaw');
@@ -80,18 +81,12 @@ function FeedScreen() {
       if(feedList[0].house === undefined){
         num =0;
       }
-
     }
     if(num >= 281){
-    const data = await getDocs(comFeedCollectionRef);
-    const mappedData = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    setFeedList(mappedData);
+    setFeedList(communityFeed);
 
   }else{
-    getFeed();
+    setFeedList(WeekFeed)
   }
   };
   const getFeed = async () => {
@@ -109,12 +104,18 @@ function FeedScreen() {
         return post
       }
     });
-    setFeedList(filter);
+    const dataCom = await getDocs(comFeedCollectionRef);
+    const mappedDataCom = dataCom.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    setComFeed(mappedDataCom);
+    setWeekFeed(filter);
   }
   useEffect(() => {
 
     const unsubscribe = navigation.addListener('focus', () => {
-
+      getFeed();
       changeFeed()
       getDate();
     });
@@ -129,7 +130,13 @@ function FeedScreen() {
     <Screen style={styles.screen}>
 
       <ScrollView>
-        <ScrollView horizontal={true} style={styles.backgroundColorView} onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)} pagingEnabled decelerationRate={0} showsHorizontalScrollIndicator scrollEventThrottle={16} >
+        <ScrollView horizontal={true}
+        style={styles.backgroundColorView}
+        onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)} pagingEnabled
+        decelerationRate={0}
+        showsHorizontalScrollIndicator
+        scrollEventThrottle={16}
+        >
             <ChallengeCard
               key={challenge.title}
               navigation={navigation}
