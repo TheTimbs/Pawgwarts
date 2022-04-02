@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FlatList,StyleSheet, View,Text,Image,Button, Pressable,
 } from 'react-native';
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
@@ -16,9 +16,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ChallengeCard from '../components/ChallengeCard';
 import CommunityCard from '../components/CommunityCard';
 
+
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
-
   const feedCollectionRef = collection(db, 'feed');
   const comFeedCollectionRef = collection(db, 'communityFeed');
   const dayCollectionRef = doc(db, 'challenge', 'date');
@@ -75,7 +75,14 @@ function FeedScreen() {
   };
   const changeFeed = async (position) => {
     console.log(position)
-    if(position >= 281){
+    let num = position;
+    if(num === undefined){
+      if(feedList[0].house === undefined){
+        num =0;
+      }
+
+    }
+    if(num >= 281){
     const data = await getDocs(comFeedCollectionRef);
     const mappedData = data.docs.map((doc) => ({
       ...doc.data(),
@@ -122,7 +129,7 @@ function FeedScreen() {
     <Screen style={styles.screen}>
 
       <ScrollView>
-        <ScrollView horizontal={true} style={styles.backgroundColorView} onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)} scrollEventThrottle={8} pagingEnabled decelerationRate={"fast"} disableIntervalMomentum={true}>
+        <ScrollView horizontal={true} style={styles.backgroundColorView} onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)} pagingEnabled decelerationRate={0} showsHorizontalScrollIndicator scrollEventThrottle={16} >
             <ChallengeCard
               key={challenge.title}
               navigation={navigation}

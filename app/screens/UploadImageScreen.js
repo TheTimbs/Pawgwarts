@@ -35,6 +35,17 @@ export default function UploadImageScreen({route}) {
     } else {
       console.log('user not here');
     }
+    if(route.params.props === 'communityFeed'){
+      await addDoc(feedCollectionRef, {
+      likes: 0,
+      image: image,
+      name: user.data().name,
+      email: auth.currentUser.email,
+      UsersLikes: [],
+      comments: [],
+      date: date.toDateString()
+    });
+    }
     await addDoc(feedCollectionRef, {
       likes: 0,
       image: image,
