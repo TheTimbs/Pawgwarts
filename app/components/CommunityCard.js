@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     width: '100%',
-    marginHorizontal:30,
+    marginHorizontal:10,
     marginRight:20
   },
   text: {

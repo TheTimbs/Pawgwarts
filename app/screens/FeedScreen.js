@@ -82,7 +82,7 @@ function FeedScreen() {
         num =0;
       }
     }
-    if(num >= 281){
+    if(num > 0){
     setFeedList(communityFeed);
 
   }else{
@@ -137,7 +137,6 @@ function FeedScreen() {
           onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)}
           pagingEnabled
           scrollEventThrottle={16}
-
           >
               <ChallengeCard
                 key={challenge.title}
