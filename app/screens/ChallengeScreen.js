@@ -193,49 +193,107 @@ function ChallengeScreen({ navigation, route }) {
 // }
 
 const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    alignContent:'center',
-    justifyContent:'center'
+  bodyText: {
+    fontSize: 18,
+    flexWrap: 'wrap',
+    flex: 1,
+    padding: 15,
   },
-  top: {
-    flexDirection: "row",
-    justifyContent: "space-between"
+  bottom: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: colors.houseYellow,
+    width: '50%',
+    alignSelf: 'center',
+    borderRadius: 10,
   },
-  trainingTitle: {
-    fontSize: 20,
-    fontWeight: "bold"
+  descriptionText: {
+    fontSize: 18,
+    padding: 15,
+    color: colors.white,
+  },
+  logo: {
+    width: '100%',
+    height: 250,
+  },
+  logoContainer: {
+    flex: 1,
   },
   stepsTitle: {
     textAlign: 'center',
     paddingTop: 5,
     fontWeight: 'bold',
+    fontSize: 24,
+    marginBottom: 15,
+  },
+  stepNumIcon: {
+    marginLeft: 20,
+    backgroundColor: colors.houseBlue,
+    borderRadius: 50,
+    width: 30,
+    height: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginRight: 15,
+  },
+  stepNumIconText: {
     fontSize: 18,
+    alignSelf: 'center',
+    color: colors.white,
   },
-  logo: {
-    width: 90,
-    height: 150,
+  stepsText: {
+    fontSize: 18,
+    flexWrap: 'wrap',
+    flex: 1,
+    paddingRight: 15,
   },
-  logoContainer: {
-    alignItems: 'center',
+  stepsView: {
+    flexDirection: 'row',
+    paddingBottom: 20,
+    marginTop: 20,
+  },
+  tipsView: {
+    backgroundColor: colors.houseBlue,
+  },
+  tipsText: {
+    color: colors.white,
+    fontSize: 18,
+    flexWrap: 'wrap',
+    flex: 1,
+    padding: 10,
+    marginRight: 10,
+    marginLeft: 10,
+  },
+  tipTitle: {
+    textAlign: 'center',
+    paddingTop: 5,
+    fontWeight: 'bold',
+    fontSize: 24,
+    marginBottom: 5,
+    color: colors.white,
+  },
+  top: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  topText: {
+    fontSize: 25,
+    alignSelf: 'center',
+    color: colors.white,
+  },
+  toolsContainer: {
+    marginLeft: 5,
+    height: 250,
+    width: 200,
+  },
+  trainingTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   trainingDescriptionContainer: {
-    marginTop: 10,
     padding: 5,
-    borderRadius: 5,
-    backgroundColor: 'wheat'
+    backgroundColor: colors.houseBlue,
   },
-  bodyText: {
-    fontSize: 18,
-  },
-  bottom: {
-    flexDirection: "column",
-    alignItems: 'center'
-  },
-  text:{
-    fontSize:20
-  }
 });
-
 
 export default ChallengeScreen;
