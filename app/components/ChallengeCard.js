@@ -6,6 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import { useFonts } from 'expo-font';
 
@@ -14,7 +15,6 @@ import colors from '../config/colors';
 
 function ChallengeCard({
   navigation,
-  imgSource,
   title,
   data,
 }) {
@@ -30,15 +30,13 @@ function ChallengeCard({
   return (
     <>
       <View style={styles.container} >
-      <AppText style={styles.text}>Challenge of week</AppText>
-        <TouchableWithoutFeedback
+        <TouchableOpacity
           onPress={() => navigation.navigate("ChallengeScreen", data)}
+           style={[styles.button, { backgroundColor: 'blue' }]}
         >
-          <ImageBackground source={{ uri: imgSource }} style={styles.image}>
-            <AppText style={styles.firstYeartext}>{title}</AppText>
-          </ImageBackground>
-        </TouchableWithoutFeedback>
-      </View>
+            <AppText style={styles.text}>{title}</AppText>
+        </TouchableOpacity>
+        </View>
     </>
   );
 }
@@ -46,30 +44,24 @@ function ChallengeCard({
 const styles = StyleSheet.create({
   container:{
     marginHorizontal:10,
-    backgroundColor:'black',
     marginBottom:10,
-
-
   },
-  image: {
-    alignItems: 'center',
-    height: 150,
+  button: {
+    backgroundColor: colors.primary,
+    borderRadius: 25,
     justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal:10,
+    paddingVertical:15,
     width: '100%',
-    borderRadius: 100,
-  },
-  firstYeartext: {
-    color: colors.gold,
-    fontWeight: 'bold',
-    fontSize: 60,
-    fontFamily: 'Harry-Potter',
+    marginHorizontal:10
+
   },
   text: {
-    color: colors.gold,
+    color: colors.white,
+    fontSize: 18,
+    textTransform: 'uppercase',
     fontWeight: 'bold',
-    fontSize: 60,
-    fontFamily: 'Harry-Potter',
-    textDecorationLine:"underline"
   },
 });
 

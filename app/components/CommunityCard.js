@@ -6,6 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import { useFonts } from 'expo-font';
 
@@ -29,47 +30,41 @@ function CommunityCard({
   const props = 'communityFeed'
   return (
     <>
-      <View style={styles.container} >
-      <AppText style={styles.text}>Challenge of weeks</AppText>
-        <TouchableWithoutFeedback
+      <View >
+
+        <TouchableOpacity
           onPress={() => navigation.navigate("UploadImageScreen", {props})}
-        >
-          <ImageBackground source={{ uri: imgSource }} style={styles.image}>
-            <AppText style={styles.firstYeartext}>{title}</AppText>
-          </ImageBackground>
-        </TouchableWithoutFeedback>
+          style={[styles.button, { backgroundColor: 'blue' }]}
+          >
+
+            <AppText style={styles.text}>{title}</AppText>
+
+        </TouchableOpacity>
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container:{
+ container:{
     marginHorizontal:10,
-    alignContent:'center',
-    alignSelf:'center',
-    backgroundColor:'black'
-
+    marginBottom:10,
   },
-  image: {
-    alignItems: 'center',
-    height: 150,
+  button: {
+    backgroundColor: colors.primary,
+    borderRadius: 25,
     justifyContent: 'center',
-    width: '80%',
-    borderRadius: 100,
-  },
-  firstYeartext: {
-    color: colors.gold,
-    fontWeight: 'bold',
-    fontSize: 60,
-    fontFamily: 'Harry-Potter',
+    alignItems: 'center',
+    padding: 15,
+    width: '100%',
+    marginHorizontal:30,
+    marginRight:20
   },
   text: {
-    color: colors.gold,
+    color: colors.white,
+    fontSize: 18,
+    textTransform: 'uppercase',
     fontWeight: 'bold',
-    fontSize: 60,
-    fontFamily: 'Harry-Potter',
-    textDecorationLine:"underline"
   },
 });
 

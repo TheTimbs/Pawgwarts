@@ -7,7 +7,7 @@ import colors from '../config/colors';
 import Screen from '../components/Screen';
 import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase/firebase-config';
-import {  getDocs,collection, doc, getDoc,updateDoc,} from 'firebase/firestore';
+import {  getDocs,collection, doc, getDoc,updateDoc, arrayUnion} from 'firebase/firestore';
 import { getTrainingsListChallenge,camelize, getTrainingCategoriesChallenge,random,} from '../functions/methods';
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
@@ -40,7 +40,7 @@ function FeedScreen() {
     setChallenge(challengeData.data().challenge);
     if (boo) {
 
-      await updateDoc(dayCollectionRef, { setDate: date.toDateString() });
+      await updateDoc(dayCollectionRef, { setDate: date.toDateString(), date: arrayUnion(cur.toDateString()) });
       randomChallenge();
     }
 
@@ -87,6 +87,7 @@ function FeedScreen() {
 
   }else{
     setFeedList(WeekFeed)
+
   }
   };
   const getFeed = async () => {
@@ -111,14 +112,15 @@ function FeedScreen() {
     }));
     setComFeed(mappedDataCom);
     setWeekFeed(filter);
+    setFeedList(filter);
   }
   useEffect(() => {
 
     const unsubscribe = navigation.addListener('focus', () => {
-      getFeed();
-      changeFeed()
-      getDate();
+     console.log("running")
+          getFeed();
     });
+      getDate();
     return unsubscribe;
   }, [navigation]);
 
@@ -130,28 +132,27 @@ function FeedScreen() {
     <Screen style={styles.screen}>
 
       <ScrollView>
-        <ScrollView horizontal={true}
-        style={styles.backgroundColorView}
-        onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)} pagingEnabled
-        decelerationRate={0}
-        showsHorizontalScrollIndicator
-        scrollEventThrottle={16}
-        >
-            <ChallengeCard
-              key={challenge.title}
-              navigation={navigation}
-              imgSource={challenge.images[0]}
-              title={challenge.title}
-              data={challenge}
-            />
-             <CommunityCard
-              key={"dum"}
-              navigation={navigation}
-              imgSource={challenge.images[0]}
-              title={"Community Feed"}
-              data={challenge}
-            />
-         </ScrollView>
+        <View>
+          <ScrollView horizontal={true}
+          onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)}
+          pagingEnabled
+          scrollEventThrottle={16}
+
+          >
+              <ChallengeCard
+                key={challenge.title}
+                navigation={navigation}
+                title={"Challenge of the week"}
+                data={challenge}
+              />
+
+              <CommunityCard
+                key={"dum"}
+                navigation={navigation}
+                title={"Community Feed"}
+              />
+          </ScrollView>
+         </View>
           {feedList.map((item) =>
           <FeedCard
             key={item.id.toString()}
@@ -172,12 +173,6 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colors.primary,
     justifyContent: 'center',
-  },
-  RectangleShapeView: {
-    width: '80%',
-    height: 120,
-    backgroundColor: 'blue',
-    position: 'relative',
   },
   buttonStyle: {
     flex: 1,
