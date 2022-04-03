@@ -132,11 +132,12 @@ function FeedScreen() {
     <Screen style={styles.screen}>
 
       <ScrollView>
-        <View>
+        <View style={{justifyContent:"center", alignItems:'center'}}>
+              <Text style={styles.text}>Participate</Text>
           <ScrollView horizontal={true}
           onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)}
           pagingEnabled
-          scrollEventThrottle={16}
+          scrollEventThrottle={0}
           >
               <ChallengeCard
                 key={challenge.title}
@@ -182,7 +183,13 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: 'transparent',
   },
+  text: {
+    color: colors.white,
+    fontSize: 20,
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
 
+  },
 });
 
 export default FeedScreen;

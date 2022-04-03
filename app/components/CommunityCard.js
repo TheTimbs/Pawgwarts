@@ -36,7 +36,6 @@ function CommunityCard({
           onPress={() => navigation.navigate("UploadImageScreen", {props})}
           style={[styles.button, { backgroundColor: 'blue' }]}
           >
-
             <AppText style={styles.text}>{title}</AppText>
 
         </TouchableOpacity>
