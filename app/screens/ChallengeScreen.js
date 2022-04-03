@@ -84,23 +84,19 @@ function ChallengeScreen({ navigation, route }) {
               <Text style={styles.descriptionText}>
                 {trainingDetails.description}
               </Text>
-              {/* <View style={styles.bottom}>
-                {startTraining ? (
-                  <Button
-                    title="Start Training"
-                    onPress={() => handleStartTraining()}
-                    color={colors.purple}
-                  />
-                ) : trainingCompleted ? (
-                  <Text fontSize={30}> Training completed! </Text>
-                ) : (
-                  <Button
-                    title="In Progress: Mark Completed"
-                    onPress={handleMarkCompleted}
-                    color={colors.purple}
-                  />
-                )}
-              </View> */}
+
+                {!userPosted ?(  <View style={styles.bottom}>
+              <Pressable style={styles.buttonStyle}
+               onPress={() => navigation.navigate('UploadImageScreen', {props})}>
+             {/* <AntDesign name="upload to challenge" size={50} color={colors.houseBlue} /> */}
+             <Text>Upload to Challenge feed</Text>
+             </Pressable>
+         </View>
+       ):<View style={styles.bottom}>
+         <Text style={styles.text}>You already posted for this week</Text>
+       </View>
+         }
+
             </>
           ) : (
             <Text style={styles.bodyText}>{loremIpsum}</Text>
