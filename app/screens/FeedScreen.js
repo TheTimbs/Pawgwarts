@@ -15,7 +15,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import ChallengeCard from '../components/ChallengeCard';
 import CommunityCard from '../components/CommunityCard';
-import PastWeekCard from '../components/PastWeekCard';
+import PastWeekButton from '../components/PastWeekButton'
 
 
 function FeedScreen() {
@@ -83,7 +83,7 @@ function FeedScreen() {
         num =0;
       }
     }
-    if(num > 0){
+    if(num >=140 ){
     setFeedList(communityFeed);
 
   }else{
@@ -136,9 +136,9 @@ function FeedScreen() {
         <View style={{justifyContent:"center", alignItems:'center'}}>
               <Text style={styles.text}>Participate</Text>
           <ScrollView horizontal={true}
-          onMomentumScrollEnd= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)}
-          pagingEnabled
+          onScroll= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)}
           scrollEventThrottle={0}
+          snapToStart
           >
               <ChallengeCard
                 key={challenge.title}
@@ -153,7 +153,7 @@ function FeedScreen() {
                 title={"Community Feed"}
               />
 
-             <PastWeekCard
+             <PastWeekButton
              key={"past"}
              navigation={navigation}
              title={"past weeks"}

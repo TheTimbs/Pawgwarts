@@ -13,7 +13,7 @@ import { useFonts } from 'expo-font';
 import AppText from './Text';
 import colors from '../config/colors';
 
-function PastWeekCard({
+function PastWeekButton({
   navigation,
   title,
 }) {
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     width: '100%',
-    //marginHorizontal:10,
-    //marginLeft:20
+    marginHorizontal:10,
+    marginLeft:20
   },
   text: {
     color: colors.white,
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PastWeekCard;
+export default PastWeekButton;
