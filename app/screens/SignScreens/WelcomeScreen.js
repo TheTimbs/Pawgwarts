@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { ImageBackground, StyleSheet, View, Image, Text } from 'react-native';
 import { useFonts } from 'expo-font';
 
-import Button from '../components/Button';
-import routes from '../navigation/routes';
+import Button from '../../components/Button';
+import routes from '../../navigation/routes';
 import { signInWithEmailAndPassword } from '@firebase/auth';
-import { auth } from '../../firebase/firebase-config';
+import { auth } from '../../../firebase/firebase-config';
 
 function WelcomeScreen({ navigation }) {
   const [isSignedIn, setIsSignedIn] = useState('');
