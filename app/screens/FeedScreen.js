@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  FlatList, StyleSheet, View, Text, Image, Button, Pressable,
+  FlatList,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  Button,
+  Pressable,
 } from 'react-native';
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import FeedCard from '../components/FeedCard';
@@ -8,16 +14,27 @@ import colors from '../config/colors';
 import Screen from '../components/Screen';
 import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase/firebase-config';
-import { getDocs, collection, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { getTrainingsListChallenge, camelize, getTrainingCategoriesChallenge, random, } from '../functions/methods';
+import {
+  getDocs,
+  collection,
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+} from 'firebase/firestore';
+import {
+  getTrainingsListChallenge,
+  camelize,
+  getTrainingCategoriesChallenge,
+  random,
+} from '../functions/methods';
 import AppButton from '../components/Button';
 import NewListingButton from '../navigation/NewListingButton';
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import ChallengeCard from '../components/ChallengeCard';
 import CommunityCard from '../components/CommunityCard';
-import PastWeekButton from '../components/PastWeekButton'
-
+import PastWeekButton from '../components/PastWeekButton';
 
 function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
@@ -32,9 +49,7 @@ function FeedScreen() {
   const navigation = useNavigation();
   const today = new Date();
 
-
   const getDate = async () => {
-
     const data = await getDoc(dayCollectionRef);
     const cur = new Date(data.data().setDate);
     const boo = new Date(today) >= new Date(cur);
@@ -42,12 +57,14 @@ function FeedScreen() {
     date.setDate(date.getDate() + 7);
     const challengeData = await getDoc(weekCollectionRef);
     setChallenge(challengeData.data().challenge);
-    setWinner(challengeData.data().winner)
+    setWinner(challengeData.data().winner);
     if (boo) {
-      await updateDoc(dayCollectionRef, { setDate: date.toDateString(), date: arrayUnion(cur.toDateString()) });
+      await updateDoc(dayCollectionRef, {
+        setDate: date.toDateString(),
+        date: arrayUnion(cur.toDateString()),
+      });
       randomChallenge();
     }
-
   };
 
   const randomChallenge = async () => {
@@ -76,28 +93,55 @@ function FeedScreen() {
     const hData = await getDoc(hRef);
     const rData = await getDoc(rRef);
     const sData = await getDoc(sRef);
-    if (gData.data().points > hData.data().points && gData.data().points > rData.data().points && gData.data().points > sData.data().points) {
-      await updateDoc(weekCollectionRef, { challenge: challenge, userPost: [], winner: 'GryffinDog' });
-      setWinner('GryffinDog')
-    } else if (hData.data().points > gData.data().points && hData.data().points > rData.data().points && hData.data().points > sData.data().points) {
-      await updateDoc(weekCollectionRef, { challenge: challenge, userPost: [], winner: 'HufflePup' });
-      setWinner('HufflePup')
-    } else if (rData.data().points > gData.data().points && rData.data().points > hData.data().points && rData.data().points > Data.data().points) {
-      await updateDoc(weekCollectionRef, { challenge: challenge, userPost: [], winner: 'RavenPaw' });
-      setWinner('RavenPaw')
+    if (
+      gData.data().points > hData.data().points &&
+      gData.data().points > rData.data().points &&
+      gData.data().points > sData.data().points
+    ) {
+      await updateDoc(weekCollectionRef, {
+        challenge: challenge,
+        userPost: [],
+        winner: 'GryffinDog',
+      });
+      setWinner('GryffinDog');
+    } else if (
+      hData.data().points > gData.data().points &&
+      hData.data().points > rData.data().points &&
+      hData.data().points > sData.data().points
+    ) {
+      await updateDoc(weekCollectionRef, {
+        challenge: challenge,
+        userPost: [],
+        winner: 'HufflePup',
+      });
+      setWinner('HufflePup');
+    } else if (
+      rData.data().points > gData.data().points &&
+      rData.data().points > hData.data().points &&
+      rData.data().points > Data.data().points
+    ) {
+      await updateDoc(weekCollectionRef, {
+        challenge: challenge,
+        userPost: [],
+        winner: 'RavenPaw',
+      });
+      setWinner('RavenPaw');
     } else {
-      await updateDoc(weekCollectionRef, { challenge: challenge, userPost: [], winner: 'Slobberin' });
-      setWinner('Slobberin')
+      await updateDoc(weekCollectionRef, {
+        challenge: challenge,
+        userPost: [],
+        winner: 'Slobberin',
+      });
+      setWinner('Slobberin');
     }
 
-    await updateDoc(gRef, { points: 0 })
-    await updateDoc(hRef, { points: 0 })
-    await updateDoc(rRef, { points: 0 })
-    await updateDoc(sRef, { points: 0 })
-
+    await updateDoc(gRef, { points: 0 });
+    await updateDoc(hRef, { points: 0 });
+    await updateDoc(rRef, { points: 0 });
+    await updateDoc(sRef, { points: 0 });
   };
   const changeFeed = async (position) => {
-    console.log(position)
+    console.log(position);
     let num = position;
     if (num === undefined) {
       if (feedList[0].house === undefined) {
@@ -106,14 +150,11 @@ function FeedScreen() {
     }
     if (num >= 140) {
       setFeedList(communityFeed);
-
     } else {
-      setFeedList(WeekFeed)
-
+      setFeedList(WeekFeed);
     }
   };
   const getFeed = async () => {
-
     const data = await getDocs(feedCollectionRef);
     const mappedData = data.docs.map((doc) => ({
       ...doc.data(),
@@ -124,8 +165,11 @@ function FeedScreen() {
     let date = new Date();
     date.setDate(date.getDate() - 7);
     const filter = mappedData.filter((post) => {
-      if (new Date(post.date) < new Date(cur) && new Date(post.date) > new Date(date)) {
-        return post
+      if (
+        new Date(post.date) < new Date(cur) &&
+        new Date(post.date) > new Date(date)
+      ) {
+        return post;
       }
     });
     const dataCom = await getDocs(comFeedCollectionRef);
@@ -136,11 +180,10 @@ function FeedScreen() {
     setComFeed(mappedDataCom);
     setWeekFeed(filter);
     setFeedList(filter);
-  }
+  };
   useEffect(() => {
-
     const unsubscribe = navigation.addListener('focus', () => {
-      console.log("running")
+      console.log('running');
       getFeed();
     });
     getDate();
@@ -148,17 +191,16 @@ function FeedScreen() {
   }, [navigation]);
 
   if (Object.keys(challenge).length === 0) {
-    return (<Text> Loading... </Text>)
-
+    return <Text> Loading... </Text>;
   } else {
     return (
       <Screen style={styles.screen}>
-
         <ScrollView>
-          <View style={{ justifyContent: "center", alignItems: 'center' }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Text style={styles.text}>Last Week's Winner: </Text>
             <Text style={styles.text}>{winner}</Text>
-            <ScrollView horizontal={true}
+            <ScrollView
+              horizontal={true}
               onScroll={(e) => changeFeed(e.nativeEvent.contentOffset.x)}
               scrollEventThrottle={0}
               snapToStart
@@ -166,26 +208,25 @@ function FeedScreen() {
               <ChallengeCard
                 key={challenge.title}
                 navigation={navigation}
-                title={"Challenge of the week"}
+                title={'Challenge of the week'}
                 data={challenge}
               />
 
               <CommunityCard
-                key={"Community"}
+                key={'Community'}
                 navigation={navigation}
-                title={"Community Feed"}
+                title={'Community Feed'}
               />
 
               <PastWeekButton
-                key={"past"}
+                key={'past'}
                 navigation={navigation}
-                title={"past weeks"}
+                title={'past weeks'}
               />
-
             </ScrollView>
           </View>
 
-          {feedList.map((item) =>
+          {feedList.map((item) => (
             <FeedCard
               key={item.id.toString()}
               title={item.name}
@@ -193,7 +234,7 @@ function FeedScreen() {
               image={{ uri: item.image }}
               email={item.email}
             />
-          )}
+          ))}
         </ScrollView>
       </Screen>
     );
@@ -220,7 +261,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textTransform: 'uppercase',
     fontWeight: 'bold',
-
+    paddingBottom: 7,
   },
 });
 

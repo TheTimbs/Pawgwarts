@@ -13,10 +13,7 @@ import { useFonts } from 'expo-font';
 import AppText from './Text';
 import colors from '../config/colors';
 
-function PastWeekButton({
-  navigation,
-  title,
-}) {
+function PastWeekButton({ navigation, title }) {
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
   });
@@ -27,14 +24,12 @@ function PastWeekButton({
 
   return (
     <>
-      <View >
-
+      <View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("pastWeekScreen")}
-          style={[styles.button, { backgroundColor: 'blue' }]}
-          >
-            <AppText style={styles.text}>{title}</AppText>
-
+          onPress={() => navigation.navigate('pastWeekScreen')}
+          style={[styles.button, { backgroundColor: colors.houseBlue }]}
+        >
+          <AppText style={styles.text}>{title}</AppText>
         </TouchableOpacity>
       </View>
     </>
@@ -42,9 +37,9 @@ function PastWeekButton({
 }
 
 const styles = StyleSheet.create({
- container:{
-    marginHorizontal:10,
-    marginBottom:10,
+  container: {
+    marginHorizontal: 10,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: colors.primary,
@@ -53,8 +48,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     width: '100%',
-    marginHorizontal:10,
-    marginLeft:20
+    marginHorizontal: 10,
+    marginLeft: 20,
   },
   text: {
     color: colors.white,

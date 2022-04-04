@@ -9,7 +9,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { addDoc, collection, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+} from 'firebase/firestore';
 import { db, auth, storage } from '../../firebase/firebase-config';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import uuid from 'uuid';
@@ -17,7 +24,7 @@ import { useNavigation } from '@react-navigation/native';
 import Button from '../components/Button';
 import Screen from '../components/Screen';
 
-export default function UploadImageScreen({route}) {
+export default function UploadImageScreen({ route }) {
   const [image, setImage] = useState(null);
   const [confirmed, setCon] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,16 +42,16 @@ export default function UploadImageScreen({route}) {
     } else {
       console.log('user not here');
     }
-    if(route.params.props === 'communityFeed'){
+    if (route.params.props === 'communityFeed') {
       await addDoc(feedCollectionRef, {
-      likes: 0,
-      image: image,
-      name: user.data().name,
-      email: auth.currentUser.email,
-      UsersLikes: [],
-      comments: [],
-      date: date.toDateString()
-    });
+        likes: 0,
+        image: image,
+        name: user.data().name,
+        email: auth.currentUser.email,
+        UsersLikes: [],
+        comments: [],
+        date: date.toDateString(),
+      });
     }
     await addDoc(feedCollectionRef, {
       likes: 0,
@@ -54,10 +61,11 @@ export default function UploadImageScreen({route}) {
       UsersLikes: [],
       house: user.data().house,
       comments: [],
-      date: date.toDateString()
-
+      date: date.toDateString(),
     });
-     await updateDoc(weekCollectionRef, {userPost:arrayUnion(auth.currentUser.email)});
+    await updateDoc(weekCollectionRef, {
+      userPost: arrayUnion(auth.currentUser.email),
+    });
     navigation.navigate('MyFeed');
   };
 

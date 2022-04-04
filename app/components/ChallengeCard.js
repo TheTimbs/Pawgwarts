@@ -13,11 +13,7 @@ import { useFonts } from 'expo-font';
 import AppText from './Text';
 import colors from '../config/colors';
 
-function ChallengeCard({
-  navigation,
-  title,
-  data,
-}) {
+function ChallengeCard({ navigation, title, data }) {
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
   });
@@ -26,36 +22,34 @@ function ChallengeCard({
     return null;
   }
 
-
   return (
     <>
-      <View style={styles.container} >
+      <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("ChallengeScreen", data)}
-           style={[styles.button, { backgroundColor: 'blue' }]}
+          onPress={() => navigation.navigate('ChallengeScreen', data)}
+          style={[styles.button, { backgroundColor: colors.houseBlue }]}
         >
-            <AppText style={styles.text}>{title}</AppText>
+          <AppText style={styles.text}>{title}</AppText>
         </TouchableOpacity>
-        </View>
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container:{
-    marginHorizontal:10,
-    marginBottom:10,
+  container: {
+    marginHorizontal: 10,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: colors.primary,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal:10,
-    paddingVertical:15,
+    paddingHorizontal: 10,
+    paddingVertical: 15,
     width: '100%',
-    marginHorizontal:10
-
+    marginHorizontal: 10,
   },
   text: {
     color: colors.white,
