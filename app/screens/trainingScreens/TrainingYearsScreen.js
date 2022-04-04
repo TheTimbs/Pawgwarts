@@ -19,24 +19,25 @@ const TrainingYearsScreen = () => {
     completedTrainings.forEach(training => { if (training.year === "secondYears") count++ })
     setYear2Count(count)
   }
+  const getUserDetails = async () => {
+    console.log("// [TrainingYears/getUserDetails] - just ran")
+    const auth = getAuth();
+    const userId = auth.currentUser.uid;
+    const docRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(docRef);
+    const userDetails = userDoc.data();
+    setUserDetails(userDetails);
+    getYear2Count(userDetails.completedTrainings);
+  };
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      const getUserDetails = async () => {
-        const auth = getAuth();
-        const userId = auth.currentUser.uid;
-        const docRef = doc(db, 'users', userId);
-        const userDoc = await getDoc(docRef);
-        const userDetails = userDoc.data();
-        setUserDetails(userDetails);
-        getYear2Count(userDetails.completedTrainings);
-      };
       getUserDetails();
     });
+    getUserDetails();
     return unsubscribe;
   }, [navigation]);
 
-  console.log("// [TrainingYearsScreen] - year2Count: ", year2Count)
 
   const schoolYearImages = {
     firstYears: require('../../assets/GermanShepPuppy.webp'),
@@ -75,10 +76,9 @@ const TrainingYearsScreen = () => {
       fontFamily: 'Harry-Potter',
     },
   };
-
-  if (userDetails.completedTrainings) {
-    return (
-      <ScrollView>
+  return (
+    <>
+      {userDetails.completedTrainings ? (<ScrollView>
         <View style={styles.container}>
           <TrainingCard
             navigation={navigation}
@@ -111,11 +111,9 @@ const TrainingYearsScreen = () => {
               } more training(s) from First Year`}
           />
         </View>
-      </ScrollView>
-    );
-  } else {
-    return <Text>Loading...</Text>;
-  }
+      </ScrollView>) : <Text> ...Loading</Text>}
+    </>
+  );
 };
 
 export default TrainingYearsScreen;

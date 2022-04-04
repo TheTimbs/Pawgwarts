@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, View, Image, Text } from 'react-native';
+import { ImageBackground, StyleSheet, View, Image, Text, ScrollView } from 'react-native';
 import React from 'react';
 import { db, auth } from '../../firebase/firebase-config';
 import { getDoc, collection, doc } from 'firebase/firestore';
@@ -78,42 +78,44 @@ function Home(props) {
         style={styles.container}
         source={require('../assets/BlueBackground.jpeg')}
       >
-        <View style={styles.top}>
-          <Text style={styles.WelcomeHeader}>
-            Welcome, {user.name} and {user.dog.dogName}!
-          </Text>
-
-          <View style={styles.dogFactContainer}>
-            <Text style={styles.dogFactHeaderText}>
-              {' '}
-              DumbleDog's Random Dog Fact{' '}
+        <ScrollView>
+          <View style={styles.top}>
+            <Text style={styles.WelcomeHeader}>
+              Welcome, {user.name} and {user.dog.dogName}!
             </Text>
-            <Text style={styles.dogFactText}> {randomDogFact}</Text>
-          </View>
 
-          <View style={styles.trainings}>
-            <Text style={styles.trainingsHeaderText}>
-              {user.dog.dogName}'s Trainings in Progress:
-            </Text>
-            {user.trainingsInProgress.map((training) => (
-              <Text
-                key={user.trainingsInProgress.indexOf(training)}
-                style={styles.trainingsText}
-                onPress={() =>
-                  navigation.navigate('SingleTraining', {
-                    year: training.year,
-                    trainingCategory: training.category,
-                    title: training.title,
-                    userDetails: user,
-                  })
-                }
-              >
+            <View style={styles.dogFactContainer}>
+              <Text style={styles.dogFactHeaderText}>
                 {' '}
-                {training.title}{' '}
+                DumbleDog's Random Dog Fact{' '}
               </Text>
-            ))}
+              <Text style={styles.dogFactText}> {randomDogFact}</Text>
+            </View>
+
+            <View style={styles.trainings}>
+              <Text style={styles.trainingsHeaderText}>
+                {user.dog.dogName}'s Trainings in Progress:
+              </Text>
+              {user.trainingsInProgress.map((training) => (
+                <Text
+                  key={user.trainingsInProgress.indexOf(training)}
+                  style={styles.trainingsText}
+                  onPress={() =>
+                    navigation.navigate('SingleTraining', {
+                      year: training.year,
+                      trainingCategory: training.category,
+                      title: training.title,
+                      userDetails: user,
+                    })
+                  }
+                >
+                  {' '}
+                  {training.title}{' '}
+                </Text>
+              ))}
+            </View>
           </View>
-        </View>
+        </ScrollView>
         <View style={styles.center}>
           <Text style={styles.textHeader}>Houses Current Points</Text>
         </View>
