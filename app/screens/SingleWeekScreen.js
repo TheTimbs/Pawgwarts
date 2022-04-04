@@ -1,27 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase/firebase-config';
+import Screen from '../components/Screen';
 import {
   getDocs,
   collection,
-  doc,
-  getDoc,
-  updateDoc,
-  arrayRemove,
-  arrayUnion,
+
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
-  View,
-  FlatList,
-  Image,
   ScrollView,
-  Button,
-  useColorScheme,
 } from 'react-native';
 import FeedCard from '../components/FeedCard';
+import colors from '../config/colors';
 
 function SingleWeekScreen({route}){
   const {title} = route.params
@@ -54,8 +46,8 @@ function SingleWeekScreen({route}){
   }
   else{
   return(
-    <View>
-      <ScrollView>
+   <Screen style={styles.screen}>
+      <ScrollView >
        {feed.map((item) =>
           <FeedCard
             key={item.id.toString()}
@@ -68,10 +60,17 @@ function SingleWeekScreen({route}){
 
 
       </ScrollView>
-    </View>
+  </Screen>
   );
       }
 }
+const styles = StyleSheet.create({
+  screen: {
+    padding: 20,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+  },
+})
 
 export default SingleWeekScreen
 
