@@ -15,6 +15,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import ChallengeCard from '../components/ChallengeCard';
 import CommunityCard from '../components/CommunityCard';
+import PastWeekCard from '../components/PastWeekCard';
 
 
 function FeedScreen() {
@@ -147,10 +148,17 @@ function FeedScreen() {
               />
 
               <CommunityCard
-                key={"dum"}
+                key={"Community"}
                 navigation={navigation}
                 title={"Community Feed"}
               />
+
+             <PastWeekCard
+             key={"past"}
+             navigation={navigation}
+             title={"past weeks"}
+             />
+
           </ScrollView>
          </View>
           {feedList.map((item) =>

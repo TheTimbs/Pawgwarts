@@ -171,22 +171,7 @@ function ChallengeScreen({ navigation, route }) {
     </>
   )
   )}
-//         }
 
-//        {/* {!userPosted ?(  <View style={styles.bottom}>
-//              <Pressable style={styles.buttonStyle}
-//                onPress={() => navigation.navigate('UploadImageScreen', {props})}>
-//              <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
-//              </Pressable>
-//          </View>
-//        ):<View style={styles.bottom}>
-//          <Text style={styles.text}>You already posted for this week</Text>
-//        </View>
-//          } */}
-
-
-//   )
-// }
 
 const styles = StyleSheet.create({
   bodyText: {
