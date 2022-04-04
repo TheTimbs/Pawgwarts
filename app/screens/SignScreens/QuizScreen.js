@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase/firebase-config';
+import { db } from '../../../firebase/firebase-config';
 import { getAuth } from 'firebase/auth';
 import QuizResult from './QuizResult';
-import colors from '../config/colors';
+import colors from '../../config/colors';
 import { useFonts } from 'expo-font';
 
 // house constants
@@ -160,7 +160,7 @@ const PersonalityQuiz = () => {
   };
 
   let [fontsLoaded] = useFonts({
-    'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
+    'Harry-Potter': require('../../assets/fonts/HarryPotter.ttf'),
   });
   if (!fontsLoaded) {
     return null;
@@ -170,7 +170,7 @@ const PersonalityQuiz = () => {
     <ImageBackground
       blurRadius={3}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../../assets/BlueBackground.jpeg')}
     >
       <View style={styles.container}>
         {selectedHouse !== '' ? (

@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Button } from 'react-native';
 // import { auth } from '../../firebase/firebase-config';
 import { getAuth, signOut } from 'firebase/auth';
-import { ListItemSeparator } from '../components/lists';
-import ListItemAccount from '../components/lists/ListItemAccount';
-import Icon from '../components/Icon';
+import ListItemAccount from '../../components/lists/ListItemAccount';
+import Icon from '../../components/Icon';
 import { useNavigation } from '@react-navigation/native';
 
 export const SignOut = () => {

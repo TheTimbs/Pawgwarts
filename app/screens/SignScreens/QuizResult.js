@@ -1,13 +1,13 @@
 import { ImageBackground, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import colors from '../config/colors';
-import Button from '../components/Button';
+import colors from '../../config/colors';
+import Button from '../../components/Button';
 import { useFonts } from 'expo-font';
 
 export default function QuizResult(props) {
   const navigation = useNavigation();
   let [fontsLoaded] = useFonts({
-    'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
+    'Harry-Potter': require('../../assets/fonts/HarryPotter.ttf'),
   });
   if (!fontsLoaded) {
     return null;
@@ -17,7 +17,7 @@ export default function QuizResult(props) {
     <ImageBackground
       blurRadius={3}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../../assets/BlueBackground.jpeg')}
     >
       <ScrollView>
       <View>
@@ -27,7 +27,7 @@ export default function QuizResult(props) {
           {props.house === 'HufflePup' ? (
             <View>
               <Image
-                source={require('../assets/hufflepup.png')}
+                source={require('../../assets/hufflepup.png')}
                 style={{
                   width: 250,
                   height: 250,
@@ -44,7 +44,7 @@ export default function QuizResult(props) {
           {props.house === 'GryffinDog' ? (
             <View>
               <Image
-                source={require('../assets/gryffindog.jpeg')}
+                source={require('../../assets/gryffindog.jpeg')}
                 style={{
                   width: 250,
                   height: 250,
@@ -61,7 +61,7 @@ export default function QuizResult(props) {
           {props.house === 'Slobberin' ? (
             <View>
               <Image
-                source={require('../assets/slobberin.jpeg')}
+                source={require('../../assets/slobberin.jpeg')}
                 style={{
                   width: 250,
                   height: 250,
@@ -79,7 +79,7 @@ export default function QuizResult(props) {
           {props.house === 'RavenPaw' ? (
             <View>
               <Image
-                source={require('../assets/ravenpaw.jpeg')}
+                source={require('../../assets/ravenpaw.jpeg')}
                 style={{
                   width: 250,
                   height: 250,

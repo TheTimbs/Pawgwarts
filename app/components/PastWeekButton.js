@@ -13,10 +13,9 @@ import { useFonts } from 'expo-font';
 import AppText from './Text';
 import colors from '../config/colors';
 
-function ChallengeCard({
+function PastWeekButton({
   navigation,
   title,
-  data,
 }) {
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
@@ -26,23 +25,24 @@ function ChallengeCard({
     return null;
   }
 
-
   return (
     <>
-      <View style={styles.container} >
+      <View >
+
         <TouchableOpacity
-          onPress={() => navigation.navigate("ChallengeScreen", data)}
-           style={[styles.button, { backgroundColor: 'blue' }]}
-        >
+          onPress={() => navigation.navigate("pastWeekScreen")}
+          style={[styles.button, { backgroundColor: 'blue' }]}
+          >
             <AppText style={styles.text}>{title}</AppText>
+
         </TouchableOpacity>
-        </View>
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container:{
+ container:{
     marginHorizontal:10,
     marginBottom:10,
   },
@@ -51,11 +51,10 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal:10,
-    paddingVertical:15,
+    padding: 15,
     width: '100%',
-    marginHorizontal:10
-
+    marginHorizontal:10,
+    marginLeft:20
   },
   text: {
     color: colors.white,
@@ -65,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChallengeCard;
+export default PastWeekButton;

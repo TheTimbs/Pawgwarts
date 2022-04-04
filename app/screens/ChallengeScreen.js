@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from "../../firebase/firebase-config";
 import { doc, getDoc,} from 'firebase/firestore';
-
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button, Pressable } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button, Pressable, TouchableWithoutFeedback } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import colors from '../config/colors';
@@ -34,41 +34,62 @@ function ChallengeScreen({ navigation, route }) {
     checkUserPosted();
     }, []);
 
+    const handleLink = (link) => {
+    Linking.openURL(link);
+  };
 
+  if (trainingDetails.difficulty) {
+    var myloop = [];
+
+    for (let i = 0; i < trainingDetails.difficulty; i++) {
+      myloop.push(
+        <MaterialCommunityIcons name="star" color={colors.white} size={30} />
+      );
+    }
+    for (let i = 0; i < 5 - trainingDetails.difficulty; i++) {
+      myloop.push(
+        <MaterialCommunityIcons
+          name="star-outline"
+          color={colors.white}
+          size={30}
+        />
+      );
+    }
+  }
 
 
   return (
-    Object.keys(trainingDetails).length === 0 ? <Text> ... Loading </Text> :
-      <SafeAreaView style={styles.container}>
-
-        <View style={styles.top}>
-          <Text style={styles.trainingTitle}> {trainingDetails.title} </Text>
-          <Text> Difficulty: {trainingDetails.difficulty}/5 </Text>
+    Object.keys(trainingDetails).length === 0 ? (
+    <Text> ... Loading </Text>
+  ) : (
+    <>
+      <ScrollView>
+        <View style={styles.logoContainer}>
+          {trainingDetails.images[1] ? (
+            <Image
+              style={styles.logo}
+              source={{ uri: trainingDetails.images[0] }}
+            />
+          ) : (
+            <Image
+              style={styles.logo}
+              source={{ uri: trainingDetails.images[0] }}
+            />
+          )}
         </View>
+        <View style={styles.trainingDescriptionContainer}>
+          {trainingDetails.description ? (
+            <>
+              <Text style={styles.topText}>Difficulty: {myloop}</Text>
+              <Text style={styles.descriptionText}>
+                {trainingDetails.description}
+              </Text>
 
-        <ScrollView>
-          <View style={styles.logoContainer}>
-            <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
-          </View>
-
-          <View style={styles.trainingDescriptionContainer}>
-            {trainingDetails.description ? <Text style={styles.bodyText}>{trainingDetails.description}</Text> : <Text style={styles.bodyText}>{loremIpsum}</Text>}
-          </View>
-
-          <Text style={styles.stepsTitle}>Steps</Text>
-          {trainingDetails.steps[0] !== "" ? trainingDetails.steps.map(step => (<Text key={steps.indexOf(step)} style={bodyText}>Step {steps.indexOf(step) + 1}: {step}</Text>)) : steps.map(step => (<Text key={steps.indexOf(step)} style={styles.bodyText}>Step {steps.indexOf(step) + 1}: {step}</Text>))}
-
-          <Text style={styles.stepsTitle}>Tips</Text>
-          {trainingDetails.tips[0] !== "" ? trainingDetails.tips.map(tip => (<Text key={tips.indexOf(tip)} style={bodyText}>* {tip}</Text>)) : tips.map(tip => (<Text key={tips.indexOf(tip)} style={styles.bodyText}>* {tip}</Text>))}
-
-          <Text style={styles.stepsTitle}> Recommended Training Tools </Text>
-          {trainingDetails.tools[0] !== "" ? trainingDetails.tools.map(tool => (<Text key={tools.indexOf(tool)} style={bodyText}>* {tool}</Text>)) : tools.map(tool => (<Text key={tools.indexOf(tool)} style={styles.bodyText}>* {tool}</Text>))}
-        </ScrollView>
-
-       {!userPosted ?(  <View style={styles.bottom}>
-             <Pressable style={styles.buttonStyle}
+                {!userPosted ?(  <View style={styles.bottom}>
+              <Pressable style={styles.buttonStyle}
                onPress={() => navigation.navigate('UploadImageScreen', {props})}>
-             <AntDesign name="pluscircle" size={50} color={colors.houseBlue} />
+             {/* <AntDesign name="upload to challenge" size={50} color={colors.houseBlue} /> */}
+             <Text>Upload to Challenge feed</Text>
              </Pressable>
          </View>
        ):<View style={styles.bottom}>
@@ -76,54 +97,184 @@ function ChallengeScreen({ navigation, route }) {
        </View>
          }
 
-      </SafeAreaView>
+            </>
+          ) : (
+            <Text style={styles.bodyText}>{loremIpsum}</Text>
+          )}
+        </View>
+
+        <Text style={styles.stepsTitle}>Steps</Text>
+        {trainingDetails.steps[0] !== '' ? (
+          trainingDetails.steps.map((step, stepIndex) => (
+            <>
+              <View style={styles.stepsView}>
+                <View style={styles.stepNumIcon}>
+                  <Text key={stepIndex} style={styles.stepNumIconText}>
+                    {stepIndex + 1}
+                  </Text>
+                </View>
+                <Text key={stepIndex} style={styles.stepsText}>
+                  {step}
+                </Text>
+              </View>
+              <Image
+                style={styles.logo}
+                source={{ uri: trainingDetails.images[stepIndex + 2] }}
+              />
+            </>
+          ))
+        ) : (
+          <Text>Loading...</Text>
+        )}
+        <View style={styles.tipsView}>
+          <Text style={styles.tipTitle}>Tips</Text>
+          {trainingDetails.tips[0] !== '' ? (
+            trainingDetails.tips.map((tip) => (
+              <Text key={tips.indexOf(tip)} style={styles.tipsText}>
+                * {tip}
+              </Text>
+            ))
+          ) : (
+            <Text>Loading...</Text>
+          )}
+        </View>
+        <Text style={styles.stepsTitle}> Recommended Training Tools </Text>
+        {trainingDetails.tools[0] !== '' ? (
+          trainingDetails.tools.map((tool, i) => (
+            <ScrollView horizontal={true}>
+              <View>
+                <View key={i} style={styles.toolsContainer}>
+                  {/* <TouchableWithoutFeedback
+                    onPress={() => handleLink(tool.link)}
+                  >
+                    <Image
+                      source={{ uri: tool.image }}
+                      style={{
+                        width: 200,
+                        height: 200,
+                        alignSelf: 'center',
+                        borderColor: colors.houseYellow,
+                        borderWidth: 3,
+                      }}
+                    />
+
+                    <Text style={styles.header}>{tool.name}</Text>
+                  </TouchableWithoutFeedback> */}
+                </View>
+              </View>
+            </ScrollView>
+          ))
+        ) : (
+          <Text>Just some yummy treats! :) </Text>
+        )}
+      </ScrollView>
+    </>
   )
-}
+  )}
+
 
 const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    alignContent:'center',
-    justifyContent:'center'
+  bodyText: {
+    fontSize: 18,
+    flexWrap: 'wrap',
+    flex: 1,
+    padding: 15,
   },
-  top: {
-    flexDirection: "row",
-    justifyContent: "space-between"
+  bottom: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: colors.houseYellow,
+    width: '50%',
+    alignSelf: 'center',
+    borderRadius: 10,
   },
-  trainingTitle: {
-    fontSize: 20,
-    fontWeight: "bold"
+  descriptionText: {
+    fontSize: 18,
+    padding: 15,
+    color: colors.white,
+  },
+  logo: {
+    width: '100%',
+    height: 250,
+  },
+  logoContainer: {
+    flex: 1,
   },
   stepsTitle: {
     textAlign: 'center',
     paddingTop: 5,
     fontWeight: 'bold',
+    fontSize: 24,
+    marginBottom: 15,
+  },
+  stepNumIcon: {
+    marginLeft: 20,
+    backgroundColor: colors.houseBlue,
+    borderRadius: 50,
+    width: 30,
+    height: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginRight: 15,
+  },
+  stepNumIconText: {
     fontSize: 18,
+    alignSelf: 'center',
+    color: colors.white,
   },
-  logo: {
-    width: 90,
-    height: 150,
+  stepsText: {
+    fontSize: 18,
+    flexWrap: 'wrap',
+    flex: 1,
+    paddingRight: 15,
   },
-  logoContainer: {
-    alignItems: 'center',
+  stepsView: {
+    flexDirection: 'row',
+    paddingBottom: 20,
+    marginTop: 20,
+  },
+  tipsView: {
+    backgroundColor: colors.houseBlue,
+  },
+  tipsText: {
+    color: colors.white,
+    fontSize: 18,
+    flexWrap: 'wrap',
+    flex: 1,
+    padding: 10,
+    marginRight: 10,
+    marginLeft: 10,
+  },
+  tipTitle: {
+    textAlign: 'center',
+    paddingTop: 5,
+    fontWeight: 'bold',
+    fontSize: 24,
+    marginBottom: 5,
+    color: colors.white,
+  },
+  top: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  topText: {
+    fontSize: 25,
+    alignSelf: 'center',
+    color: colors.white,
+  },
+  toolsContainer: {
+    marginLeft: 5,
+    height: 250,
+    width: 200,
+  },
+  trainingTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   trainingDescriptionContainer: {
-    marginTop: 10,
     padding: 5,
-    borderRadius: 5,
-    backgroundColor: 'wheat'
+    backgroundColor: colors.houseBlue,
   },
-  bodyText: {
-    fontSize: 18,
-  },
-  bottom: {
-    flexDirection: "column",
-    alignItems: 'center'
-  },
-  text:{
-    fontSize:20
-  }
 });
-
 
 export default ChallengeScreen;

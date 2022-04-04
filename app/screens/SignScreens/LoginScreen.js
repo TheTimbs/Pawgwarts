@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, Image, Alert, View, ImageBackground } from 'react-native';
 import * as Yup from 'yup';
-import { Form, FormField, SubmitButton } from '../components/forms';
-import Button from '../components/Button';
-import Screen from '../components/Screen';
+import { Form, FormField, SubmitButton } from '../../components/forms';
+import Button from '../../components/Button';
+import Screen from '../../components/Screen';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
-import { auth } from '../../firebase/firebase-config';
+import { auth } from '../../../firebase/firebase-config';
 import { TextInput } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import FeedNavigator from '../navigation/FeedNavigator';
+import FeedNavigator from '../../navigation/FeedNavigator';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -37,10 +37,10 @@ function LoginScreen(props) {
     <ImageBackground
       blurRadius={3}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../../assets/BlueBackground.jpeg')}
     >
 
-      <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
+      <Image style={styles.logo} source={require('../../assets/DogLogo.png')} />
       <Form
         initialValues={{ email: '', password: '' }}
         onSubmit={(value) => SignUser(value)}
