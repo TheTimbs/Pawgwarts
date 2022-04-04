@@ -128,16 +128,14 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     padding: 5,
-    marginBottom: 5,
+    marginBottom: 3,
     flexDirection: 'row',
   },
   commentText: {
     fontSize: 20,
-    paddingBottom: 3,
   },
   userText: {
     fontSize: 20,
-    paddingBottom: 3,
     fontWeight: 'bold',
     color: colors.houseBlue,
   },
