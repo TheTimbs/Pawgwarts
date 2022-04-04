@@ -13,12 +13,7 @@ import { useFonts } from 'expo-font';
 import AppText from './Text';
 import colors from '../config/colors';
 
-function CommunityCard({
-  navigation,
-  imgSource,
-  title,
-  data,
-}) {
+function CommunityCard({ navigation, imgSource, title, data }) {
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
   });
@@ -27,17 +22,15 @@ function CommunityCard({
     return null;
   }
 
-  const props = 'communityFeed'
+  const props = 'communityFeed';
   return (
     <>
-      <View >
-
+      <View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("UploadImageScreen", {props})}
-          style={[styles.button, { backgroundColor: 'blue' }]}
-          >
-            <AppText style={styles.text}>{title}</AppText>
-
+          onPress={() => navigation.navigate('UploadImageScreen', { props })}
+          style={[styles.button, { backgroundColor: colors.houseBlue }]}
+        >
+          <AppText style={styles.text}>{title}</AppText>
         </TouchableOpacity>
       </View>
     </>
@@ -45,9 +38,9 @@ function CommunityCard({
 }
 
 const styles = StyleSheet.create({
- container:{
-    marginHorizontal:10,
-    marginBottom:10,
+  container: {
+    marginHorizontal: 10,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: colors.primary,
@@ -56,8 +49,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     width: '100%',
-    marginHorizontal:10,
-    marginRight:20
+    marginHorizontal: 10,
+    marginRight: 20,
   },
   text: {
     color: colors.white,
