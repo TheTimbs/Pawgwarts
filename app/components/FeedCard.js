@@ -82,7 +82,7 @@ function FeedCard({ title, likes, image, email }) {
         <Button title={`${like}`} onPress={() => addLike(email)}></Button>
       </View> */}
       <View style={styles.rowContainer}>
-        <Text style={styles.currLikes}> Likes: {like}</Text>
+        <Text style={styles.currLikes}> Bones: {like}</Text>
         <Pressable style={styles.detailsContainer}>
           <View style={styles.icons}>
             <MaterialCommunityIcons

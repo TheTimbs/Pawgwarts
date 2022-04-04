@@ -24,44 +24,56 @@ const hufflepup = 'HufflePup';
 
 const allQuestions = [
   {
-    question: 'What’s your favorite color?',
+    question: 'Where is your dog when you get back from Pawgwarts?',
     options: [
-      { answer: 'Red', house: gryffindog },
-      { answer: 'Green', house: slobberin },
-      { answer: 'Blue', house: ravenPaw },
-      { answer: 'Yellow', house: hufflepup },
+      {
+        answer: 'At the door to greet me like Doby the houseelf',
+        house: gryffindog,
+      },
+      { answer: 'In their crate', house: slobberin },
+      {
+        answer: 'Watching his favorite show on the TV I left on for them',
+        house: ravenPaw,
+      },
+      { answer: 'On the couch or bed', house: hufflepup },
+    ],
+  },
+  {
+    question: 'No Pawgwarts class today! What are you and your dog up to?',
+    options: [
+      { answer: 'A doggy play date', house: gryffindog },
+      { answer: 'A long run', house: slobberin },
+      { answer: 'A dog friendly festival or event', house: ravenPaw },
+      { answer: 'Couch, snacks and a movie or two', house: hufflepup },
+    ],
+  },
+  {
+    question: 'What distracts your dog most on walks?',
+    options: [
+      { answer: 'Other dogs and people', house: gryffindog },
+      { answer: 'My dog doesn’t get distracted', house: slobberin },
+      { answer: 'SQUIRRELS!', house: ravenPaw },
+      { answer: 'All the smells!', house: hufflepup },
     ],
   },
   {
     question:
-      "You're locked in a duel with a skilled opponent. They fire an unknown spell at you, and you shout…",
+      'When meeting new witches and wizards, which statement best describes your dog?',
     options: [
-      { answer: 'Expelliarmus!', house: gryffindog },
-      { answer: 'Protego!', house: slobberin },
-      { answer: 'Stupefy!', house: ravenPaw },
-      { answer: 'Crucio!', house: hufflepup },
-    ],
-  },
-  {
-    question: 'Which of your skills are you most proud of?',
-    options: [
-      { answer: 'My Ability to Absorb new Information', house: gryffindog },
-      { answer: 'My ability to make new friends', house: slobberin },
-      { answer: 'My ability to get what I want', house: ravenPaw },
-      { answer: 'My ability to keep secrets', house: hufflepup },
-    ],
-  },
-  {
-    question: 'What would you see in the Mirror of Erised?',
-    options: [
-      { answer: 'Myself, surrounded by riches', house: gryffindog },
       {
-        answer: 'Myself, surrounded by my lovign family and friends',
+        answer: 'They have never met a stranger, he loves everyone!',
+        house: gryffindog,
+      },
+      {
+        answer: 'They bark at them',
         house: slobberin,
       },
-      { answer: 'Myself, knowledgable above all', house: ravenPaw },
       {
-        answer: 'Myself, experiencign a marvellous adventure',
+        answer: 'They are timid at first, but warms up quickly',
+        house: ravenPaw,
+      },
+      {
+        answer: 'They avoid them at all costs',
         house: hufflepup,
       },
     ],
@@ -77,22 +89,19 @@ const allQuestions = [
     ],
   },
   {
-    question:
-      'You are making a PowerPoint presentation for a class project. You...',
+    question: 'Your dogs activity level is:',
     options: [
       {
-        answer:
-          'Take charger, organize everyone, and end up doing almost everything',
+        answer: 'Average',
         house: gryffindog,
       },
       {
-        answer: 'Do as little as you can. Ah, the perks of group projects',
+        answer: 'HIGH',
         house: slobberin,
       },
-      { answer: 'Do a little of everything', house: ravenPaw },
+      { answer: 'Low', house: ravenPaw },
       {
-        answer:
-          'Do most of the research and writing, but let other people make it flash',
+        answer: 'What activity?',
         house: hufflepup,
       },
     ],
