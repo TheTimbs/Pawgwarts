@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
   getDocs,
@@ -19,21 +19,23 @@ import { getAuth } from 'firebase/auth';
 function CommentsScreen({ route }) {
   const { email, image } = route.params;
   const [comments, setComments] = useState([]);
-  const [userComment, setUserComment] = useState('')
+  const [userComment, setUserComment] = useState('');
   const dummyComments = [
-    { username: "yaazi1", comment: "nice dog you got there" },
-    { username: "yaazi2", comment: "what a cute pup!" },
-    { username: "yaazi3", comment: "she nailed the trick!" },
-    { username: "yaazi4", comment: "she did this challenge perfectly! more points to Gryffindog" },
-    { username: "yaazi5", comment: "time to level up!" }
-  ]
-
+    { username: 'yaazi1', comment: 'nice dog you got there' },
+    { username: 'yaazi2', comment: 'what a cute pup!' },
+    { username: 'yaazi3', comment: 'she nailed the trick!' },
+    {
+      username: 'yaazi4',
+      comment: 'she did this challenge perfectly! more points to Gryffindog',
+    },
+    { username: 'yaazi5', comment: 'time to level up!' },
+  ];
 
   async function getComments(email) {
     const post = query(
       collection(db, 'feed'),
       where('email', '==', `${email}`),
-      where('image', '==', `${image.uri}`),
+      where('image', '==', `${image.uri}`)
     );
     const docs = await getDocs(post);
     docs.forEach(async (document) => {
@@ -43,12 +45,12 @@ function CommentsScreen({ route }) {
       setComments(commentsFromPost);
     });
     setUserComment('');
-  };
+  }
 
   const addComment = async () => {
     const auth = getAuth();
     const currentUser = auth.currentUser;
-    const user = doc(db, "users", currentUser.uid);
+    const user = doc(db, 'users', currentUser.uid);
     let userDetails = await getDoc(user);
     userDetails = userDetails.data();
 
@@ -60,20 +62,29 @@ function CommentsScreen({ route }) {
     const docs = await getDocs(post);
     docs.forEach(async (document) => {
       const feedPost = doc(db, 'feed', document.id);
-      await updateDoc(feedPost, { comments: arrayUnion({ username: userDetails.name, comment: userComment }) })
+      await updateDoc(feedPost, {
+        comments: arrayUnion({
+          username: userDetails.name,
+          comment: userComment,
+        }),
+      });
     });
     getComments(email);
-  }
+  };
 
-  useEffect(() => (getComments(email)), [])
-
+  useEffect(() => getComments(email), []);
 
   return (
     <View syle={styles.parentContainer}>
       <Text style={styles.header}>Comments</Text>
       <View style={styles.commentsContainer}>
         <ScrollView>
-          {comments.map(comment => (<Text style={styles.commentText} key={comments.indexOf(comment)}> {comment.username}: {comment.comment} </Text>))}
+          {comments.map((comment) => (
+            <View key={comments.indexOf(comment)} style={styles.textContainer}>
+              <Text style={styles.userText}>{comment.username}: </Text>
+              <Text style={styles.commentText}>{comment.comment}</Text>
+            </View>
+          ))}
         </ScrollView>
       </View>
 
@@ -82,16 +93,20 @@ function CommentsScreen({ route }) {
           <TextInput
             style={styles.textInputBox}
             placeholder="Add a Comment"
-            onChangeText={text => setUserComment(text)}
+            onChangeText={(text) => setUserComment(text)}
             defaultValue={userComment}
             value={userComment}
             multiline
           />
-          <Button onPress={() => addComment()} style={styles.submitComment} title="Post"></Button>
+          <Button
+            onPress={() => addComment()}
+            style={styles.submitComment}
+            title="Post"
+          ></Button>
         </View>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -111,9 +126,20 @@ const styles = StyleSheet.create({
     height: '65%',
     padding: 10,
   },
+  textContainer: {
+    padding: 5,
+    marginBottom: 5,
+    flexDirection: 'row',
+  },
   commentText: {
     fontSize: 20,
     paddingBottom: 3,
+  },
+  userText: {
+    fontSize: 20,
+    paddingBottom: 3,
+    fontWeight: 'bold',
+    color: colors.houseBlue,
   },
   addCommentContainer: {
     height: '25%',
@@ -135,7 +161,7 @@ const styles = StyleSheet.create({
     borderColor: '#3eb0d4',
     alignSelf: 'flex-end',
     borderRadius: 10,
-  }
+  },
 });
 
 export default CommentsScreen;
