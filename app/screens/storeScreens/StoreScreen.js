@@ -79,7 +79,7 @@ function StoreScreen({ navigation }) {
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <StoreCard
             navigation={navigation}
-            navTarget={'AccessoriesStore'}
+            navTarget={'Accessories'}
             imgSource={storeImages.accessories}
             title={'Accessories'}
             styling={storeStylings.accessoryText}
@@ -87,7 +87,7 @@ function StoreScreen({ navigation }) {
           />
           <StoreCard
             navigation={navigation}
-            navTarget={'ToyStore'}
+            navTarget={'Toys'}
             imgSource={storeImages.toys}
             title={'Toys'}
             styling={storeStylings.toyText}
@@ -95,7 +95,7 @@ function StoreScreen({ navigation }) {
           />
           <StoreCard
             navigation={navigation}
-            navTarget={'TreatStore'}
+            navTarget={'Treats'}
             imgSource={storeImages.treats}
             title={'Treats'}
             styling={storeStylings.treatText}
@@ -103,7 +103,7 @@ function StoreScreen({ navigation }) {
           />
           <StoreCard
             navigation={navigation}
-            navTarget={'GroomingStore'}
+            navTarget={'Grooming'}
             imgSource={storeImages.grooming}
             title={'Grooming'}
             styling={storeStylings.groomingText}
