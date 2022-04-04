@@ -27,6 +27,7 @@ function FeedScreen() {
   const dayCollectionRef = doc(db, 'challenge', 'date');
   const weekCollectionRef = doc(db, 'challenge', 'weeksChallenge');
   const [challenge, setChallenge] = useState({});
+  const [winner, setWinner]= useState('');
   const navigation = useNavigation();
   const today = new Date();
 
@@ -39,8 +40,8 @@ function FeedScreen() {
     date.setDate(date.getDate() + 7);
     const challengeData = await getDoc(weekCollectionRef);
     setChallenge(challengeData.data().challenge);
+    setWinner(challengeData.data().winner)
     if (boo) {
-
       await updateDoc(dayCollectionRef, { setDate: date.toDateString(), date: arrayUnion(cur.toDateString()) });
       randomChallenge();
     }
@@ -65,15 +66,33 @@ function FeedScreen() {
     const trainingNum = random(arrTraining.length);
     const challenge = arrTraining[trainingNum].data();
     setChallenge(challenge);
-    await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[]});
     const gRef = doc(db, 'houses ', 'GryffinDog');
     const hRef = doc(db, 'houses ', 'HufflePup');
     const rRef = doc(db, 'houses ', 'RavenPaw');
     const sRef = doc(db, 'houses ', 'Slobberin');
+    const gData = await getDoc(gRef);
+    const hData = await getDoc(hRef);
+    const rData = await getDoc(rRef);
+    const sData = await getDoc(sRef);
+   if(gData.data().points > hData.data().points && gData.data().points > rData.data().points && gData.data().points > sData.data().points){
+     await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[], winner:'GryffinDog'});
+     setWinner('GryffinDog')
+   }else if(hData.data().points > gData.data().points && hData.data().points > rData.data().points && hData.data().points > sData.data().points){
+      await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[], winner:'HufflePup'});
+      setWinner('HufflePup')
+   }else if(rData.data().points > gData.data().points && rData.data().points > hData.data().points && rData.data().points > Data.data().points){
+      await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[], winner:'RavenPaw'});
+      setWinner('RavenPaw')
+   }else{
+     await updateDoc(weekCollectionRef, { challenge: challenge , userPost:[], winner:'Slobberin'});
+      setWinner('Slobberin')
+   }
+
     await updateDoc(gRef,{points:0})
     await updateDoc(hRef,{points:0})
     await updateDoc(rRef,{points:0})
     await updateDoc(sRef,{points:0})
+
   };
   const changeFeed = async (position) => {
     console.log(position)
@@ -134,7 +153,8 @@ function FeedScreen() {
 
       <ScrollView>
         <View style={{justifyContent:"center", alignItems:'center'}}>
-              <Text style={styles.text}>Participate</Text>
+          <Text style={styles.text}>Last week current winner</Text>
+              <Text style={styles.text}>{winner}</Text>
           <ScrollView horizontal={true}
           onScroll= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)}
           scrollEventThrottle={0}
@@ -161,6 +181,7 @@ function FeedScreen() {
 
           </ScrollView>
          </View>
+
           {feedList.map((item) =>
           <FeedCard
             key={item.id.toString()}
