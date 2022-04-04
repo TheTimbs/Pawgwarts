@@ -30,7 +30,7 @@ function PastWeekCard({
       <View >
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("pastWeekScreen")}
+          onPress={() => navigation.navigate("SingleWeekScreen", {title})}
           style={[styles.button, { backgroundColor: 'blue' }]}
           >
             <AppText style={styles.text}>{title}</AppText>
@@ -53,8 +53,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     width: '100%',
-    //marginHorizontal:10,
-    //marginLeft:20
   },
   text: {
     color: colors.white,
