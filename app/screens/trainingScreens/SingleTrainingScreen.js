@@ -202,22 +202,23 @@ function SingleTrainingScreen({ navigation, route }) {
         <Text style={styles.stepsTitle}>Steps</Text>
         {trainingDetails.steps[0] !== '' ? (
           trainingDetails.steps.map((step, stepIndex) => (
-            <>
-              <View style={styles.stepsView}>
+            <View key={stepIndex}>
+              <View style={styles.stepsView} >
                 <View style={styles.stepNumIcon}>
-                  <Text key={stepIndex} style={styles.stepNumIconText}>
+                  <Text style={styles.stepNumIconText}>
                     {stepIndex + 1}
                   </Text>
                 </View>
-                <Text key={stepIndex} style={styles.stepsText}>
+                <Text style={styles.stepsText}>
                   {step}
                 </Text>
               </View>
-              <Image
+              {trainingDetails.images.length > 1 ? (<Image
                 style={styles.logo}
                 source={{ uri: trainingDetails.images[stepIndex + 2] }}
-              />
-            </>
+              />) : null}
+
+            </ View>
           ))
         ) : (
           <Text>Loading...</Text>
@@ -225,8 +226,8 @@ function SingleTrainingScreen({ navigation, route }) {
         <View style={styles.tipsView}>
           <Text style={styles.tipTitle}>Tips</Text>
           {trainingDetails.tips[0] !== '' ? (
-            trainingDetails.tips.map((tip) => (
-              <Text key={tips.indexOf(tip)} style={styles.tipsText}>
+            trainingDetails.tips.map((tip, tipIndex) => (
+              <Text key={tipIndex} style={styles.tipsText}>
                 * {tip}
               </Text>
             ))
@@ -234,12 +235,13 @@ function SingleTrainingScreen({ navigation, route }) {
             <Text>Loading...</Text>
           )}
         </View>
+
         <Text style={styles.stepsTitle}> Recommended Training Tools </Text>
-        {trainingDetails.tools[0] !== '' ? (
-          trainingDetails.tools.map((tool, i) => (
-            <ScrollView horizontal={true}>
-              <View>
-                <View key={i} style={styles.toolsContainer}>
+        <ScrollView horizontal={true}  >
+          {trainingDetails.tools[0] !== '' ? (
+            trainingDetails.tools.map((tool, i) => (
+              <View key={i}>
+                <View style={styles.toolsContainer} key={i}>
                   <TouchableWithoutFeedback
                     onPress={() => handleLink(tool.link)}
                   >
@@ -258,11 +260,13 @@ function SingleTrainingScreen({ navigation, route }) {
                   </TouchableWithoutFeedback>
                 </View>
               </View>
-            </ScrollView>
-          ))
-        ) : (
-          <Text>Just some yummy treats! :) </Text>
-        )}
+
+            ))
+
+          ) : (
+            <Text>Just some yummy treats! :) </Text>
+          )}
+        </ScrollView>
       </ScrollView>
     </>
   );
