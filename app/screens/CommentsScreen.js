@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
   getDocs,
@@ -10,8 +10,6 @@ import {
   updateDoc,
   query,
   where,
-  increment,
-  arrayRemove,
   arrayUnion,
 } from 'firebase/firestore';
 import { db } from '../../firebase/firebase-config';
@@ -23,11 +21,11 @@ function CommentsScreen({ route }) {
   const [comments, setComments] = useState([]);
   const [userComment, setUserComment] = useState('')
   const dummyComments = [
-    { userName: "yaazi1", comment: "nice dog you got there" },
-    { userName: "yaazi2", comment: "what a cute pup!" },
-    { userName: "yaazi3", comment: "she nailed the trick!" },
-    { userName: "yaazi4", comment: "she did this challenge perfectly! more points to Gryffindog" },
-    { userName: "yaazi5", comment: "time to level up!" }
+    { username: "yaazi1", comment: "nice dog you got there" },
+    { username: "yaazi2", comment: "what a cute pup!" },
+    { username: "yaazi3", comment: "she nailed the trick!" },
+    { username: "yaazi4", comment: "she did this challenge perfectly! more points to Gryffindog" },
+    { username: "yaazi5", comment: "time to level up!" }
   ]
 
 
@@ -35,17 +33,14 @@ function CommentsScreen({ route }) {
     const post = query(
       collection(db, 'feed'),
       where('email', '==', `${email}`),
-      // where('image', '==', `${image.uri}`)
+      where('image', '==', `${image.uri}`),
     );
     const docs = await getDocs(post);
     docs.forEach(async (document) => {
       const feedPost = doc(db, 'feed', document.id);
       const feedData = await getDoc(feedPost);
-      // console.log("// [CommentsScreen/getComments()] - feedData: ", feedData)
       const commentsFromPost = feedData.data().comments;
-      // console.log("// [CommentsScreen/getComments()] - comments from post: ", commentsFromPost)
       setComments(commentsFromPost);
-      console.log("// [CommentsScreen/getComments()] - comments: ", comments)
     });
     setUserComment('');
   };
@@ -60,7 +55,7 @@ function CommentsScreen({ route }) {
     const post = query(
       collection(db, 'feed'),
       where('email', '==', `${email}`),
-      // where('image', '==', `${image.uri}`)
+      where('image', '==', `${image.uri}`)
     );
     const docs = await getDocs(post);
     docs.forEach(async (document) => {
@@ -83,14 +78,17 @@ function CommentsScreen({ route }) {
       </View>
 
       <View style={styles.addCommentContainer}>
-        <TextInput
-          style={{ height: 40 }}
-          placeholder="Add a Comment"
-          onChangeText={text => setUserComment(text)}
-          defaultValue={userComment}
-          value={userComment}
-        />
-        <Button onPress={() => addComment()} style={styles.submitComment} title="Post"></Button>
+        <View style={styles.addCommentField}>
+          <TextInput
+            style={styles.textInputBox}
+            placeholder="Add a Comment"
+            onChangeText={text => setUserComment(text)}
+            defaultValue={userComment}
+            value={userComment}
+            multiline
+          />
+          <Button onPress={() => addComment()} style={styles.submitComment} title="Post"></Button>
+        </View>
       </View>
     </View>
   )
@@ -101,16 +99,16 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   header: {
+    height: '10%',
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
+    fontSize: 22,
+    paddingTop: 25,
   },
   commentsContainer: {
-    borderWidth: 3,
-    borderColor: "red",
-    height: '50%',
+    borderTopColor: '#3eb0d4',
+    borderTopWidth: 3,
+    height: '65%',
     padding: 10,
   },
   commentText: {
@@ -118,11 +116,26 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
   },
   addCommentContainer: {
-    height: '40%',
-    borderWidth: 3,
-    borderColor: 'blue',
+    height: '25%',
     display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderTopColor: '#3eb0d4',
+    borderTopWidth: 1,
   },
+  textInputBox: {
+    height: 80,
+    fontSize: 20,
+  },
+  addCommentField: {
+    borderBottomColor: '#3eb0d4',
+    borderBottomWidth: 12,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#3eb0d4',
+    alignSelf: 'flex-end',
+    borderRadius: 10,
+  }
 });
 
 export default CommentsScreen;
