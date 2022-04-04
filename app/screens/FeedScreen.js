@@ -33,6 +33,7 @@ function FeedScreen() {
 
 
   const getDate = async () => {
+
     const data = await getDoc(dayCollectionRef);
     const cur = new Date(data.data().setDate);
     const boo = new Date(today) >= new Date(cur);
@@ -111,6 +112,7 @@ function FeedScreen() {
   }
   };
   const getFeed = async () => {
+
     const data = await getDocs(feedCollectionRef);
     const mappedData = data.docs.map((doc) => ({
       ...doc.data(),
@@ -153,7 +155,7 @@ function FeedScreen() {
 
       <ScrollView>
         <View style={{justifyContent:"center", alignItems:'center'}}>
-          <Text style={styles.text}>Last week current winner</Text>
+          <Text style={styles.text}>Last week winner</Text>
               <Text style={styles.text}>{winner}</Text>
           <ScrollView horizontal={true}
           onScroll= {(e)=> changeFeed(e.nativeEvent.contentOffset.x)}

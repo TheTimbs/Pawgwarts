@@ -118,7 +118,7 @@ function RegisterScreen() {
     <ImageBackground
       blurRadius={3}
       style={styles.container}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../../assets/BlueBackground.jpeg')}
     >
       {/* <Screen style={styles.container}> */}
       <ScrollView>

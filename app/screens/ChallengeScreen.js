@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db, auth } from "../../firebase/firebase-config";
 import { doc, getDoc,} from 'firebase/firestore';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button, Pressable } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button, Pressable, TouchableWithoutFeedback } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import colors from '../config/colors';
@@ -144,7 +144,7 @@ function ChallengeScreen({ navigation, route }) {
             <ScrollView horizontal={true}>
               <View>
                 <View key={i} style={styles.toolsContainer}>
-                  <TouchableWithoutFeedback
+                  {/* <TouchableWithoutFeedback
                     onPress={() => handleLink(tool.link)}
                   >
                     <Image
@@ -159,7 +159,7 @@ function ChallengeScreen({ navigation, route }) {
                     />
 
                     <Text style={styles.header}>{tool.name}</Text>
-                  </TouchableWithoutFeedback>
+                  </TouchableWithoutFeedback> */}
                 </View>
               </View>
             </ScrollView>
