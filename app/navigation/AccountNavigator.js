@@ -4,7 +4,7 @@ import AccountScreen from '../screens/AccountScreen';
 import UserPic from '../screens/UserPic';
 import UserProfile from '../screens/UserProfileScreen';
 import EditUserProfile from '../screens/EditUserProfileScreen';
-import WelcomeScreen from '../screens/WelcomeScreen';
+import WelcomeScreen from '../screens/SignScreens/WelcomeScreen';
 import MyTrainings from '../screens/MyTrainingsScreen';
 import SingleTrainingScreen from '../screens/trainingScreens/SingleTrainingScreen';
 const Stack = createStackNavigator();

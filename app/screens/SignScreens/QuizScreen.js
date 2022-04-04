@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase/firebase-config';
+import { db } from '../../../firebase/firebase-config';
 import { getAuth } from 'firebase/auth';
 import QuizResult from './QuizResult';
-import colors from '../config/colors';
+import colors from '../../config/colors';
 import { useFonts } from 'expo-font';
 
 // house constants

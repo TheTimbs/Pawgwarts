@@ -1,7 +1,7 @@
 import { ImageBackground, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import colors from '../config/colors';
-import Button from '../components/Button';
+import colors from '../../config/colors';
+import Button from '../../components/Button';
 import { useFonts } from 'expo-font';
 
 export default function QuizResult(props) {

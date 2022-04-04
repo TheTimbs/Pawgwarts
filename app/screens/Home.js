@@ -124,28 +124,28 @@ function Home(props) {
               style={styles.houseImages}
               source={require('../assets/hufflepuffportrait.jpg')}
             />
-            <Text style={styles.text}>HufflePup: {points[0]}</Text>
+            <Text style={styles.text}>HufflePup: {points[1]}</Text>
           </View>
           <View style={styles.box}>
             <Image
               style={styles.houseImages}
               source={require('../assets/ravenclawportrait.jpg')}
             />
-            <Text style={styles.text}>RavenPaw: {points[1]}</Text>
+            <Text style={styles.text}>RavenPaw: {points[2]}</Text>
           </View>
           <View style={styles.box}>
             <Image
               style={styles.houseImages}
               source={require('../assets/slytherinportrait.jpg')}
             />
-            <Text style={styles.text}>Slobberin: {points[2]}</Text>
+            <Text style={styles.text}>Slobberin: {points[3]}</Text>
           </View>
           <View style={styles.box}>
             <Image
               style={styles.houseImages}
               source={require('../assets/gryffindorportrait.jpg')}
             />
-            <Text style={styles.text}>GryffinDog: {points[3]}</Text>
+            <Text style={styles.text}>GryffinDog: {points[0]}</Text>
           </View>
         </View>
       </ImageBackground>

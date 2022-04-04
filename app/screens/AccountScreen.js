@@ -6,7 +6,7 @@ import {
   Text,
   ImageBackground,
 } from 'react-native';
-
+import { SignOut } from './SignScreens/SignOut';
 import { ListItemSeparator } from '../components/lists';
 import ListItemAccount from '../components/lists/ListItemAccount';
 import colors from '../config/colors';
