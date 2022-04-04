@@ -13,7 +13,6 @@ import colors from '../config/colors';
 import Icon from '../components/Icon';
 import routes from '../navigation/routes';
 import Screen from '../components/Screen';
-import { SignOut } from './SignOut';
 import { db } from '../../firebase/firebase-config';
 import { getDoc, collection, doc } from 'firebase/firestore';
 import { getAuth } from '@firebase/auth';

@@ -11,7 +11,7 @@ function WelcomeScreen({ navigation }) {
   const [isSignedIn, setIsSignedIn] = useState('');
 
   let [fontsLoaded] = useFonts({
-    'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
+    'Harry-Potter': require('../../assets/fonts/HarryPotter.ttf'),
   });
 
   const demo = {
@@ -37,10 +37,10 @@ function WelcomeScreen({ navigation }) {
     <ImageBackground
       blurRadius={1}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+        source={require('../../assets/BlueBackground.jpeg')}
     >
       <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
+        <Image style={styles.logo} source={require('../../assets/DogLogo.png')} />
         <Text style={styles.tagline}>Pawgwarts</Text>
       </View>
       <View style={styles.buttonsContainer}>

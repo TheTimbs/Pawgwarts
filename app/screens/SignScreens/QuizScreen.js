@@ -160,7 +160,7 @@ const PersonalityQuiz = () => {
   };
 
   let [fontsLoaded] = useFonts({
-    'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
+    'Harry-Potter': require('../../assets/fonts/HarryPotter.ttf'),
   });
   if (!fontsLoaded) {
     return null;
@@ -170,7 +170,7 @@ const PersonalityQuiz = () => {
     <ImageBackground
       blurRadius={3}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../../assets/BlueBackground.jpeg')}
     >
       <View style={styles.container}>
         {selectedHouse !== '' ? (

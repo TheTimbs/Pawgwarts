@@ -37,10 +37,10 @@ function LoginScreen(props) {
     <ImageBackground
       blurRadius={3}
       style={styles.background}
-      source={require('../assets/BlueBackground.jpeg')}
+      source={require('../../assets/BlueBackground.jpeg')}
     >
 
-      <Image style={styles.logo} source={require('../assets/DogLogo.png')} />
+      <Image style={styles.logo} source={require('../../assets/DogLogo.png')} />
       <Form
         initialValues={{ email: '', password: '' }}
         onSubmit={(value) => SignUser(value)}
