@@ -52,17 +52,18 @@ export default function UploadImageScreen({ route }) {
         comments: [],
         date: date.toDateString(),
       });
+    } else {
+      await addDoc(feedCollectionRef, {
+        likes: 0,
+        image: image,
+        name: user.data().name,
+        email: auth.currentUser.email,
+        UsersLikes: [],
+        house: user.data().house,
+        comments: [],
+        date: date.toDateString(),
+      });
     }
-    await addDoc(feedCollectionRef, {
-      likes: 0,
-      image: image,
-      name: user.data().name,
-      email: auth.currentUser.email,
-      UsersLikes: [],
-      house: user.data().house,
-      comments: [],
-      date: date.toDateString(),
-    });
     await updateDoc(weekCollectionRef, {
       userPost: arrayUnion(auth.currentUser.email),
     });
