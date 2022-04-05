@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { db, auth } from "../../firebase/firebase-config";
 import { doc, getDoc, } from 'firebase/firestore';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button, Pressable, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, FlatList, Image, ScrollView, Button, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import colors from '../config/colors';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 function ChallengeScreen({ navigation, route }) {
   const data = route.params;
@@ -59,91 +60,90 @@ function ChallengeScreen({ navigation, route }) {
 
 
   return (
-    Object.keys(trainingDetails).length === 0 ? (
-      <Text> ... Loading </Text>
-    ) : (
-      <>
-        <ScrollView>
-          <View style={styles.logoContainer}>
-            {trainingDetails.images[1] ? (
-              <Image
-                style={styles.logo}
-                source={{ uri: trainingDetails.images[0] }}
-              />
-            ) : (
-              <Image
-                style={styles.logo}
-                source={{ uri: trainingDetails.images[0] }}
-              />
-            )}
-          </View>
-          <View style={styles.trainingDescriptionContainer}>
-            {trainingDetails.description ? (
-              <>
-                <Text style={styles.topText}>Difficulty: {myloop}</Text>
-                <Text style={styles.descriptionText}>
-                  {trainingDetails.description}
-                </Text>
-
+    <>
+      <ScrollView>
+        <View style={styles.logoContainer}>
+          {trainingDetails.images[1] ? (
+            <Image
+              style={styles.logo}
+              source={{ uri: trainingDetails.images[0] }}
+            />
+          ) : (
+            <Image
+              style={styles.logo}
+              source={{ uri: trainingDetails.images[0] }}
+            />
+          )}
+        </View>
+        <View style={styles.trainingDescriptionContainer}>
+          {trainingDetails.description ? (
+            <>
+              <Text style={styles.topText}>Difficulty: {myloop}</Text>
+              <Text style={styles.descriptionText}>
+                {trainingDetails.description}
+              </Text>
+              <View style={styles.bottom}>
                 {!userPosted ? (<View style={styles.bottom}>
                   <Pressable style={styles.buttonStyle}
                     onPress={() => navigation.navigate('UploadImageScreen', { props })}>
-                    <Text style={{ fontSize: 20, textAlign: 'center' }}>Upload to Challenge feed</Text>
+                    <Text style={{ fontSize: 16, textAlign: 'center' }}>Upload to Challenge feed</Text>
                   </Pressable>
                 </View>
                 ) : <View style={styles.bottom}>
                   <Text style={{ fontSize: 20, textAlign: 'center' }}>You already posted for this week</Text>
                 </View>
                 }
+              </View>
+            </>
+          ) : (
+            <Text style={styles.bodyText}>{loremIpsum}</Text>
+          )}
+        </View>
 
-              </>
-            ) : (
-              <Text style={styles.bodyText}>{loremIpsum}</Text>
-            )}
-          </View>
-
-          <Text style={styles.stepsTitle}>Steps</Text>
-          {trainingDetails.steps[0] !== '' ? (
-            trainingDetails.steps.map((step, stepIndex) => (
-              <>
-                <View style={styles.stepsView}>
-                  <View style={styles.stepNumIcon}>
-                    <Text key={stepIndex} style={styles.stepNumIconText}>
-                      {stepIndex + 1}
-                    </Text>
-                  </View>
-                  <Text key={stepIndex} style={styles.stepsText}>
-                    {step}
+        <Text style={styles.stepsTitle}>Steps</Text>
+        {trainingDetails.steps[0] !== '' ? (
+          trainingDetails.steps.map((step, stepIndex) => (
+            <View key={stepIndex}>
+              <View style={styles.stepsView} >
+                <View style={styles.stepNumIcon}>
+                  <Text style={styles.stepNumIconText}>
+                    {stepIndex + 1}
                   </Text>
                 </View>
-                <Image
-                  style={styles.logo}
-                  source={{ uri: trainingDetails.images[stepIndex + 2] }}
-                />
-              </>
+                <Text style={styles.stepsText}>
+                  {step}
+                </Text>
+              </View>
+              {trainingDetails.images.length > 1 ? (<Image
+                style={styles.logo}
+                source={{ uri: trainingDetails.images[stepIndex + 2] }}
+              />) : null}
+
+            </ View>
+          ))
+        ) : (
+          <Text>Loading...</Text>
+        )}
+        <View style={styles.tipsView}>
+          <Text style={styles.tipTitle}>Tips</Text>
+          {trainingDetails.tips[0] !== '' ? (
+            trainingDetails.tips.map((tip, tipIndex) => (
+              <Text key={tipIndex} style={styles.tipsText}>
+                * {tip}
+              </Text>
             ))
           ) : (
             <Text>Loading...</Text>
           )}
-          <View style={styles.tipsView}>
-            <Text style={styles.tipTitle}>Tips</Text>
-            {trainingDetails.tips[0] !== '' ? (
-              trainingDetails.tips.map((tip) => (
-                <Text key={tips.indexOf(tip)} style={styles.tipsText}>
-                  * {tip}
-                </Text>
-              ))
-            ) : (
-              <Text>Loading...</Text>
-            )}
-          </View>
-          <Text style={styles.stepsTitle}> Recommended Training Tools </Text>
+        </View>
+
+        <Text style={styles.stepsTitle}> Recommended Training Tools </Text>
+        <ScrollView horizontal={true}  >
           {trainingDetails.tools[0] !== '' ? (
             trainingDetails.tools.map((tool, i) => (
-              <ScrollView horizontal={true}>
-                <View>
-                  <View key={i} style={styles.toolsContainer}>
-                    {/* <TouchableWithoutFeedback
+              <View key={i}>
+                <View style={styles.toolsContainer} key={i}>
+                  <TouchableWithoutFeedback
                     onPress={() => handleLink(tool.link)}
                   >
                     <Image
@@ -158,19 +158,22 @@ function ChallengeScreen({ navigation, route }) {
                     />
 
                     <Text style={styles.header}>{tool.name}</Text>
-                  </TouchableWithoutFeedback> */}
-                  </View>
+                  </TouchableWithoutFeedback>
                 </View>
-              </ScrollView>
+              </View>
+
             ))
+
           ) : (
             <Text>Just some yummy treats! :) </Text>
           )}
         </ScrollView>
-      </>
-    )
-  )
+      </ScrollView>
+    </>
+  );
 }
+
+
 
 
 const styles = StyleSheet.create({
@@ -187,7 +190,7 @@ const styles = StyleSheet.create({
     width: '60%',
     alignSelf: 'center',
     borderRadius: 10,
-    padding: 3,
+    padding: 2,
 
   },
   descriptionText: {
