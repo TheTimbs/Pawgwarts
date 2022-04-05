@@ -200,7 +200,7 @@ function FeedScreen() {
             <Text style={styles.text}>{winner}</Text>
             <ScrollView
               horizontal={true}
-              onScroll={(e) => changeFeed(e.nativeEvent.contentOffset.x)}
+              onScrollBeginDrag={(e) => changeFeed(e.nativeEvent.contentOffset.x)}
               scrollEventThrottle={0}
               snapToStart
             >
