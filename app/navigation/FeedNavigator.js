@@ -12,7 +12,8 @@ const Stack = createStackNavigator();
 const FeedNavigator = () => (
   <Stack.Navigator>
     <Stack.Screen name="MyFeed" component={FeedScreen} options={{ headerShown: false }} />
-    <Stack.Screen name="ChallengeScreen" component={ChallengeScreen} />
+    <Stack.Screen name="ChallengeScreen" component={ChallengeScreen}
+     options={({ route }) => ({ title: route.params.title })}/>
     <Stack.Screen name="UploadImageScreen" component={UploadImageScreen} />
     <Stack.Screen name="pastWeekScreen" component={PastWeekScreen} />
      <Stack.Screen name="SingleWeekScreen" component={SingleWeekScreen} />
