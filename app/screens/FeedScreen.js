@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  FlatList,
   StyleSheet,
   View,
   Text,
@@ -8,7 +7,7 @@ import {
   Button,
   Pressable,
 } from 'react-native';
-import { AsyncStorage } from '@react-native-async-storage/async-storage';
+
 import FeedCard from '../components/FeedCard';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
@@ -28,9 +27,6 @@ import {
   getTrainingCategoriesChallenge,
   random,
 } from '../functions/methods';
-import AppButton from '../components/Button';
-import NewListingButton from '../navigation/NewListingButton';
-import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import ChallengeCard from '../components/ChallengeCard';
 import CommunityCard from '../components/CommunityCard';
@@ -40,6 +36,7 @@ function FeedScreen() {
   const [feedList, setFeedList] = useState([]);
   const [WeekFeed, setWeekFeed] = useState([]);
   const [communityFeed, setComFeed] = useState([]);
+  const [feed, setFeed] = useState('feed');
   const feedCollectionRef = collection(db, 'feed');
   const comFeedCollectionRef = collection(db, 'communityFeed');
   const dayCollectionRef = doc(db, 'challenge', 'date');
@@ -149,8 +146,10 @@ function FeedScreen() {
       }
     }
     if (num >= 140) {
+      setFeed("communityFeed")
       setFeedList(communityFeed);
     } else {
+        setFeed("feed")
       setFeedList(WeekFeed);
     }
   };
@@ -233,6 +232,7 @@ function FeedScreen() {
               likes={item.likes}
               image={{ uri: item.image }}
               email={item.email}
+              feed={feed}
             />
           ))}
         </ScrollView>

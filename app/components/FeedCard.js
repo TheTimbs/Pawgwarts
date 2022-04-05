@@ -19,7 +19,7 @@ import { getAuth } from 'firebase/auth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-function FeedCard({ title, likes, image, email }) {
+function FeedCard({ title, likes, image, email, feed }) {
   const navigation = useNavigation();
   const [like, setLike] = useState(likes);
   const [userLike, setUserLike] = useState(false);
@@ -29,17 +29,21 @@ function FeedCard({ title, likes, image, email }) {
     const currentUser = auth.currentUser;
 
     const post = query(
-      collection(db, 'feed'),
+      collection(db, `${feed}`),
       where('email', '==', `${email}`),
       where('image', '==', `${image.uri}`)
     );
     const docs = await getDocs(post);
 
     docs.forEach(async (document) => {
-      const feedPost = doc(db, 'feed', document.id);
+      const feedPost = doc(db, `${feed}`, document.id);
       const feedData = await getDoc(feedPost);
-      const house = feedData.data().house;
-      const houseRef = doc(db, 'houses ', house);
+      let house ;
+      let houseRef;
+      if(feed === 'feed'){
+         house = feedData.data().house;
+         houseRef = doc(db, 'houses ', house);
+      }
 
       const user = query(
         collection(db, 'users'),
@@ -53,23 +57,42 @@ function FeedCard({ title, likes, image, email }) {
       });
 
       const arr = document.data().UsersLikes;
+      console.log(feed)
+      if(feed === 'feed'){
+        if (arr.includes(currentUser.email)) {
+          updateDoc(feedPost, {
+            likes: increment(-1),
+            UsersLikes: arrayRemove(currentUser.email),
+          });
+          updateDoc(houseRef, { points: increment(-1) });
+          updateDoc(userPost, { likes: increment(-1) });
+          setLike(document.data().likes - 1);
+        } else{
+          updateDoc(feedPost, {
+            likes: increment(1),
+            UsersLikes: arrayUnion(currentUser.email),
+          });
+          updateDoc(houseRef, { points: increment(1) });
+          updateDoc(userPost, { likes: increment(1) });
+          setLike(document.data().likes + 1);
+        }
+    }else {
       if (arr.includes(currentUser.email)) {
         updateDoc(feedPost, {
           likes: increment(-1),
           UsersLikes: arrayRemove(currentUser.email),
         });
-        updateDoc(houseRef, { points: increment(-1) });
         updateDoc(userPost, { likes: increment(-1) });
         setLike(document.data().likes - 1);
-      } else {
+      } else{
         updateDoc(feedPost, {
           likes: increment(1),
           UsersLikes: arrayUnion(currentUser.email),
         });
-        updateDoc(houseRef, { points: increment(1) });
         updateDoc(userPost, { likes: increment(1) });
         setLike(document.data().likes + 1);
       }
+    }
       userLike ? setUserLike(false) : setUserLike(true);
     });
   }
@@ -82,7 +105,7 @@ function FeedCard({ title, likes, image, email }) {
         <Button title={`${like}`} onPress={() => addLike(email)}></Button>
       </View> */}
       <View style={styles.rowContainer}>
-        <Text style={styles.currLikes}> Bones: {like}</Text>
+        <Text style={styles.currLikes}> Likes: {like}</Text>
         <Pressable style={styles.detailsContainer}>
           <View style={styles.icons}>
             <MaterialCommunityIcons
