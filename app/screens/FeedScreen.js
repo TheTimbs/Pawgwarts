@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  Button,
-  Pressable,
-} from 'react-native';
+import { StyleSheet, View, Text, Image, Button, Pressable } from 'react-native';
 
 import FeedCard from '../components/FeedCard';
 import colors from '../config/colors';
@@ -146,10 +139,10 @@ function FeedScreen() {
       }
     }
     if (num >= 140) {
-      setFeed("communityFeed")
+      setFeed('communityFeed');
       setFeedList(communityFeed);
     } else {
-        setFeed("feed")
+      setFeed('feed');
       setFeedList(WeekFeed);
     }
   };
@@ -200,7 +193,7 @@ function FeedScreen() {
             <Text style={styles.text}>{winner}</Text>
             <ScrollView
               horizontal={true}
-              onScrollBeginDrag={(e) => changeFeed(e.nativeEvent.contentOffset.x)}
+              onScroll={(e) => changeFeed(e.nativeEvent.contentOffset.x)}
               scrollEventThrottle={0}
               snapToStart
             >
