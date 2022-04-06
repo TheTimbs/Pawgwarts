@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SingleTrainingScreen from '../screens/trainingScreens/SingleTrainingScreen';
 import Home from '../screens/Home';
-import colors from '../config/colors';
 
 const Stack = createStackNavigator();
 

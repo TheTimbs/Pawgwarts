@@ -9,16 +9,12 @@ import {
   ImageBackground,
 } from 'react-native';
 import * as Yup from 'yup';
-import { date, object } from 'yup';
 import Button from '../../components/Button';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { db, storage, auth } from '../../../firebase/firebase-config';
-import Screen from '../../components/Screen';
 import { Form, FormField, SubmitButton } from '../../components/forms';
-//import { AsyncStorage } from '@react-native-async-storage/async-storage';
-import { TextInput } from 'react-native-gesture-handler';
-import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
+import {  setDoc, doc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -45,7 +41,6 @@ function RegisterScreen() {
   const navigation = useNavigation();
 
   const RegisterUser = async (value) => {
-    console.log(value);
     const user = await createUserWithEmailAndPassword(
       auth,
       value.email,
@@ -89,14 +84,12 @@ function RegisterScreen() {
     setLoading(true);
     uploadImage();
     async function uploadImage() {
-      console.log('done');
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
           resolve(xhr.response);
         };
         xhr.onerror = function (e) {
-          console.log(e);
           reject(new TypeError('Network request failed'));
         };
         xhr.responseType = 'blob';

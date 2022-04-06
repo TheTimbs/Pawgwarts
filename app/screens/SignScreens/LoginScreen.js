@@ -28,7 +28,7 @@ function LoginScreen(props) {
         navigation.navigate('App');
       })
       .catch((err) => {
-        console.log(err);
+
         Alert.alert(err.message);
       });
   };

@@ -51,9 +51,7 @@ function AccountScreen(props) {
 
   async function getUserInfo() {
     const userDoc = await getDoc(userRef);
-
     setInfo(userDoc.data());
-    // console.log(info);
     setPic(userDoc.data().dog);
   }
 

@@ -1,15 +1,10 @@
 import React, { LogBox } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
 import AccountNavigator from './AccountNavigator';
 import FeedNavigator from './FeedNavigator';
 import StoreNavigator from './StoreNavigator';
 import TrainingNavigator from './TrainingNavigator';
-import Home from '../screens/Home';
-// import ListingEditScreen from '../screens/ListingEditScreen';
-// import NewListingButton from './NewListingButton';
-// import routes from './routes';
 import HomeNavigator from './HomeNavigator'
 
 const Tab = createBottomTabNavigator();
@@ -50,24 +45,6 @@ const AppNavigator = () => (
         headerShown: false,
       }}
     />
-    {/* <Tab.Screen
-      name="ListingEdit"
-      component={ListingEditScreen}
-      options={({ navigation }) => ({
-        tabBarButton: () => (
-          <NewListingButton
-            onPress={() => navigation.navigate(routes.LISTING_EDIT)}
-          />
-        ),
-        tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons
-            name="plus-circle"
-            color={color}
-            size={size}
-          />
-        ),
-      })}
-    /> */}
     <Tab.Screen
       name="Store"
 

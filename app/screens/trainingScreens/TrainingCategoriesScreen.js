@@ -2,21 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../../firebase/firebase-config';
 import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-import TrainingCard from '../../components/TrainingCard';
 import TrainingCardCategories from '../../components/TrainingCardCategories';
 import { ScrollView } from 'react-native-gesture-handler';
+import {camelize} from '../../functions'
 
 function TrainingCategoriesScreen({ navigation, route }) {
   const year = route.params.year;
   const [trainingCategories, setTrainingCategories] = useState([]);
-
-  function camelize(str) {
-    return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
-      if (+match === 0) return '';
-      return index === 0 ? match.toLowerCase() : match.toUpperCase();
-    });
-  }
 
   const getTrainingCategories = async (trainingYear) => {
     const yearCollectionRef = collection(db, trainingYear);

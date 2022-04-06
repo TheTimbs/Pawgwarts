@@ -57,7 +57,6 @@ function FeedCard({ title, likes, image, email, feed }) {
       });
 
       const arr = document.data().UsersLikes;
-      console.log(feed)
       if(feed === 'feed'){
         if (arr.includes(currentUser.email)) {
           updateDoc(feedPost, {
@@ -101,9 +100,6 @@ function FeedCard({ title, likes, image, email, feed }) {
     <View style={styles.card}>
       <Text style={styles.title}>{title}</Text>
       <Image style={styles.image} source={image} />
-      {/* <View style={styles.detailsContainer}>
-        <Button title={`${like}`} onPress={() => addLike(email)}></Button>
-      </View> */}
       <View style={styles.rowContainer}>
         <Text style={styles.currLikes}> Likes: {like}</Text>
         <Pressable style={styles.detailsContainer}>

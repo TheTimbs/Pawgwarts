@@ -134,12 +134,9 @@ const PersonalityQuiz = () => {
 
   const handlSelectedOption = (option) => {
     const selectedHouse = option.house;
-    // console.log('house associated with selected answer: ', selectedHouse);
-
     let value = ++house[`${selectedHouse}`];
-    // console.log(value);
+
     setHouse({ ...house, [`${selectedHouse}`]: value });
-    // console.log('++ logging house ++', house);
 
     if (qNum !== 5) {
       setQNum(qNum + 1);
@@ -165,7 +162,6 @@ const PersonalityQuiz = () => {
     const docRef = doc(db, 'users', currrentUser.uid);
     await updateDoc(docRef, { house: selectedHouse });
 
-    console.log('your house is ', selectedHouse);
   };
 
   let [fontsLoaded] = useFonts({

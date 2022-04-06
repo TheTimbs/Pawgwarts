@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
-  TextInput,
   Image,
   View,
-  Platform,
   Text,
-  TouchableOpacity,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import {
@@ -39,8 +36,6 @@ export default function UploadImageScreen({ route }) {
     const date = new Date();
     if (user.exists()) {
       console.log(user.data());
-    } else {
-      console.log('user not here');
     }
     if (route.params.props === 'communityFeed') {
       await addDoc(feedCollectionRef, {
@@ -95,7 +90,6 @@ export default function UploadImageScreen({ route }) {
           resolve(xhr.response);
         };
         xhr.onerror = function (e) {
-          console.log(e);
           reject(new TypeError('Network request failed'));
         };
         xhr.responseType = 'blob';
