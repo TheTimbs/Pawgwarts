@@ -75,10 +75,6 @@ function LoginScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   padding: 10,
-  //   backgroundColor: '#587b7f',
-  // },
   background: {
     flex: 1,
     justifyContent: 'flex-start',

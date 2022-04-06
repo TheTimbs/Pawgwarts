@@ -181,9 +181,6 @@ const PersonalityQuiz = () => {
         {selectedHouse !== '' ? (
           <QuizResult house={selectedHouse} />
         ) : (
-          // <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          //   <Text style={{ fontSize: 32, fontWeight: '700' }}>LOADING...</Text>
-          // </View>
           questions && (
             <View style={styles.parent}>
               <View style={styles.top}>
@@ -221,7 +218,6 @@ const PersonalityQuiz = () => {
                 >
                   <Text style={styles.option}>{options[3].answer}</Text>
                 </TouchableOpacity>
-                {/* {selectedHouse !== "" ? <QuizResult house={selectedHouse} /> : <Text> {qNum + 1}/6 </Text>} */}
               </View>
               <View style={styles.bottom}>
                 <Text style={styles.bottomText}> {qNum + 1}/6 </Text>
@@ -238,8 +234,6 @@ export default PersonalityQuiz;
 
 const styles = StyleSheet.create({
   container: {
-    // paddingTop: 40,
-    // paddingHorizontal: 20,
     height: '100%',
   },
   background: {

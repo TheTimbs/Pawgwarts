@@ -51,7 +51,6 @@ function RegisterScreen() {
       email: value.email,
       likes: 0,
       house: house,
-      // dog: [dogName, breed, DOB, image, taskCompleted],
       dog: {
         dogName: value.dogName,
         breed: value.breed,
@@ -113,7 +112,6 @@ function RegisterScreen() {
       style={styles.container}
       source={require('../../assets/BlueBackground.jpeg')}
     >
-      {/* <Screen style={styles.container}> */}
       <ScrollView>
         <View style={styles.buttonsContainer}>
           <Button
@@ -215,7 +213,6 @@ function RegisterScreen() {
           <SubmitButton title="Register" color="blue" />
         </Form>
       </ScrollView>
-      {/* </Screen> */}
     </ImageBackground>
   );
 }
