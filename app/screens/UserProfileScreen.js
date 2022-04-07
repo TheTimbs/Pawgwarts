@@ -9,10 +9,7 @@ import {
   Pressable,
   Button,
 } from 'react-native';
-import { ListItem, ListItemSeparator } from '../components/lists';
-import colors from '../config/colors';
-import Icon from '../components/Icon';
-import Screen from '../components/Screen';
+import colors from '../config/colors';;
 import { db, auth } from '../../firebase/firebase-config';
 import { getDoc, collection, doc, getDocs } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
@@ -31,13 +28,10 @@ function UserProfile() {
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
           setUser(userSnap.data());
-        } else {
-          console.log('No such document');
         }
       };
       getUserInfo();
     });
-    console.log('userprofilescreen');
     return unsubscribe;
   }, [navigation]);
 
@@ -56,7 +50,6 @@ function UserProfile() {
     };
     getPhotos();
   }, []);
-  // console.log(user.completedTrainings.length);
 
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),

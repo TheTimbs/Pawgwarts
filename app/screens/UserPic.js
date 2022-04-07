@@ -2,22 +2,16 @@ import React, { useState, useEffect } from 'react';
 import {
   FlatList,
   StyleSheet,
-  View,
   Text,
-  Image,
-  Button,
-  TextComponent,
   ImageBackground,
 } from 'react-native';
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import FeedCard from '../components/FeedCard';
-import colors from '../config/colors';
+
 import Screen from '../components/Screen';
 import { useNavigation } from '@react-navigation/native';
 import { db, auth } from '../../firebase/firebase-config';
 import { getDocs, collection, doc } from 'firebase/firestore';
-import AppButton from '../components/Button';
-import NewListingButton from '../navigation/NewListingButton';
 
 function UserPic() {
   const [userPhoto, setUserPhoto] = useState([]);

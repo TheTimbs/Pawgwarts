@@ -4,9 +4,7 @@ import Screen from '../components/Screen';
 import {
   getDocs,
   collection,
-
 } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
 import {
   StyleSheet,
   Text,

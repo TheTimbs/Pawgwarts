@@ -131,7 +131,6 @@ function FeedScreen() {
     await updateDoc(sRef, { points: 0 });
   };
   const changeFeed = async (position) => {
-    console.log(position);
     let num = position;
     if (num === undefined) {
       if (feedList[0].house === undefined) {
@@ -175,7 +174,6 @@ function FeedScreen() {
   };
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      console.log('running');
       getFeed();
     });
     getDate();

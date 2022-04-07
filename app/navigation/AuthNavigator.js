@@ -1,10 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import LoginScreen from '../screens/SignScreens/LoginScreen';
 import RegisterScreen from '../screens/SignScreens/RegisterScreen';
 import WelcomeScreen from '../screens/SignScreens/WelcomeScreen';
-import FeedScreen from '../screens/FeedScreen';
 import AppNavigator from './AppNavigator';
 import QuizScreen from '../screens/SignScreens/QuizScreen';
 

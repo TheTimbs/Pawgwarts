@@ -1,11 +1,7 @@
 import React from 'react';
 import {
-  ImageBackground,
   StyleSheet,
   View,
-  Image,
-  TouchableWithoutFeedback,
-  Text,
   TouchableOpacity,
 } from 'react-native';
 import { useFonts } from 'expo-font';

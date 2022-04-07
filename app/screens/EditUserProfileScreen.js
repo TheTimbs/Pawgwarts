@@ -7,10 +7,7 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
-import { ListItem, ListItemSeparator } from '../components/lists';
 import colors from '../config/colors';
-import Icon from '../components/Icon';
-import Screen from '../components/Screen';
 import { db, auth } from '../../firebase/firebase-config';
 import {
   getDoc,
@@ -38,17 +35,14 @@ const EditUserProfile = () => {
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
         setUser(userSnap.data());
-      } else {
-        console.log('No such document');
       }
     };
     getUserInfo();
   }, []);
-  console.log('edituserprofilescreen');
+
 
   const updatePhoto = async () => {
     const imageRef = doc(db, 'users', auth.currentUser.uid);
-    // console.log('imageRef', imageRef.data);
     await updateDoc(imageRef, {
       'dog.image': image,
     });
@@ -75,7 +69,6 @@ const EditUserProfile = () => {
         resolve(xhr.response);
       };
       xhr.onerror = function (e) {
-        console.log(e);
         reject(new TypeError('Network request failed'));
       };
       xhr.responseType = 'blob';

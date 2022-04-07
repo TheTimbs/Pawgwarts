@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../../firebase/firebase-config';
 import {
-  getDocs,
-  collection,
   doc,
   getDoc,
   updateDoc,
@@ -16,17 +14,15 @@ import {
   Text,
   TouchableOpacity,
   View,
-  FlatList,
   Image,
   ScrollView,
   Button,
   useColorScheme,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../config/colors';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+
 
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
@@ -74,7 +70,6 @@ function SingleTrainingScreen({ navigation, route }) {
     const docSnap = await getDoc(trainingDocRef);
     const trainingData = docSnap.data();
     setTrainingDetails(trainingData);
-    console.log('My Training details', trainingDetails);
   };
 
   const setStateVariables = () => {

@@ -7,8 +7,6 @@ import {
   TouchableWithoutFeedback,
   Text,
 } from 'react-native';
-import { useFonts } from 'expo-font';
-
 import AppText from '../components/Text';
 import colors from '../config/colors';
 

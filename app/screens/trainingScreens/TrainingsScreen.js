@@ -5,9 +5,6 @@ import {
   collection,
   doc,
   getDoc,
-  updateDoc,
-  arrayRemove,
-  arrayUnion,
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';

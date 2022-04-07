@@ -1,25 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase/firebase-config';
 import {
-  getDocs,
-  collection,
   doc,
   getDoc,
-  updateDoc,
-  arrayRemove,
-  arrayUnion,
 } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
-  FlatList,
-  Image,
   ScrollView,
-  Button,
-  useColorScheme,
 } from 'react-native';
 import PastWeekCard from '../components/PastWeekCard';
 import colors from '../config/colors';

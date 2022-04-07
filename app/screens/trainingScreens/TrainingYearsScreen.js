@@ -22,7 +22,6 @@ const TrainingYearsScreen = () => {
     setYear2Count(count);
   };
   const getUserDetails = async () => {
-    console.log('// [TrainingYears/getUserDetails] - just ran');
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const docRef = doc(db, 'users', userId);

@@ -134,12 +134,9 @@ const PersonalityQuiz = () => {
 
   const handlSelectedOption = (option) => {
     const selectedHouse = option.house;
-    // console.log('house associated with selected answer: ', selectedHouse);
-
     let value = ++house[`${selectedHouse}`];
-    // console.log(value);
+
     setHouse({ ...house, [`${selectedHouse}`]: value });
-    // console.log('++ logging house ++', house);
 
     if (qNum !== 5) {
       setQNum(qNum + 1);
@@ -165,7 +162,6 @@ const PersonalityQuiz = () => {
     const docRef = doc(db, 'users', currrentUser.uid);
     await updateDoc(docRef, { house: selectedHouse });
 
-    console.log('your house is ', selectedHouse);
   };
 
   let [fontsLoaded] = useFonts({
@@ -185,9 +181,6 @@ const PersonalityQuiz = () => {
         {selectedHouse !== '' ? (
           <QuizResult house={selectedHouse} />
         ) : (
-          // <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          //   <Text style={{ fontSize: 32, fontWeight: '700' }}>LOADING...</Text>
-          // </View>
           questions && (
             <View style={styles.parent}>
               <View style={styles.top}>
@@ -225,7 +218,6 @@ const PersonalityQuiz = () => {
                 >
                   <Text style={styles.option}>{options[3].answer}</Text>
                 </TouchableOpacity>
-                {/* {selectedHouse !== "" ? <QuizResult house={selectedHouse} /> : <Text> {qNum + 1}/6 </Text>} */}
               </View>
               <View style={styles.bottom}>
                 <Text style={styles.bottomText}> {qNum + 1}/6 </Text>
@@ -242,8 +234,6 @@ export default PersonalityQuiz;
 
 const styles = StyleSheet.create({
   container: {
-    // paddingTop: 40,
-    // paddingHorizontal: 20,
     height: '100%',
   },
   background: {

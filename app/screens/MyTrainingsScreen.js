@@ -2,14 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
-  FlatList,
-  Button,
   Text,
-  Image,
-  TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import { ListItem, ListItemSeparator } from '../components/lists';
 import colors from '../config/colors';
 import Icon from '../components/Icon';
 import Screen from '../components/Screen';
@@ -29,18 +24,12 @@ function MyTrainings() {
     setUser(userData.data());
   };
   useEffect(() => {
-    console.log('!!! useeffect from Home.js ran !!!');
     const unsubscribe = navigation.addListener('focus', () => {
       getUser();
     });
-    console.log('// [MyTraininsScreen/useEffect()] - user: ', user);
     return unsubscribe;
   }, [navigation]);
 
-  console.log(
-    '// [MyTrainingsScreen] - user.completedTrainings',
-    user.completedTrainings
-  );
 
   let [fontsLoaded] = useFonts({
     'Harry-Potter': require('../assets/fonts/HarryPotter.ttf'),
@@ -132,7 +121,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     padding: 10,
     fontFamily: 'Harry-Potter',
-    // backgroundColor: 'rgba(0, 0, 0, .7)',
   },
   trainings: {
     marginTop: 5,
