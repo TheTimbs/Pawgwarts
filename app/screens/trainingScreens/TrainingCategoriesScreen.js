@@ -4,7 +4,7 @@ import { getDocs, collection, doc, getDoc } from 'firebase/firestore';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import TrainingCardCategories from '../../components/TrainingCardCategories';
 import { ScrollView } from 'react-native-gesture-handler';
-import {camelize} from '../../functions'
+import {camelize} from '../../functions/methods'
 
 function TrainingCategoriesScreen({ navigation, route }) {
   const year = route.params.year;
